@@ -1,4 +1,4 @@
-import MyPlate from './MyPlate';
+import MyPlate from './Plate';
 
 export {
     MyPlate

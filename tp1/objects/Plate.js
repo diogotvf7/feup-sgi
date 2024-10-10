@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-class MyPlate extends THREE.Object3D {
+class Plate extends THREE.Object3D {
     
     
     constructor(app, radiusTop, radiusBottom, height){
@@ -29,4 +29,4 @@ class MyPlate extends THREE.Object3D {
 
 }
 
-export { MyPlate };
+export { Plate };

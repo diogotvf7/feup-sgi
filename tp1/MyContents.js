@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
-import { MyPlate } from './objects/MyPlate.js';
+import { Plate } from './objects/Plate.js';
+import { Candle } from './objects/Candle.js';
 
 /**
  *  This class contains the contents of out application
@@ -14,7 +15,8 @@ class MyContents  {
     constructor(app) {
         this.app = app
         this.axis = null
-        this.plate = new MyPlate(app, 5, 3, 1)
+        this.plate = new Plate(app, 5, 3, 1)
+        this.candle = new Candle(app, 0.3 ,2)
 
         // box related attributes
         this.boxMesh = null
@@ -54,7 +56,7 @@ class MyContents  {
         if (this.axis === null) {
             // create and attach the axis to the scene
             this.axis = new MyAxis(this)
-            this.app.scene.add(this.axis)
+            //this.app.scene.add(this.axis)
         }
 
         // add a point light on top of the model
@@ -72,8 +74,9 @@ class MyContents  {
         this.app.scene.add( ambientLight );
 
         this.buildBox()
-        this.plate.draw()
-        
+        //this.plate.draw()
+        this.candle.draw()
+
         // Create a Plane Mesh with basic material
         
         let plane = new THREE.PlaneGeometry( 10, 10 );
