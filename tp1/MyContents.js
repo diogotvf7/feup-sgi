@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
+import { MyPlate } from './objects/MyPlate.js';
 
 /**
  *  This class contains the contents of out application
@@ -13,11 +14,12 @@ class MyContents  {
     constructor(app) {
         this.app = app
         this.axis = null
+        this.plate = new MyPlate(app, 5, 3, 1)
 
         // box related attributes
         this.boxMesh = null
         this.boxMeshSize = 1.0
-        this.boxEnabled = true
+        this.boxEnabled = false
         this.lastBoxEnabled = null
         this.boxDisplacement = new THREE.Vector3(0,2,0)
 
@@ -70,6 +72,7 @@ class MyContents  {
         this.app.scene.add( ambientLight );
 
         this.buildBox()
+        this.plate.draw()
         
         // Create a Plane Mesh with basic material
         

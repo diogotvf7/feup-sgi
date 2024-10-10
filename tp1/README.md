@@ -4,8 +4,8 @@
 
 | Name             | Number    | E-Mail             |
 | ---------------- | --------- | ------------------ |
-| John Doe         | 201901010 | ...                |
-| Jane Doe         | 201901011 | ...                |
+| Diogo Tomás Valente Fernandes         | 202108752 | ...                |
+| Jaime Francisco Rodrigues Fonseca         | 202108789 | ...                |
 
 ----
 ## Project information
