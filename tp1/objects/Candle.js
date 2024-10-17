@@ -7,6 +7,17 @@ class Candle extends THREE.Object3D {
         this.radius = radius;
         this.height = height;
         this.teardrops = [];
+  
+        this.candleMaterial = new THREE.MeshPhongMaterial({ color: 0xffe3bd });
+        this.wickMaterial = new THREE.MeshPhongMaterial({ color: 0x000000 }); 
+        this.flameMaterial = new THREE.MeshPhongMaterial({ 
+            color:0xd26f04 ,
+            emissive:0xd26f04 ,
+            emissiveIntensity: 1 
+        });
+        this.bottomFlameMaterial = new THREE.MeshPhongMaterial({ color: 0xD17205 });
+        
+
         this.init();
     }
 
@@ -15,19 +26,19 @@ class Candle extends THREE.Object3D {
         this.buildCandleBody();
         this.buildCandleTop();
         this.buildCandleWick();
-        this.buildTeardrop();
+        this.buildFlame();
 
 
         this.add(this.candleMesh);
         this.add(this.topMesh);
         this.add(this.wickMesh);
+        this.add(this.flame)
     
     }   
 
     buildCandleBody(){
         this.geometry = new THREE.CylinderGeometry(this.radius, this.radius, this.height, 30);
-        this.material = new THREE.MeshBasicMaterial({ color: 0xffe3bd });
-        this.candleMesh = new THREE.Mesh(this.geometry, this.material);
+        this.candleMesh = new THREE.Mesh(this.geometry, this.candleMaterial);
         this.candleMesh.position.y = this.height / 2;
     }
 
@@ -40,8 +51,7 @@ class Candle extends THREE.Object3D {
         points.push(new THREE.Vector2(0, 0.35 * this.radius)); 
 
         this.topGeometry = new THREE.LatheGeometry(points, 30);
-        this.topMaterial = new THREE.MeshBasicMaterial({ color: 0xffe3bd });
-        this.topMesh = new THREE.Mesh(this.topGeometry, this.topMaterial);
+        this.topMesh = new THREE.Mesh(this.topGeometry, this.candleMaterial);
 
         this.topMesh.position.y = this.height;
     }
@@ -57,34 +67,45 @@ class Candle extends THREE.Object3D {
         ]);
 
         const wickGeometry = new THREE.TubeGeometry(wickCurve, 20, wickRadius, 8, false);
-        const wickMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 }); 
-        this.wickMesh = new THREE.Mesh(wickGeometry, wickMaterial);
+        this.wickMesh = new THREE.Mesh(wickGeometry, this.wickMaterial);
         this.wickMesh.position.y = this.height / 2 * 1.05;
     }
 
-    buildTeardrop(){
-        this.teardrops = [];
-        this.createTeardrop(0.25, this.height * 0.5, 0);    
-        this.createTeardrop(-0.25, this.height * 0.8, 0.1);  
-        this.createTeardrop(0, this.height * 0.65, -0.25);
-    }
     
-    createTeardrop(x, y, z){
-        const geometry = new THREE.SphereGeometry(0.08, 32, 32);
-        geometry.scale(1, 1.5, 1);
+    buildFlame() {
+        this.flameGeometry = new THREE.ConeGeometry(0.05, 0.2, 50);
+        const flameMesh = new THREE.Mesh(this.flameGeometry, this.flameMaterial);
+        flameMesh.position.y = 4.93;
     
-        const material = new THREE.MeshBasicMaterial({ color: 0xffe3bd });
-        const teardrop = new THREE.Mesh(geometry, material);
+        const sphereGeometry = new THREE.SphereGeometry(0.05, 32, 32);
+        const sphereMesh = new THREE.Mesh(sphereGeometry, this.bottomFlameMaterial);
+        sphereMesh.position.y = 4.83;
     
-        teardrop.position.set(x, y, z);
-        this.add(teardrop);
-    }
+        const flame = new THREE.Group();
+        flame.add(flameMesh);
+        flame.add(sphereMesh);
+        
+        flame.position.set(0.1, -2.55, 0.05);
     
-    
+        const rotationInDegrees = 15;
+        const rotationInRadians = THREE.MathUtils.degToRad(rotationInDegrees);
+        flame.rotation.x = rotationInRadians
+        flame.position.set(0.1,-2.4,-1.2)
 
+        this.add(flame);
+    }
+    
     draw() {
         this.app.scene.add(this);
+        
+        const light = new THREE.PointLight(0xe8b63b, 1.5, 100);  
+        light.position.set(0.3, this.height + 0.3, 0.3);             
+        
+        
+                
+        this.app.scene.add(light);
     }
+    
 }
 
 export { Candle };
