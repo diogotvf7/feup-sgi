@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
 import { Plate } from './objects/Plate.js';
 import { Candle } from './objects/Candle.js';
+import { Cake } from './objects/Cake.js';
 
 /**
  *  This class contains the contents of out application
@@ -17,6 +18,7 @@ class MyContents  {
         this.axis = null
         this.plate = new Plate(app, 5, 3, 1)
         this.candle = new Candle(app, 0.3 ,2)
+        this.cake = new Cake(app, 2, 1.5)
 
         // box related attributes
         this.boxMesh = null
@@ -75,7 +77,8 @@ class MyContents  {
 
         this.buildBox()
         //this.plate.draw()
-        this.candle.draw()
+        //this.candle.draw()
+        this.cake.draw()
 
         // Create a Plane Mesh with basic material
         
@@ -83,7 +86,7 @@ class MyContents  {
         this.planeMesh = new THREE.Mesh( plane, this.planeMaterial );
         this.planeMesh.rotation.x = -Math.PI / 2;
         this.planeMesh.position.y = -0;
-        this.app.scene.add( this.planeMesh );
+        //this.app.scene.add( this.planeMesh );
     }
     
     /**
