@@ -2,6 +2,10 @@ import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
 import { Plate } from './objects/Plate.js';
 import { Candle } from './objects/Candle.js';
+import { Floor }  from './objects/Floor.js';
+import { Walls } from './objects/Walls.js';
+import { Ceiling } from './objects/Ceiling.js';
+import { Table } from './objects/Table.js';
 
 /**
  *  This class contains the contents of out application
@@ -16,7 +20,12 @@ class MyContents  {
         this.app = app
         this.axis = null
         this.plate = new Plate(app, 5, 3, 1)
-        this.candle = new Candle(app, 0.3 ,2)
+        // this.candle = new Candle(app, 0.3 ,2)
+        // beige floor (rug)
+        this.floor = new Floor(app, 20, 50, "#f28f7e", "#ffffff", 0)
+        this.walls = new Walls(app, this.floor, 15, "#696e56")
+        this.ceiling = new Ceiling(app, this.floor, this.walls, "#fbf2d5")
+        this.table = new Table(app, 5, 5, .5, 3, .2, "#ead7C9", "#3a261b")
 
         // box related attributes
         this.boxMesh = null
@@ -24,13 +33,6 @@ class MyContents  {
         this.boxEnabled = false
         this.lastBoxEnabled = null
         this.boxDisplacement = new THREE.Vector3(0,2,0)
-
-        // plane related attributes
-        this.diffusePlaneColor = "#00ffff"
-        this.specularPlaneColor = "#777777"
-        this.planeShininess = 30
-        this.planeMaterial = new THREE.MeshPhongMaterial({ color: this.diffusePlaneColor, 
-            specular: this.specularPlaneColor, emissive: "#000000", shininess: this.planeShininess })
     }
 
     /**
@@ -75,42 +77,13 @@ class MyContents  {
 
         this.buildBox()
         //this.plate.draw()
-        this.candle.draw()
+        // this.candle.draw()
+        this.floor.draw()
+        this.walls.draw()
+        this.ceiling.draw()
+        this.table.draw()
+    }
 
-        // Create a Plane Mesh with basic material
-        
-        let plane = new THREE.PlaneGeometry( 10, 10 );
-        this.planeMesh = new THREE.Mesh( plane, this.planeMaterial );
-        this.planeMesh.rotation.x = -Math.PI / 2;
-        this.planeMesh.position.y = -0;
-        this.app.scene.add( this.planeMesh );
-    }
-    
-    /**
-     * updates the diffuse plane color and the material
-     * @param {THREE.Color} value 
-     */
-    updateDiffusePlaneColor(value) {
-        this.diffusePlaneColor = value
-        this.planeMaterial.color.set(this.diffusePlaneColor)
-    }
-    /**
-     * updates the specular plane color and the material
-     * @param {THREE.Color} value 
-     */
-    updateSpecularPlaneColor(value) {
-        this.specularPlaneColor = value
-        this.planeMaterial.specular.set(this.specularPlaneColor)
-    }
-    /**
-     * updates the plane shininess and the material
-     * @param {number} value 
-     */
-    updatePlaneShininess(value) {
-        this.planeShininess = value
-        this.planeMaterial.shininess = this.planeShininess
-    }
-    
     /**
      * rebuilds the box mesh if required
      * this method is called from the gui interface
