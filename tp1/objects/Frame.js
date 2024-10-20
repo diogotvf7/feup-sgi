@@ -3,7 +3,7 @@ import * as THREE from "three";
 
 class Frame extends THREE.Object3D {
 
-    constructor(app, position, picture, imgX, imgY, frameWidth, withFrame=true){
+    constructor(app, position, picture, imgX, imgY, frameWidth, withFrame=true, rotation={x:0, y:0, z:0}){
         super();
         this.app = app;
         this.framePosition = position;
@@ -11,6 +11,7 @@ class Frame extends THREE.Object3D {
         this.imgY = imgY;
         this.frameWidth = frameWidth;
         this.withFrame = withFrame;
+        this.frameRotation = rotation;
         this.pictureMaterial = new THREE.MeshStandardMaterial({
             map: new THREE.TextureLoader().load(picture),
             roughness: 1,
@@ -33,12 +34,10 @@ class Frame extends THREE.Object3D {
             this.framePicture.add(this.frame)
             this.framePicture.add(this.img)
         }else{
-            //Hard Coded need to change
-            this.img.rotation.y = Math.PI / 2;
             this.framePicture.add(this.img)
         }
         this.framePicture.position.set(this.framePosition.x, this.framePosition.y, this.framePosition.z)
-
+        this.framePicture.rotation.set(this.frameRotation.x, this.frameRotation.y, this.frameRotation.z)
     }
 
     buildFrame(){

@@ -35,7 +35,7 @@ class MyContents  {
 
         this.frame = new Frame(app, new THREE.Vector3(0, 6, -12.5), "./texture/diogo.jpg", 4, 4, 0.5)
         this.frame2 = new Frame(app, new THREE.Vector3(8, 6, -12.5), "./texture/jaime.jpg", 4, 4, 0.5)
-        this.frame3 = new Frame(app, new THREE.Vector3(-22.4, 5, 6), "./texture/pulpfiction.jpg", 6, 8, 0.5, false)
+        this.frame3 = new Frame(app, new THREE.Vector3(-22.4, 5, 6), "./texture/pulpfiction.jpg", 6, 8, 0.5, false, {x: 0, y: Math.PI / 2, z: 0})
 
 
     }
