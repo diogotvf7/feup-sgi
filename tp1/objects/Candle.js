@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 class Candle extends THREE.Object3D {
-    constructor(app, radius, height) {
+    constructor(app, radius, height, position) {
         super();
         this.app = app;
         this.radius = radius;
@@ -16,7 +16,7 @@ class Candle extends THREE.Object3D {
             emissiveIntensity: 1 
         });
         this.bottomFlameMaterial = new THREE.MeshPhongMaterial({ color: 0xD17205 });
-        
+        this.candlePosition = position;
 
         this.init();
     }
@@ -28,12 +28,14 @@ class Candle extends THREE.Object3D {
         this.buildCandleWick();
         this.buildFlame();
 
+        this.candle = new THREE.Group();
+        this.candle.add(this.candleMesh);
+        this.candle.add(this.topMesh);
+        this.candle.add(this.wickMesh);
+        this.candle.add(this.flame);
 
-        this.add(this.candleMesh);
-        this.add(this.topMesh);
-        this.add(this.wickMesh);
-        this.add(this.flame)
-    
+        this.candle.position.set(this.candlePosition.x, this.candlePosition.y, this.candlePosition.z);
+
     }   
 
     buildCandleBody(){
@@ -61,45 +63,60 @@ class Candle extends THREE.Object3D {
         const wickHeight = this.height * 0.1; 
 
         const wickCurve = new THREE.CatmullRomCurve3([
-            new THREE.Vector3(0, this.height / 2, 0), 
-            new THREE.Vector3(0, this.height / 2 + wickHeight / 2, 0), 
-            new THREE.Vector3(0.1, this.height / 2 + wickHeight, 0.05), 
+            new THREE.Vector3(0, 0, 0), 
+            new THREE.Vector3(0, wickHeight / 2, 0), 
+            new THREE.Vector3(this.radius * 0.1, wickHeight, this.radius * 0.05), 
         ]);
 
         const wickGeometry = new THREE.TubeGeometry(wickCurve, 20, wickRadius, 8, false);
         this.wickMesh = new THREE.Mesh(wickGeometry, this.wickMaterial);
-        this.wickMesh.position.y = this.height / 2 * 1.05;
+        this.wickMesh.position.y = this.height + (wickHeight / 2);
     }
 
     
     buildFlame() {
-        this.flameGeometry = new THREE.ConeGeometry(0.05, 0.2, 50);
-        const flameMesh = new THREE.Mesh(this.flameGeometry, this.flameMaterial);
-        flameMesh.position.y = 4.93;
-    
-        const sphereGeometry = new THREE.SphereGeometry(0.05, 32, 32);
-        const sphereMesh = new THREE.Mesh(sphereGeometry, this.bottomFlameMaterial);
-        sphereMesh.position.y = 4.83;
-    
-        const flame = new THREE.Group();
-        flame.add(flameMesh);
-        flame.add(sphereMesh);
+        const flameHeight = this.height * 0.1;
+        const flameRadius = this.radius * 0.25;
         
-        flame.position.set(0.1, -2.55, 0.05);
+        this.flameGeometry = new THREE.ConeGeometry(flameRadius, flameHeight, 50);
+        const flameMesh = new THREE.Mesh(this.flameGeometry, this.flameMaterial);
+        flameMesh.position.y = flameHeight / 2;
+    
+        const sphereGeometry = new THREE.SphereGeometry(flameRadius, 32, 32);
+        const sphereMesh = new THREE.Mesh(sphereGeometry, this.bottomFlameMaterial);
+        sphereMesh.position.y = -flameHeight * 0.1;
+    
+        this.flame = new THREE.Group();
+        this.flame.add(flameMesh);
+        this.flame.add(sphereMesh);
+        
+        const wickTip = this.height + (this.height * 0.15);
+        this.flame.position.set(this.radius * 0.1, wickTip, this.radius * 0.05);
     
         const rotationInDegrees = 15;
         const rotationInRadians = THREE.MathUtils.degToRad(rotationInDegrees);
-        flame.rotation.x = rotationInRadians
-        flame.position.set(0.1,-2.4,-1.2)
-
-        this.add(flame);
+        this.flame.rotation.x = rotationInRadians;
     }
     
     draw() {
-        this.app.scene.add(this);
+        this.app.scene.add(this.candle);
         
-        const light = new THREE.PointLight(0xe8b63b, 1.5, 100);  
-        light.position.set(0.3, this.height + 0.3, 0.3);             
+        const lightIntensity = 2 * (this.radius / 0.5);
+        const lightDistance = 100 * (this.height / 5);
+        const light = new THREE.PointLight(0xe8b63b, lightIntensity, lightDistance);  
+        light.position.set(
+            this.radius * 0.6 + this.candlePosition.x, 
+            this.height + (this.height * 0.15) + this.candlePosition.y, 
+            this.radius * 0.6 + this.candlePosition.z
+        );             
+
+/* 
+        const lightHelperGeometry = new THREE.SphereGeometry(0.05, 16, 16);
+        const lightHelperMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+        const lightHelper = new THREE.Mesh(lightHelperGeometry, lightHelperMaterial);
+        lightHelper.position.copy(light.position);
+        this.app.scene.add(lightHelper); */
+
         this.app.scene.add(light);
     }
     

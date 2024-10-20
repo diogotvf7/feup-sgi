@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 
 class Table extends THREE.Object3D {
-    constructor(app, width, height, table_top_height, table_leg_height, table_leg_radius, table_top_color, table_leg_color) {
+    constructor(app, width, height, table_top_height, table_leg_height, table_leg_radius, table_top_color, table_leg_color, position) {
         super();
         this.app = app;
 
@@ -10,6 +10,7 @@ class Table extends THREE.Object3D {
         this.table_top_height = table_top_height 
         this.table_leg_height = table_leg_height 
         this.table_leg_radius = table_leg_radius
+        this.tablePosition = position
         
         this.table_top_material = new THREE.MeshPhongMaterial({ 
             color: table_top_color,
@@ -31,11 +32,14 @@ class Table extends THREE.Object3D {
     init() {
         this.buildTable()
 
-        this.add(this.table_top_mesh)
-        this.add(this.tl_leg_mesh)
-        this.add(this.tr_leg_mesh)
-        this.add(this.bl_leg_mesh)
-        this.add(this.br_leg_mesh)
+        this.table = new THREE.Group();
+        this.table.add(this.table_top_mesh)
+        this.table.add(this.tl_leg_mesh)
+        this.table.add(this.tr_leg_mesh)
+        this.table.add(this.bl_leg_mesh)
+        this.table.add(this.br_leg_mesh)
+        this.table.position.set(this.tablePosition.x, this.tablePosition.y, this.tablePosition.z)
+        
     }   
 
     buildTable() {
@@ -67,7 +71,7 @@ class Table extends THREE.Object3D {
     }
 
     draw() {
-        this.app.scene.add(this)
+        this.app.scene.add(this.table)
     }
 }
 

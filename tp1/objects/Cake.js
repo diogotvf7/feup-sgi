@@ -1,11 +1,15 @@
 import * as THREE from "three";
 
 class Cake extends THREE.Object3D {
-  constructor(app, radius, height) {
+  constructor(app, radius, height, position, rotation=0, isSlice=false) {
     super();
     this.app = app;
     this.radius = radius;
     this.height = height;
+    this.cakePosition = position;
+    this.cakeRotation = rotation;
+    this.isSlice = isSlice;
+    
     this.material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
     this.insideCakeGeometry = new THREE.PlaneGeometry(this.radius, this.height);
 
@@ -29,8 +33,7 @@ class Cake extends THREE.Object3D {
   }
 
   init() {
-    this.buildCake();
-    this.buildSlice();
+    this.isSlice ? this.buildSlice() : this.buildCake();
   }
 
   buildCake() {
@@ -56,7 +59,7 @@ class Cake extends THREE.Object3D {
     );
 
     insideCake1.rotation.y = -(Math.PI / 2);
-    insideCake1.position.z = 1;
+    insideCake1.position.z = 0.5;
 
     const angle = (3 / 20) * 2 * Math.PI;
 
@@ -71,7 +74,10 @@ class Cake extends THREE.Object3D {
     cake.add(this.cake);
     cake.add(insideCake1);
     cake.add(insideCake2);
-    // this.add(cake);
+    cake.rotation.y = this.cakeRotation;
+    cake.position.set(this.cakePosition.x, this.cakePosition.y, this.cakePosition.z);
+
+    this.add(cake);
   }
 
   buildSlice() {
@@ -114,6 +120,8 @@ class Cake extends THREE.Object3D {
 
     slice.rotation.y = Math.PI / 2;
     slice.rotation.x = Math.PI / 2;
+    
+    slice.position.set(this.cakePosition.x, this.cakePosition.y, this.cakePosition.z);
     this.add(slice);
   }
 

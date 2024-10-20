@@ -3,12 +3,13 @@ import * as THREE from 'three';
 class Plate extends THREE.Object3D {
     
     
-    constructor(app, radiusTop, radiusBottom, height){
+    constructor(app, radiusTop, radiusBottom, height, position){
         super();
         this.app = app;
         this.radiusTop = radiusTop;
         this.radiusBottom = radiusBottom;
         this.height = height;
+        this.platePosition = position;
         this.init();
     }
 
@@ -19,12 +20,13 @@ class Plate extends THREE.Object3D {
             metalness: 0.6,  
             roughness: 0.2,  
         });
-        this.cylinder = new THREE.Mesh(geometry, material);
+        this.plate = new THREE.Mesh(geometry, material);
+        this.plate.position.set(this.platePosition.x, this.platePosition.y, this.platePosition.z);
     }
 
 
     draw(){
-        this.app.scene.add(this.cylinder);
+        this.app.scene.add(this.plate);
     }
 
 }

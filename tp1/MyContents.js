@@ -6,6 +6,7 @@ import { Floor }  from './objects/Floor.js';
 import { Walls } from './objects/Walls.js';
 import { Ceiling } from './objects/Ceiling.js';
 import { Table } from './objects/Table.js';
+import { Cake } from './objects/Cake.js';
 
 /**
  *  This class contains the contents of out application
@@ -19,35 +20,20 @@ class MyContents  {
     constructor(app) {
         this.app = app
         this.axis = null
-        this.plate = new Plate(app, 5, 3, 1)
-        // this.candle = new Candle(app, 0.3 ,2)
+
+        this.plate = new Plate(app, 1.5, 1, 0.2, new THREE.Vector3(-5, 3.5, -4))
+        this.cake = new Cake(app, 1, 0.5, new THREE.Vector3(-5, 3.8, -4), -Math.PI / 2)
+        this.candle = new Candle(app, 0.03 ,0.25, new THREE.Vector3(-4.95, 4, -4))
+        this.table = new Table(app, 5, 5, .5, 3, .2, "#ead7C9", "#3a261b", new THREE.Vector3(-5, 0, -4))
+
+
         // beige floor (rug)
-        this.floor = new Floor(app, 20, 50, "#f28f7e", "#ffffff", 0)
+        this.floor = new Floor(app, 25, 45, "#f28f7e", "#ffffff", 0)
         this.walls = new Walls(app, this.floor, 15, "#696e56")
         this.ceiling = new Ceiling(app, this.floor, this.walls, "#fbf2d5")
-        this.table = new Table(app, 5, 5, .5, 3, .2, "#ead7C9", "#3a261b")
 
-        // box related attributes
-        this.boxMesh = null
-        this.boxMeshSize = 1.0
-        this.boxEnabled = false
-        this.lastBoxEnabled = null
-        this.boxDisplacement = new THREE.Vector3(0,2,0)
     }
 
-    /**
-     * builds the box mesh with material assigned
-     */
-    buildBox() {    
-        let boxMaterial = new THREE.MeshPhongMaterial({ color: "#ffff77", 
-        specular: "#000000", emissive: "#000000", shininess: 90 })
-
-        // Create a Cube Mesh with basic material
-        let box = new THREE.BoxGeometry(  this.boxMeshSize,  this.boxMeshSize,  this.boxMeshSize );
-        this.boxMesh = new THREE.Mesh( box, boxMaterial );
-        this.boxMesh.rotation.x = -Math.PI / 2;
-        this.boxMesh.position.y = this.boxDisplacement.y;
-    }
 
     /**
      * initializes the contents
@@ -62,8 +48,8 @@ class MyContents  {
         }
 
         // add a point light on top of the model
-        const pointLight = new THREE.PointLight( 0xffffff, 500, 0 );
-        pointLight.position.set( 0, 20, 0 );
+        const pointLight = new THREE.PointLight( 0xffffff, 100, 0 );
+        pointLight.position.set( 20, 20, 0 );
         this.app.scene.add( pointLight );
 
         // add a point light helper for the previous point light
@@ -75,60 +61,39 @@ class MyContents  {
         const ambientLight = new THREE.AmbientLight( 0x555555 );
         this.app.scene.add( ambientLight );
 
-        this.buildBox()
-        //this.plate.draw()
-        // this.candle.draw()
+    
+        this.build()
+        this.illuminate()
+    }
+
+    build(){
+        this.plate.draw()
+        this.cake.draw()
+        this.candle.draw()
         this.floor.draw()
         this.walls.draw()
         this.ceiling.draw()
         this.table.draw()
     }
 
-    /**
-     * rebuilds the box mesh if required
-     * this method is called from the gui interface
-     */
-    rebuildBox() {
-        // remove boxMesh if exists
-        if (this.boxMesh !== undefined && this.boxMesh !== null) {  
-            this.app.scene.remove(this.boxMesh)
-        }
-        this.buildBox();
-        this.lastBoxEnabled = null
-    }
-    
-    /**
-     * updates the box mesh if required
-     * this method is called from the render method of the app
-     * updates are trigered by boxEnabled property changes
-     */
-    updateBoxIfRequired() {
-        if (this.boxEnabled !== this.lastBoxEnabled) {
-            this.lastBoxEnabled = this.boxEnabled
-            if (this.boxEnabled) {
-                this.app.scene.add(this.boxMesh)
-            }
-            else {
-                this.app.scene.remove(this.boxMesh)
-            }
-        }
+    illuminate() {
+        this.cakeSpotLight = new THREE.SpotLight(0xe0ce9b, 2000, 20, Math.PI / 32, 1);
+        this.cakeSpotLight.position.set(-10, 12, -12.5); // Moved the light higher above the cake
+        this.app.scene.add(this.cakeSpotLight);
+
+        this.cakeSpotLight.target.position.set(-5, 3.8, -4);
+        this.app.scene.add(this.cakeSpotLight.target);
+
+        const spotLightHelper = new THREE.SpotLightHelper(this.cakeSpotLight);
+        this.app.scene.add(spotLightHelper);
+
+        const sphereGeometry = new THREE.SphereGeometry(0.1, 16, 16);
+        const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+        const lightSphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        lightSphere.position.copy(this.cakeSpotLight.position);
+        this.app.scene.add(lightSphere);
     }
 
-    /**
-     * updates the contents
-     * this method is called from the render method of the app
-     * 
-     */
-    update() {
-        // check if box mesh needs to be updated
-        this.updateBoxIfRequired()
-
-        // sets the box mesh position based on the displacement vector
-        this.boxMesh.position.x = this.boxDisplacement.x
-        this.boxMesh.position.y = this.boxDisplacement.y
-        this.boxMesh.position.z = this.boxDisplacement.z
-        
-    }
 
 }
 

@@ -14,8 +14,7 @@ class Walls extends THREE.Object3D {
 
         this.wall_material = new THREE.MeshPhongMaterial({ 
             color: diffuse,
-            // specular: "#FFFFFF",
-            emissive: "#000000",
+            specular: "#000000",
             shininess: 0,
             side: THREE.BackSide
         }); 
