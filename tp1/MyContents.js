@@ -7,6 +7,7 @@ import { Walls } from './objects/Walls.js';
 import { Ceiling } from './objects/Ceiling.js';
 import { Table } from './objects/Table.js';
 import { Cake } from './objects/Cake.js';
+import { Frame } from './objects/Frame.js';
 
 /**
  *  This class contains the contents of out application
@@ -32,6 +33,11 @@ class MyContents  {
         this.walls = new Walls(app, this.floor, 15, "#696e56")
         this.ceiling = new Ceiling(app, this.floor, this.walls, "#fbf2d5")
 
+        this.frame = new Frame(app, new THREE.Vector3(0, 6, -12.5), "./texture/diogo.jpg", 4, 4, 0.5)
+        this.frame2 = new Frame(app, new THREE.Vector3(8, 6, -12.5), "./texture/jaime.jpg", 4, 4, 0.5)
+        this.frame3 = new Frame(app, new THREE.Vector3(-22.4, 5, 6), "./texture/pulpfiction.jpg", 6, 8, 0.5, false)
+
+
     }
 
 
@@ -48,8 +54,8 @@ class MyContents  {
         }
 
         // add a point light on top of the model
-        const pointLight = new THREE.PointLight( 0xffffff, 100, 0 );
-        pointLight.position.set( 20, 20, 0 );
+        const pointLight = new THREE.PointLight( 0xffffff, 500, 0 );
+        pointLight.position.set( 0, 20, 0 );
         this.app.scene.add( pointLight );
 
         // add a point light helper for the previous point light
@@ -74,16 +80,20 @@ class MyContents  {
         this.walls.draw()
         this.ceiling.draw()
         this.table.draw()
+        
+        this.frame.draw()
+        this.frame2.draw()
+        this.frame3.draw()
     }
 
     illuminate() {
-        this.cakeSpotLight = new THREE.SpotLight(0xe0ce9b, 2000, 20, Math.PI / 32, 1);
-        this.cakeSpotLight.position.set(-10, 12, -12.5); // Moved the light higher above the cake
+        this.cakeSpotLight = new THREE.SpotLight(0xe0ce9b, 500, 20, Math.PI / 12, 1);
+        this.cakeSpotLight.position.set(-5, 10, -4); // Moved the light higher above the cake
         this.app.scene.add(this.cakeSpotLight);
 
         this.cakeSpotLight.target.position.set(-5, 3.8, -4);
         this.app.scene.add(this.cakeSpotLight.target);
-
+/* 
         const spotLightHelper = new THREE.SpotLightHelper(this.cakeSpotLight);
         this.app.scene.add(spotLightHelper);
 
@@ -91,7 +101,7 @@ class MyContents  {
         const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
         const lightSphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
         lightSphere.position.copy(this.cakeSpotLight.position);
-        this.app.scene.add(lightSphere);
+        this.app.scene.add(lightSphere); */
     }
 
 
