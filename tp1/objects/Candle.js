@@ -100,9 +100,6 @@ class Candle extends THREE.Object3D {
         
         const light = new THREE.PointLight(0xe8b63b, 1.5, 100);  
         light.position.set(0.3, this.height + 0.3, 0.3);             
-        
-        
-                
         this.app.scene.add(light);
     }
     
