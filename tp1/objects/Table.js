@@ -15,7 +15,7 @@ class Table extends THREE.Object3D {
         this.table_top_material = new THREE.MeshPhongMaterial({ 
             color: table_top_color,
             specular: table_top_color,
-            emissive: table_top_color,
+            //emissive: table_top_color,
             shininess: 0,
         }); 
 
