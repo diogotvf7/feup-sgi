@@ -9,6 +9,7 @@ import { Table } from "./objects/Table.js";
 import { Cake } from "./objects/Cake.js";
 import { Frame } from "./objects/Frame.js";
 import { Vase } from "./objects/Vase.js";
+import { Flower } from "./objects/Flower.js";
 
 /**
  *  This class contains the contents of out application
@@ -47,7 +48,8 @@ class MyContents {
     this.floor = new Floor(app, 25, 45, "#f28f7e", "#ffffff", 0);
     this.walls = new Walls(app, this.floor, 15, "#696e56");
     this.ceiling = new Ceiling(app, this.floor, this.walls, "#fbf2d5");
-    this.vase = new Vase(app, new THREE.Vector3(0, 1.1, 0));
+    this.vase = new Vase(app, new THREE.Vector3(-21, 1.1, -2));
+    this.flower = new Flower(app, new THREE.Vector3(0, 0, 0));
 
     this.frame = new Frame(
       app,
@@ -115,6 +117,7 @@ class MyContents {
     this.ceiling.draw();
     this.table.draw();
     this.vase.draw();
+    this.flower.draw();
 
     this.frame.draw();
     this.frame2.draw();

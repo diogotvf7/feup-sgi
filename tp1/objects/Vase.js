@@ -16,7 +16,7 @@ class Vase extends THREE.Object3D {
       map: this.vaseTexture,
       transparent: this.opacity < 1.0,
       opacity: this.opacity,
-      color: 0x00f2e3,
+      color: 0x8c2d19,
       side: THREE.DoubleSide,
       shininess: 100,
       specular: 0xffffff,
