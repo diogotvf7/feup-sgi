@@ -183,6 +183,12 @@ class MyApp  {
             //this.contents.update()
         }
 
+        if (this.contents) {
+            if (this.contents.table && typeof this.contents.table.update === 'function') {
+                this.contents.table.update();
+            }
+        }
+
         // required if controls.enableDamping or controls.autoRotate are set to true
         this.controls.update();
 

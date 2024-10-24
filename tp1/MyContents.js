@@ -22,10 +22,13 @@ class MyContents  {
         this.app = app
         this.axis = null
 
-        this.plate = new Plate(app, 1.5, 1, 0.2, new THREE.Vector3(-5, 3.5, -4))
+        const table_top_height = 0.3
+        const table_leg_height = 3
+        this.table = new Table(app, table_leg_height, table_top_height, 3, .2, new THREE.Vector3(-5, 0, -4))
+        this.plate = new Plate(app, 1.5, 1, 0.2, new THREE.Vector3(-5, table_leg_height + table_top_height, -4))
         this.cake = new Cake(app, 1, 0.5, new THREE.Vector3(-5, 3.8, -4), -Math.PI / 2)
         this.candle = new Candle(app, 0.03 ,0.25, new THREE.Vector3(-4.95, 4, -4))
-        this.table = new Table(app, 3, .3, 3, .2, new THREE.Vector3(-5, 0, -4))
+
 
         // beige floor (rug)
         this.floor = new Floor(app, 25, 45, "#f28f7e", "#ffffff", 0)
@@ -42,7 +45,6 @@ class MyContents  {
      * initializes the contents
      */
     init() {
-       
         // create once 
         if (this.axis === null) {
             // create and attach the axis to the scene
@@ -84,7 +86,7 @@ class MyContents  {
     }
 
     illuminate() {
-        this.cakeSpotLight = new THREE.SpotLight(0xe0ce9b, 500, 21, Math.PI / 12, 1);
+        this.cakeSpotLight = new THREE.SpotLight(0xffffff, 500, 21, Math.PI / 9, 1);
         this.cakeSpotLight.position.set(-5, 10, -4);
         this.cakeSpotLight.castShadow = true;
         this.cakeSpotLight.receiveShadow = true;

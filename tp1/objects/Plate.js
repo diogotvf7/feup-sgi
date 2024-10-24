@@ -3,7 +3,7 @@ import * as THREE from 'three';
 class Plate extends THREE.Object3D {
     
     
-    constructor(app, radiusTop, radiusBottom, height, position){
+    constructor(app, radiusTop, radiusBottom, height, position) {
         super();
         this.app = app;
         this.radiusTop = radiusTop;
@@ -13,7 +13,7 @@ class Plate extends THREE.Object3D {
         this.init();
     }
 
-    init(){
+    init() {
         let geometry = new THREE.CylinderGeometry(this.radiusTop, this.radiusBottom, this.height, 30);
         let material = new THREE.MeshStandardMaterial({
             color: 0xc4c4c4, 
@@ -21,11 +21,15 @@ class Plate extends THREE.Object3D {
             roughness: 0.2,  
         });
         this.plate = new THREE.Mesh(geometry, material);
+
+        this.plate.receiveShadow = true;
+        this.plate.castShadow = true;
+
         this.plate.position.set(this.platePosition.x, this.platePosition.y, this.platePosition.z);
     }
 
 
-    draw(){
+    draw() {
         this.app.scene.add(this.plate);
     }
 

@@ -11,11 +11,22 @@ class Table extends THREE.Object3D {
         this.table_leg_radius = table_leg_radius
         this.tablePosition = position
         
+        const cubeRenderTarget = new THREE.WebGLCubeRenderTarget( 512, {
+            format: THREE.RGBAFormat,
+            generateMipmaps: true,
+            minFilter: THREE.LinearMipmapLinearFilter,
+            encoding: THREE.sRGBEncoding,
+        });
+
+        this.cubeCamera = new THREE.CubeCamera( 0.1, 1000, cubeRenderTarget );
+        this.cubeCamera.position.set(this.tablePosition.x, this.tablePosition.y - 1, this.tablePosition.z); // CubeCamera placed above the table
+        this.app.scene.add(this.cubeCamera);
+
         this.table_top_material = new THREE.MeshPhongMaterial({ 
-            color: "#e8d8c9",
-            specular: "#e8d8c9",
-            emissive: "#e6c9ae",
-            shininess: 0,
+            shininess: 20,
+            color: 0xe6c9ae,
+            reflectivity: 0.7,
+            envMap: this.cubeCamera.renderTarget.texture
         });
 
         this.table_leg_material = new THREE.MeshPhongMaterial({ 
@@ -35,7 +46,6 @@ class Table extends THREE.Object3D {
         this.table.add(this.bl_leg_mesh)
         this.table.add(this.br_leg_mesh)
         this.table.position.set(this.tablePosition.x, this.tablePosition.y, this.tablePosition.z)
-        
     }   
 
     buildTable() {
@@ -71,6 +81,12 @@ class Table extends THREE.Object3D {
         this.table_top_mesh.castShadow = true;        
     }
 
+    update() {
+        this.table.visible = false;
+        this.cubeCamera.update(this.app.renderer, this.app.scene);
+        this.table.visible = true;
+    }
+    
     draw() {
         this.app.scene.add(this.table)
     }
