@@ -3,17 +3,26 @@ import * as THREE from "three";
 
 class Frame extends THREE.Object3D {
 
-    constructor(app, position, picture, imgX, imgY, frameWidth, withFrame=true, rotation={x:0, y:0, z:0}){
+    constructor(app, position, picture, imgX, imgY, frameWidth, pictureWidth, pictureHeight, withFrame=true, rotation={x:0, y:0, z:0}, ){
         super();
         this.app = app;
         this.framePosition = position;
         this.imgX = imgX;
         this.imgY = imgY;
         this.frameWidth = frameWidth;
+
+        this.pictureWidth = pictureWidth;
+        this.pictureHeight = pictureHeight;
+        
         this.withFrame = withFrame;
         this.frameRotation = rotation;
+
+        this.planeTexture = new THREE.TextureLoader().load(picture);
+        this.planeTexture.wrapS = THREE.RepeatWrapping;
+        this.planeTexture.wrapT = THREE.RepeatWrapping;
+
         this.pictureMaterial = new THREE.MeshStandardMaterial({
-            map: new THREE.TextureLoader().load(picture),
+            map: this.planeTexture,
             roughness: 1,
             metalness: 0,
         });
@@ -62,9 +71,19 @@ class Frame extends THREE.Object3D {
     }
 
     buildPicture(){
-        const imgGeometry = new THREE.PlaneGeometry(this.imgX, this.imgY);
-        this.img = new THREE.Mesh(imgGeometry, this.pictureMaterial);
-        this.img.position.set(0, this.imgY / 2, 0.2)
+      let planeUVRate = this.imgY / this.imgX;
+
+      let planeTextureUVRate = this.pictureWidth / this.pictureHeight;
+      let planeTextureRepeatU = 1;
+      let planeTextureRepeatV = planeTextureRepeatU * planeUVRate * planeTextureUVRate;
+
+      this.planeTexture.repeat.set(planeTextureRepeatU, planeTextureRepeatV);
+      this.planeTexture.rotation = 0;
+      this.planeTexture.offset = new THREE.Vector2(0, 0);
+
+      const imgGeometry = new THREE.PlaneGeometry(this.imgX, this.imgY);
+      this.img = new THREE.Mesh(imgGeometry, this.pictureMaterial);
+      this.img.position.set(0, this.imgY / 2, 0.2); 
     }
 
     draw(){

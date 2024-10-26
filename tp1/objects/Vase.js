@@ -9,11 +9,8 @@ class Vase extends THREE.Object3D {
     this.vasePosition = position;
     this.builder = new MyNurbsBuilder();
     this.opacity = opacity;
-    this.vaseTexture = new THREE.TextureLoader().load(
-      "./texture/vase-texture.jpg"
-    );
+
     this.material = new THREE.MeshPhongMaterial({
-      map: this.vaseTexture,
       transparent: this.opacity < 1.0,
       opacity: this.opacity,
       color: 0x8c2d19,
@@ -28,19 +25,6 @@ class Vase extends THREE.Object3D {
     this.init();
   }
 
-  /*   drawControlPoints(controlPoints) {
-    const pointGeometry = new THREE.SphereGeometry(0.05, 16, 16);
-    const pointMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-
-    for (let u = 0; u < controlPoints.length; u++) {
-      for (let v = 0; v < controlPoints[u].length; v++) {
-        const point = controlPoints[u][v];
-        const pointMesh = new THREE.Mesh(pointGeometry, pointMaterial);
-        pointMesh.position.set(point[0], point[1], point[2]);
-        this.app.scene.add(pointMesh);
-      }
-    }
-  } */
 
   init() {
     this.build();

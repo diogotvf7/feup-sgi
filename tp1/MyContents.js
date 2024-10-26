@@ -57,7 +57,9 @@ class MyContents {
       "./texture/diogo.jpg",
       4,
       4,
-      0.5
+      0.5,
+      1200,
+      1600,
     );
     this.frame2 = new Frame(
       app,
@@ -65,7 +67,9 @@ class MyContents {
       "./texture/jaime.jpg",
       4,
       4,
-      0.5
+      0.5,
+      640,
+      640,
     );
     this.frame3 = new Frame(
       app,
@@ -74,6 +78,8 @@ class MyContents {
       6,
       8,
       0.5,
+      1055,
+      1536,
       false,
       { x: 0, y: Math.PI / 2, z: 0 }
     );
@@ -112,7 +118,7 @@ class MyContents {
     this.plate.draw();
     this.cake.draw();
     this.candle.draw();
-    this.floor.draw();
+    //this.floor.draw();
     this.walls.draw();
     this.ceiling.draw();
     this.table.draw();
@@ -132,7 +138,7 @@ class MyContents {
       Math.PI / 12,
       1
     );
-    this.cakeSpotLight.position.set(-5, 10, -4); // Moved the light higher above the cake
+    this.cakeSpotLight.position.set(-5, 10, -4);
     this.app.scene.add(this.cakeSpotLight);
 
     this.cakeSpotLight.target.position.set(-5, 3.8, -4);
