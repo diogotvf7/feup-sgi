@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 
 class Table extends THREE.Object3D {
-    constructor(app, radius, table_top_height, table_leg_height, table_leg_radius, position) {
+    constructor(app, radius, table_top_height, table_leg_height, table_leg_radius, color, position) {
         super();
         this.app = app;
 
@@ -18,13 +18,13 @@ class Table extends THREE.Object3D {
             encoding: THREE.sRGBEncoding,
         });
 
-        this.cubeCamera = new THREE.CubeCamera( 0.1, 1000, cubeRenderTarget );
+        this.cubeCamera = new THREE.CubeCamera(0.1, 1000, cubeRenderTarget);
         this.cubeCamera.position.set(this.tablePosition.x, this.tablePosition.y - 1, this.tablePosition.z); // CubeCamera placed above the table
         this.app.scene.add(this.cubeCamera);
 
         this.table_top_material = new THREE.MeshPhongMaterial({ 
-            shininess: 20,
-            color: 0xe6c9ae,
+            shininess: 50,
+            color: color,
             reflectivity: 0.7,
             envMap: this.cubeCamera.renderTarget.texture
         });
@@ -37,7 +37,7 @@ class Table extends THREE.Object3D {
     }
 
     init() {
-        this.buildTable()
+        this.build()
 
         this.table = new THREE.Group();
         this.table.add(this.table_top_mesh)
@@ -48,7 +48,7 @@ class Table extends THREE.Object3D {
         this.table.position.set(this.tablePosition.x, this.tablePosition.y, this.tablePosition.z)
     }   
 
-    buildTable() {
+    build() {
         this.table_top_geometry = new THREE.CylinderGeometry(this.radius, this.radius, this.table_top_height)
         this.table_leg_geometry = new THREE.CylinderGeometry(this.table_leg_radius, this.table_leg_radius * 0.6, this.table_leg_height)
 

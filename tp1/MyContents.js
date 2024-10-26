@@ -8,6 +8,7 @@ import { Ceiling } from './objects/Ceiling.js';
 import { Table } from './objects/Table.js';
 import { Cake } from './objects/Cake.js';
 import { Frame } from './objects/Frame.js';
+import { Window } from './objects/Window.js';
 
 /**
  *  This class contains the contents of out application
@@ -24,11 +25,13 @@ class MyContents  {
 
         const table_top_height = 0.3
         const table_leg_height = 3
-        this.table = new Table(app, table_leg_height, table_top_height, 3, .2, new THREE.Vector3(-5, 0, -4))
+        const furniture_color = 0x9B8863
+
+        this.table = new Table(app, table_leg_height, table_top_height, 3, .2, furniture_color, new THREE.Vector3(-5, 0, -4))
         this.plate = new Plate(app, 1.5, 1, 0.2, new THREE.Vector3(-5, table_leg_height + table_top_height, -4))
         this.cake = new Cake(app, 1, 0.5, new THREE.Vector3(-5, 3.8, -4), -Math.PI / 2)
         this.candle = new Candle(app, 0.03 ,0.25, new THREE.Vector3(-4.95, 4, -4))
-
+        this.window = new Window(app, 4, 6, .3, .3, furniture_color, new THREE.Vector3(0, 5, 0))
 
         // beige floor (rug)
         this.floor = new Floor(app, 25, 45, "#f28f7e", "#ffffff", 0)
@@ -79,6 +82,7 @@ class MyContents  {
         this.walls.draw()
         this.ceiling.draw()
         this.table.draw()
+        this.window.draw()
         
         this.frame.draw()
         this.frame2.draw()
@@ -96,14 +100,14 @@ class MyContents  {
         this.cakeSpotLight.target.position.set(-5, 3.8, -4);
         this.app.scene.add(this.cakeSpotLight.target);
     
-        const spotLightHelper = new THREE.SpotLightHelper(this.cakeSpotLight);
-        this.app.scene.add(spotLightHelper);
+        // const spotLightHelper = new THREE.SpotLightHelper(this.cakeSpotLight);
+        // this.app.scene.add(spotLightHelper);
 
-        const sphereGeometry = new THREE.SphereGeometry(0.1, 16, 16);
-        const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
-        const lightSphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-        lightSphere.position.copy(this.cakeSpotLight.position);
-        this.app.scene.add(lightSphere); 
+        // const sphereGeometry = new THREE.SphereGeometry(0.1, 16, 16);
+        // const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+        // const lightSphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        // lightSphere.position.copy(this.cakeSpotLight.position);
+        // this.app.scene.add(lightSphere); 
     
     }
 
