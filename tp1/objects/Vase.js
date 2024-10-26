@@ -1,23 +1,26 @@
 import * as THREE from "three";
 
 import { MyNurbsBuilder } from "../helpers/MyNurbsBuilder.js";
+import { Flower } from "./Flower.js";
+
 
 class Vase extends THREE.Object3D {
-  constructor(app, position, opacity = 1) {
+  constructor(app, position, withFlower = false) {
     super();
     this.app = app;
     this.vasePosition = position;
     this.builder = new MyNurbsBuilder();
-    this.opacity = opacity;
+    this.withFlower = withFlower;
 
     this.material = new THREE.MeshPhongMaterial({
-      transparent: this.opacity < 1.0,
-      opacity: this.opacity,
-      color: 0x8c2d19,
+      color: 0xa0a0a0,
       side: THREE.DoubleSide,
       shininess: 100,
       specular: 0xffffff,
     });
+
+    this.dirtMaterial = new THREE.MeshPhongMaterial({ color: 0x8c2d19, roughness: 1 });
+
     this.material.side = THREE.DoubleSide;
     this.samplesU = 16;
     this.samplesV = 16;
@@ -28,6 +31,10 @@ class Vase extends THREE.Object3D {
 
   init() {
     this.build();
+    if (this.withFlower) {
+      this.buildDirt();
+    }
+
     this.vase.position.set(
       this.vasePosition.x,
       this.vasePosition.y,
@@ -101,6 +108,14 @@ class Vase extends THREE.Object3D {
     this.vase.add(mesh);
     this.vase.add(mesh1);
     this.vase.add(this.buildBase());
+  }
+
+  buildDirt() {
+    const geometry = new THREE.CircleGeometry( 0.47, 16 );
+    const dirt = new THREE.Mesh(geometry, this.dirtMaterial);
+    dirt.position.set(0, 1.5, 0);
+    dirt.rotation.x = -Math.PI / 2;
+    this.vase.add(dirt);
   }
 
   buildBase() {

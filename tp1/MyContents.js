@@ -48,9 +48,13 @@ class MyContents {
     this.floor = new Floor(app, 25, 45, "#f28f7e", "#ffffff", 0);
     this.walls = new Walls(app, this.floor, 15, "#696e56");
     this.ceiling = new Ceiling(app, this.floor, this.walls, "#fbf2d5");
-    this.vase = new Vase(app, new THREE.Vector3(-21, 1.1, -2));
-    this.flower = new Flower(app, new THREE.Vector3(0, 0, 0));
+    
+    this.vase = new Vase(this.app, new THREE.Vector3(-21, 1.1, -2), true);
 
+    this.flower = new Flower(this.app, new THREE.Vector3(-21, 2.6, -2), 0.5 , new THREE.Vector3(0, -10, 0));
+    this.flower_ = new Flower(this.app, new THREE.Vector3(-20.9, 2.1, -2), 0.5);
+    this.flower__ = new Flower(this.app, new THREE.Vector3(-21, 2.3, -1.9), 0.5, new THREE.Vector3(0, 5, 0));
+    
     this.frame = new Frame(
       app,
       new THREE.Vector3(0, 6, -12.5),
@@ -93,7 +97,7 @@ class MyContents {
     if (this.axis === null) {
       // create and attach the axis to the scene
       this.axis = new MyAxis(this);
-      this.app.scene.add(this.axis);
+      //this.app.scene.add(this.axis);
     }
 
     // add a point light on top of the model
@@ -118,17 +122,22 @@ class MyContents {
     this.plate.draw();
     this.cake.draw();
     this.candle.draw();
-    //this.floor.draw();
+    this.floor.draw();
     this.walls.draw();
     this.ceiling.draw();
     this.table.draw();
     this.vase.draw();
+    
+
     this.flower.draw();
+    this.flower_.draw();
+    this.flower__.draw();
 
     this.frame.draw();
     this.frame2.draw();
     this.frame3.draw();
   }
+
 
   illuminate() {
     this.cakeSpotLight = new THREE.SpotLight(

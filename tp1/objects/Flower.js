@@ -3,10 +3,12 @@ import { MyNurbsBuilder } from "../helpers/MyNurbsBuilder.js";
 
 
 class Flower extends THREE.Object3D {
-  constructor(app, position) {
+  constructor(app, position, scale = 1, rotation = new THREE.Vector3(0, 0, 0)) {
     super();
     this.app = app;
     this.flowerPosition = position;
+    this.flowerScale = scale;
+    this.flowerRotation = rotation;
     this.builder = new MyNurbsBuilder();
 
     this.material = new THREE.MeshPhongMaterial({
@@ -22,9 +24,19 @@ class Flower extends THREE.Object3D {
   }
 
   init() {
-    //this.buildStem();
+    this.buildStem();
     this.buildPetals();
+    this.buildBase();
+
+    this.stemFlower = new THREE.Group()
+    this.stemFlower.add(this.stem)
+    this.stemFlower.add(this.flower)
+    this.stemFlower.scale.set(this.flowerScale, this.flowerScale, this.flowerScale);
+    this.stemFlower.rotation.set(this.flowerRotation.x, this.flowerRotation.y, this.flowerRotation.z);
+    this.stemFlower.position.set(this.flowerPosition.x, this.flowerPosition.y, this.flowerPosition.z);
   }
+
+
   buildStem() {
     const p1 = new THREE.Vector3(3.71, 0.52, 0);
     const p2 = new THREE.Vector3(2.6, 3.91, 0);
@@ -37,6 +49,8 @@ class Flower extends THREE.Object3D {
     const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
     this.stem = new THREE.Mesh(geometry, material);
     this.stem.scale.set(0.3, 0.3, 0.3);
+    this.stem.position.set(-1, 0, 0);
+
   }
 
   buildPetals() {
@@ -45,16 +59,28 @@ class Flower extends THREE.Object3D {
     let petalRing3 = this.buildPetalRing();
   
     petalRing2.scale.set(0.8, 0.8, 0.8);
-    petalRing2.rotateY(THREE.MathUtils.degToRad(30)); // Corrected method
+    petalRing2.rotateY(THREE.MathUtils.degToRad(30)); 
     petalRing3.scale.set(0.6, 0.6, 0.6);
-    petalRing3.rotateY(THREE.MathUtils.degToRad(60)); // Corrected method
-    
+    petalRing3.rotateY(THREE.MathUtils.degToRad(60)); 
+
 
     this.flower = new THREE.Group()
     this.flower.add(petalRing1)
     this.flower.add(petalRing2)
     this.flower.add(petalRing3)
+
+    this.flower.scale.set(0.4, 0.4, 0.4);
+    this.flower.position.set(0.4, 3.5, 0);
+    this.flower.rotation.set(0, 0, THREE.MathUtils.degToRad(-10));
+  } 
+
+  buildBase(){
+    let base = new THREE.Mesh(new THREE.SphereGeometry(0.5, 32, 32), this.material);
+    base.scale.set(1.1, 1 , 1.1);
+    base.position.set(0, -0.7, 0);
+    this.flower.add(base);
   }
+
 
   buildPetalRing(){
     let petal1 = this.buildPetal();
@@ -141,23 +167,9 @@ class Flower extends THREE.Object3D {
   }
 
   draw() {
-    this.app.scene.add(this.stem);
-    this.app.scene.add(this.flower)
+    this.app.scene.add(this.stemFlower)
   }
 
-  drawControlPoints(controlPoints) {
-    const pointGeometry = new THREE.SphereGeometry(0.05, 16, 16);
-    const pointMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-
-    for (let u = 0; u < controlPoints.length; u++) {
-      for (let v = 0; v < controlPoints[u].length; v++) {
-        const point = controlPoints[u][v];
-        const pointMesh = new THREE.Mesh(pointGeometry, pointMaterial);
-        pointMesh.position.set(point[0], point[1], point[2]);
-        this.app.scene.add(pointMesh);
-      }
-    }
-  } 
 }
 
 export { Flower };
