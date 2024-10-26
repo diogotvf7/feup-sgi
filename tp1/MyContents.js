@@ -10,6 +10,7 @@ import { Cake } from "./objects/Cake.js";
 import { Frame } from "./objects/Frame.js";
 import { Vase } from "./objects/Vase.js";
 import { Flower } from "./objects/Flower.js";
+import { Spiral } from "./objects/spiral.js";
 
 /**
  *  This class contains the contents of out application
@@ -50,6 +51,9 @@ class MyContents {
     this.ceiling = new Ceiling(app, this.floor, this.walls, "#fbf2d5");
     
     this.vase = new Vase(this.app, new THREE.Vector3(-21, 1.1, -2), true);
+
+    this.spiral = new Spiral(this.app, new THREE.Vector3(-6, 3.8, -6), new THREE.Vector3(0, Math.PI / 4, Math.PI / 2), 0.5, 5, 128, 2, 0.1);
+
 
     this.flower = new Flower(this.app, new THREE.Vector3(-21, 2.6, -2), 0.5 , new THREE.Vector3(0, -10, 0));
     this.flower_ = new Flower(this.app, new THREE.Vector3(-20.9, 2.1, -2), 0.5);
@@ -136,6 +140,8 @@ class MyContents {
     this.frame.draw();
     this.frame2.draw();
     this.frame3.draw();
+
+    this.spiral.draw();
   }
 
 

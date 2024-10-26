@@ -1,7 +1,6 @@
 import * as THREE from "three";
 
 import { MyNurbsBuilder } from "../helpers/MyNurbsBuilder.js";
-import { Flower } from "./Flower.js";
 
 
 class Vase extends THREE.Object3D {

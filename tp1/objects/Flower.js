@@ -46,7 +46,7 @@ class Flower extends THREE.Object3D {
     const curve = new THREE.CubicBezierCurve3(p1, p3, p2, p4);
 
     const geometry = new THREE.TubeGeometry(curve, 64, 0.2, 8, false);
-    const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
+    const material = new THREE.MeshStandardMaterial({ color: 0x006600 });
     this.stem = new THREE.Mesh(geometry, material);
     this.stem.scale.set(0.3, 0.3, 0.3);
     this.stem.position.set(-1, 0, 0);
