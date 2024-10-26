@@ -11,6 +11,7 @@ import { Frame } from "./objects/Frame.js";
 import { Vase } from "./objects/Vase.js";
 import { Flower } from "./objects/Flower.js";
 import { Spiral } from "./objects/spiral.js";
+import { Counter } from "./objects/Counter.js"
 
 /**
  *  This class contains the contents of out application
@@ -49,6 +50,7 @@ class MyContents {
     this.floor = new Floor(app, 25, 45, "#f28f7e", "#ffffff", 0);
     this.walls = new Walls(app, this.floor, 15, "#696e56");
     this.ceiling = new Ceiling(app, this.floor, this.walls, "#fbf2d5");
+    this.counter = new Counter(app, "#696e56")
     
     this.vase = new Vase(this.app, new THREE.Vector3(-21, 1.1, -2), true);
 
@@ -71,7 +73,7 @@ class MyContents {
     );
     this.frame2 = new Frame(
       app,
-      new THREE.Vector3(8, 6, -12.5),
+      new THREE.Vector3(-8, 6, -12.5),
       "./texture/jaime.jpg",
       4,
       4,
@@ -142,6 +144,7 @@ class MyContents {
     this.frame3.draw();
 
     this.spiral.draw();
+    this.counter.draw();
   }
 
 
