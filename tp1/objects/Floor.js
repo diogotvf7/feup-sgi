@@ -27,6 +27,8 @@ class Floor extends THREE.Object3D {
     buildFloor() {
         this.geometry = new THREE.BoxGeometry(this.height, this.depth, this.width);
         this.floorMesh = new THREE.Mesh(this.geometry, this.floorMaterial);
+        this.floorMesh.receiveShadow = true;
+        this.floorMesh.castShadow = true;
 
         this.floorMesh.position.y = - this.depth / 2;
     }
