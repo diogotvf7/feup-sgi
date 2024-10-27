@@ -41,7 +41,7 @@ class Walls extends THREE.Object3D {
         this.front_mesh.position.y = this.height / 2
         this.front_mesh.rotateY(Math.PI / 2)
 
-        this.addBulletHoles();
+        //this.addBulletHoles();
 
 
         // left wall

@@ -15,6 +15,7 @@ import { Counter } from "./objects/Counter.js"
 import { Sofa } from "./objects/Sofa.js"
 import { Door } from "./objects/Door.js";
 import { Suitcase } from "./objects/Suitcase.js";
+import { Chair } from "./objects/Chair.js";
 
 
 /**
@@ -56,7 +57,7 @@ class MyContents  {
         this.sofa = new Sofa(app);
         this.door = new Door(app)
         this.suitcase = new Suitcase(app);
-
+        this.chair = new Chair(app)
 
     }
 
@@ -116,6 +117,8 @@ class MyContents  {
         this.sofa.draw();
         this.door.draw();
         this.suitcase.draw()
+
+        this.chair.draw()
       }
     
 
