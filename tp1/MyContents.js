@@ -12,6 +12,7 @@ import { Vase } from "./objects/Vase.js";
 import { Flower } from "./objects/Flower.js";
 import { Spiral } from "./objects/spiral.js";
 import { Counter } from "./objects/Counter.js"
+import { Sofa } from "./objects/Sofa.js"
 
 /**
  *  This class contains the contents of out application
@@ -61,6 +62,8 @@ class MyContents {
     this.flower_ = new Flower(this.app, new THREE.Vector3(-20.9, 2.1, -2), 0.5);
     this.flower__ = new Flower(this.app, new THREE.Vector3(-21, 2.3, -1.9), 0.5, new THREE.Vector3(0, 5, 0));
     
+    this.sofa = new Sofa(app);
+
     this.frame = new Frame(
       app,
       new THREE.Vector3(0, 6, -12.5),
@@ -145,6 +148,7 @@ class MyContents {
 
     this.spiral.draw();
     this.counter.draw();
+    this.sofa.draw();
   }
 
 
