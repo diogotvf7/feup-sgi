@@ -41,6 +41,9 @@ class Walls extends THREE.Object3D {
         this.front_mesh.position.y = this.height / 2
         this.front_mesh.rotateY(Math.PI / 2)
 
+        this.addBulletHoles();
+
+
         // left wall
         this.left_mesh = new THREE.Mesh(this.cross_geometry, this.wall_material)
         this.left_mesh.position.y = this.height / 2
@@ -57,6 +60,27 @@ class Walls extends THREE.Object3D {
         this.right_mesh.position.y = this.height / 2
         this.right_mesh.position.z = - this.floor.width / 2
         this.right_mesh.rotateY(Math.PI)
+    }
+
+    addBulletHoles() {
+        const bulletHoleGeometry = new THREE.CircleGeometry(0.1, 8, 8); 
+        const cakeTexture = new THREE.TextureLoader().load("./texture/bullethole.jpg");
+
+        const bulletHoleMaterial = new THREE.MeshPhongMaterial({ map: cakeTexture }); 
+
+        const bulletHolePositions = [
+            { x: -22.4, y: 1, z: 0.5 },
+            { x: -22.4, y: 5, z: -5 },
+            { x: -22.4, y: 3, z: 5 },
+        ];
+
+        bulletHolePositions.forEach(pos => {
+            const bulletHoleMesh = new THREE.Mesh(bulletHoleGeometry, bulletHoleMaterial);
+            bulletHoleMesh.position.set(pos.x, pos.y, pos.z);
+            bulletHoleMesh.scale.set(2,2,2)
+            bulletHoleMesh.rotateY(Math.PI / 2)
+            this.add(bulletHoleMesh);
+        });
     }
 
     draw() {

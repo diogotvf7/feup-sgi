@@ -13,21 +13,25 @@ import { Flower } from "./objects/Flower.js";
 import { Spiral } from "./objects/spiral.js";
 import { Counter } from "./objects/Counter.js"
 import { Sofa } from "./objects/Sofa.js"
+import { Door } from "./objects/Door.js";
+import { Suitcase } from "./objects/Suitcase.js";
+
 
 /**
  *  This class contains the contents of out application
  */
-class MyContents {
-  /**
+class MyContents  {
+
+    /**
        constructs the object
        @param {MyApp} app The application object
-    */
-  constructor(app) {
-    this.app = app;
-    this.axis = null;
+    */ 
+    constructor(app) {
+        this.app = app
+        this.axis = null
 
-        this.plate = new Plate(app, 1.5, 1, 0.2, new THREE.Vector3(-5, 3.5, -4))
-        this.cake = new Cake(app, 1, 0.5, new THREE.Vector3(-5, 3.8, -4), -Math.PI / 2)
+        this.plate = new Plate(app, 1.5, 1, 0.2, new THREE.Vector3(-5, 3.3, -4))
+        this.cake = new Cake(app, 1, 0.5, new THREE.Vector3(-5, 3.6, -4), -Math.PI / 2)
         this.candle = new Candle(app, 0.03 ,0.25, new THREE.Vector3(-4.95, 4, -4))
         this.table = new Table(app, 3, .3, 3, .2, new THREE.Vector3(-5, 0, -4))
 
@@ -35,10 +39,25 @@ class MyContents {
         this.floor = new Floor(app, 25, 45, "#f28f7e", "#ffffff", 0)
         this.walls = new Walls(app, this.floor, 15, "#696e56")
         this.ceiling = new Ceiling(app, this.floor, this.walls, "#fbf2d5")
+        this.counter = new Counter(app, "#696e56")
 
-        this.frame = new Frame(app, new THREE.Vector3(0, 6, -12.5), "./texture/diogo.jpg", 4, 4, 0.5)
-        this.frame2 = new Frame(app, new THREE.Vector3(8, 6, -12.5), "./texture/jaime.jpg", 4, 4, 0.5)
-        this.frame3 = new Frame(app, new THREE.Vector3(-22.4, 5, 6), "./texture/pulpfiction.jpg", 6, 8, 0.5, false, {x: 0, y: Math.PI / 2, z: 0})
+        this.frame = new Frame(app, new THREE.Vector3(0, 6, -12.5), "./texture/diogo.jpg", 4, 4, 0.5, 1200, 1600, );
+        this.frame2 = new Frame(app, new THREE.Vector3(-8, 6, -12.5), "./texture/jaime.jpg", 4, 4, 0.5, 640, 640, );
+        this.frame3 = new Frame(app, new THREE.Vector3(-22.4, 5, 6), "./texture/pulpfiction.jpg", 6, 8, 0.5, 1055, 1536, false, { x: 0, y: Math.PI / 2, z: 0 });
+
+        this.vase = new Vase(this.app, new THREE.Vector3(-21, 1.1, -2), true);
+        this.spiral = new Spiral(this.app, new THREE.Vector3(-6, 3.6, -6), new THREE.Vector3(0, Math.PI / 4, Math.PI / 2), 0.5, 5, 128, 2, 0.1);
+
+
+        this.flower = new Flower(this.app, new THREE.Vector3(-21, 2.6, -2), 0.5 , new THREE.Vector3(0, -10, 0));
+        this.flower_ = new Flower(this.app, new THREE.Vector3(-20.9, 2.1, -2), 0.5);
+        this.flower__ = new Flower(this.app, new THREE.Vector3(-21, 2.3, -1.9), 0.5, new THREE.Vector3(0, 5, 0));
+        
+        this.sofa = new Sofa(app);
+        this.door = new Door(app)
+        this.suitcase = new Suitcase(app);
+
+
     }
 
 
@@ -68,81 +87,37 @@ class MyContents {
         const ambientLight = new THREE.AmbientLight( 0x555555 );
         this.app.scene.add( ambientLight );
 
-    // beige floor (rug)
-    this.floor = new Floor(app, 25, 45, "#f28f7e", "#ffffff", 0);
-    this.walls = new Walls(app, this.floor, 15, "#696e56");
-    this.ceiling = new Ceiling(app, this.floor, this.walls, "#fbf2d5");
-    this.counter = new Counter(app, "#696e56")
     
-    this.vase = new Vase(this.app, new THREE.Vector3(-21, 1.1, -2), true);
-
-    this.spiral = new Spiral(this.app, new THREE.Vector3(-6, 3.8, -6), new THREE.Vector3(0, Math.PI / 4, Math.PI / 2), 0.5, 5, 128, 2, 0.1);
-
-
-    this.flower = new Flower(this.app, new THREE.Vector3(-21, 2.6, -2), 0.5 , new THREE.Vector3(0, -10, 0));
-    this.flower_ = new Flower(this.app, new THREE.Vector3(-20.9, 2.1, -2), 0.5);
-    this.flower__ = new Flower(this.app, new THREE.Vector3(-21, 2.3, -1.9), 0.5, new THREE.Vector3(0, 5, 0));
-    
-    this.sofa = new Sofa(app);
-
-    this.frame = new Frame(
-      app,
-      new THREE.Vector3(0, 6, -12.5),
-      "./texture/diogo.jpg",
-      4,
-      4,
-      0.5,
-      1200,
-      1600,
-    );
-    this.frame2 = new Frame(
-      app,
-      new THREE.Vector3(-8, 6, -12.5),
-      "./texture/jaime.jpg",
-      4,
-      4,
-      0.5,
-      640,
-      640,
-    );
-    this.frame3 = new Frame(
-      app,
-      new THREE.Vector3(-22.4, 5, 6),
-      "./texture/pulpfiction.jpg",
-      6,
-      8,
-      0.5,
-      1055,
-      1536,
-      false,
-      { x: 0, y: Math.PI / 2, z: 0 }
-    );
-  }
-
-  /**
-   * initializes the contents
-   */
-  init() {
-    // create once
-    if (this.axis === null) {
-      // create and attach the axis to the scene
-      this.axis = new MyAxis(this);
-      //this.app.scene.add(this.axis);
+        this.build()
+        this.illuminate()
     }
 
     build() {
-        this.plate.draw()
-        this.cake.draw()
-        this.candle.draw()
-        this.floor.draw()
-        this.walls.draw()
-        this.ceiling.draw()
-        this.table.draw()
+        this.plate.draw();
+        this.cake.draw();
+        this.candle.draw();
+        this.floor.draw();
+        this.walls.draw();
+        this.ceiling.draw();
+        this.table.draw();
+        this.vase.draw();
         
-        this.frame.draw()
-        this.frame2.draw()
-        this.frame3.draw()
-    }
+    
+        this.flower.draw();
+        this.flower_.draw();
+        this.flower__.draw();
+    
+        this.frame.draw();
+        this.frame2.draw();
+        this.frame3.draw();
+    
+        this.spiral.draw();
+        this.counter.draw();
+        this.sofa.draw();
+        this.door.draw();
+        this.suitcase.draw()
+      }
+    
 
     illuminate() {
         this.cakeSpotLight = new THREE.SpotLight(0xe0ce9b, 500, 21, Math.PI / 12, 1);
@@ -162,7 +137,7 @@ class MyContents {
         const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
         const lightSphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
         lightSphere.position.copy(this.cakeSpotLight.position);
-        this.app.scene.add(lightSphere); 
+        this.app.scene.add(lightSphere);  
     
     }
 
