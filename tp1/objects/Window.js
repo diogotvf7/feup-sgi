@@ -32,6 +32,7 @@ class Window extends THREE.Object3D {
         this.window.add(this.top_horizontal_divider_mesh)
         this.window.add(this.bottom_horizontal_divider_mesh)
         this.window.add(this.vertical_divider_mesh)
+        this.window.add(this.view)
 
         this.window.receiveShadow = true;
         this.window.castShadow = true;
@@ -81,6 +82,15 @@ class Window extends THREE.Object3D {
     }
 
     buildView() {
+        this.view_geometry = new THREE.CylinderGeometry(20, 20, 8, 9, 7, true, 0, 1.1)
+        
+        this.view_material = new THREE.MeshStandardMaterial({ 
+            side: THREE.BackSide,
+            map: new THREE.TextureLoader().load('./texture/view.jpg')
+        });
+
+        this.view = new THREE.Mesh(this.view_geometry, this.view_material)
+        this.view.position.z = - this.depth / 2 + 1
         
     }
 

@@ -64,7 +64,7 @@ class Sofa extends THREE.Object3D {
         right_armrestMesh.rotateY(Math.PI / 2)
         this.sofa.add(right_armrestMesh)
 
-        this.sofa.scale.set(4.5,4.5,4.5)
+        this.sofa.scale.set(5,5,5)
         this.sofa.rotateY(Math.PI)
         this.sofa.position.set(-8,0,10)
 
