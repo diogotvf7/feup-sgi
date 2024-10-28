@@ -81,7 +81,7 @@ class Window extends THREE.Object3D {
     }
 
     buildView() {
-
+        
     }
 
     draw() {
