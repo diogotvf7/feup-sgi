@@ -18,6 +18,9 @@ class MyContents  {
       const table_top_height = 0.3
       const table_leg_height = 3
       const furniture_color = 0x9B8863
+      const floor_width = 25
+      const floor_height = 45
+      const wall_height = 15
 
       this.table = new Objects.Table(app, table_leg_height, table_top_height, 3, .2, furniture_color, new THREE.Vector3(-5, 0, -4))
       this.plate = new Objects.Plate(app, 1.5, 1, 0.2, new THREE.Vector3(-5, table_leg_height + table_top_height, -4))
@@ -26,12 +29,21 @@ class MyContents  {
 
       this.counter = new Objects.Counter(this.app, "#696e56")
       this.door = new Objects.Door(this.app)
-      this.floor = new Objects.Floor(this.app, 25, 45, "#f28f7e", "#ffffff", 0)
-      this.walls = new Objects.Walls(this.app, this.floor, 15, "#696e56")
+      this.floor = new Objects.Floor(this.app, floor_width, floor_height, "#f28f7e", "#ffffff", 0)
+      
+      // this.window = new Objects.Window(app, 4, 6, .3, .3, furniture_color, new THREE.Vector3(0, 5, 0))
+      
+      this.walls = [
+        new Objects.Wall(this.app, floor_width, wall_height, "#696e56", [
+          { x: 5, y: 5, width: 4, height: 6, depth: 0.3, frame_thickness: 0.3, color: furniture_color }
+        ])
+      ]
+      // new Objects.Walls(this.app, this.floor, 15, "#696e56")
+
+      
       this.ceiling = new Objects.Ceiling(this.app, this.floor, this.walls, "#fbf2d5")
 
       this.candle = new Objects.Candle(app, 0.03 ,0.25, new THREE.Vector3(-4.95, 4, -4))
-      this.window = new Objects.Window(app, 4, 6, .3, .3, furniture_color, new THREE.Vector3(0, 5, 0))
 
       this.chair = new Objects.Chair(this.app, new THREE.Vector3(0, 0, -7))
       this.sofa = new Objects.Sofa(app)
@@ -60,7 +72,7 @@ class MyContents  {
         if (this.axis === null) {
           // create and attach the axis to the scene
           this.axis = new MyAxis(this)
-          //this.app.scene.add(this.axis)
+          this.app.scene.add(this.axis)
         }
 
         // add a point light on top of the model
@@ -77,7 +89,6 @@ class MyContents  {
         const ambientLight = new THREE.AmbientLight( 0x555555 )
         this.app.scene.add( ambientLight )
 
-    
         this.build()
         this.illuminate()
     }
@@ -88,12 +99,12 @@ class MyContents  {
       this.cake.draw()
       this.spiral.draw()
       this.candle.draw()
-      this.window.draw()
+      // this.window.draw()
       this.chair.draw()
       this.sofa.draw()
       this.suitcase.draw()
       this.floor.draw()
-      this.walls.draw()
+      this.walls.forEach(wall => wall.draw())
       this.ceiling.draw()
       this.diogo_frame.draw()
       this.jaime_frame.draw()
@@ -101,9 +112,6 @@ class MyContents  {
       this.flowers.draw()      
       this.counter.draw()
       this.door.draw()
-      this.floor.draw()
-      this.walls.draw()
-      this.ceiling.draw()
     }   
 
     illuminate() {

@@ -18,7 +18,7 @@ class Vase extends THREE.Object3D {
       specular: 0xffffff,
     });
 
-    this.dirtMaterial = new THREE.MeshPhongMaterial({ color: 0x8c2d19, roughness: 1 });
+    this.dirtMaterial = new THREE.MeshPhongMaterial({ color: 0x8c2d19 });
 
     this.material.side = THREE.DoubleSide;
     this.samplesU = 16;
