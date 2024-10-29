@@ -1,7 +1,7 @@
 export { Plate } from './table/Plate.js';
 export { Candle } from './table/Candle.js';
 export { Floor } from './structure/Floor.js';
-export { Walls } from './structure/Walls.js';
+export { Wall } from './structure/Wall.js';
 export { Ceiling } from './structure/Ceiling.js';
 export { Table } from './table/Table.js';
 export { Cake } from './table/Cake.js';
