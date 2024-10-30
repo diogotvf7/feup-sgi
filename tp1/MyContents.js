@@ -35,27 +35,34 @@ class MyContents  {
       this.walls = [
         new Objects.Wall(this.app, floor_width, wall_height, "#696e56", [],
           new THREE.Vector3(floor_height / 2, 0, - floor_width / 2),
-          - Math.PI / 2,
+          - Math.PI / 2, []
         ),
         new Objects.Wall(this.app, floor_width, wall_height, "#696e56", [],
           new THREE.Vector3(- floor_height / 2, 0, floor_width / 2),
-          Math.PI / 2,
+          Math.PI / 2, [   
+            { x: -22.4, y: 8, z: 0.5 },
+            { x: -22.4, y: 10, z: -3 },
+            { x: -22.4, y: 12, z: 1 },
+            { x: -22.4, y: 10.5, z: 0 },
+            { x: -22.4, y: 9, z: -1 },
+          ]
         ),
         new Objects.Wall(this.app, floor_height, wall_height, "#696e56", [],
           new THREE.Vector3(- floor_height / 2, 0, - floor_width / 2),
-          0,
+          0, []
         ),
         new Objects.Wall(this.app, floor_height, wall_height, "#696e56", [
           { x: floor_height * 0.4, y: 5, width: 4, height: 6, depth: 0.3, frame_thickness: 0.3, color: furniture_color },
           { x: floor_height * 0.8, y: 5, width: 4, height: 6, depth: 0.3, frame_thickness: 0.3, color: furniture_color }
         ],
           new THREE.Vector3(floor_height / 2, 0,floor_width / 2),
-          Math.PI,
+          Math.PI, []
         ),
       ]
             
       this.chair = new Objects.Chair(this.app, new THREE.Vector3(0, 0, -7))
       this.sofa = new Objects.Sofa(app)
+      this.newspaper = new Objects.Newspaper(app, 1.5)
 
       this.suitcase = new Objects.Suitcase(app)
 
@@ -63,14 +70,12 @@ class MyContents  {
       this.jaime_frame = new Objects.Frame(this.app, new THREE.Vector3(-8, 6, -12.5), "./texture/jaime.jpg", 4, 4, 0.5, 640, 640, ),
       this.pulp_fiction_frame = new Objects.Frame(this.app, new THREE.Vector3(-22.4, 5, 6), "./texture/pulpfiction.jpg", 6, 8, 0.5, 1055, 1536, false, { x: 0, y: Math.PI / 2, z: 0 })
 
-      this.flowers = new Objects.FlowerVase(app, 
-        new THREE.Vector3(-21, 1.1, -2), 
-        [
-            new THREE.Vector3(-21, 2.6, -2),
-            new THREE.Vector3(-20.9, 2.1, -2),
-            new THREE.Vector3(-21, 2.3, -1.9)
-        ]
-      )
+      this.vase = new Objects.Vase(this.app, new THREE.Vector3(-21, 1.1, -2), true);
+      this.flowers = [
+        new Objects.Flower(this.app, new THREE.Vector3(-21, 2.6, -2), 0.5, new THREE.Vector3(0, -10, 0)),
+        new Objects.Flower(this.app, new THREE.Vector3(-20.9, 2.1, -2), 0.5),
+        new Objects.Flower(this.app, new THREE.Vector3(-21, 2.3, -1.9), 0.5, new THREE.Vector3(0, 5, 0))
+      ];
     }
 
     /**
@@ -117,9 +122,11 @@ class MyContents  {
       this.diogo_frame.draw()
       this.jaime_frame.draw()
       this.pulp_fiction_frame.draw()
-      this.flowers.draw()      
       this.counter.draw()
       this.door.draw()
+      this.newspaper.draw()
+      this.vase.draw();
+      this.flowers.forEach(flower => flower.draw())
     }   
 
     illuminate() {

@@ -25,11 +25,6 @@ class Ceiling extends THREE.Object3D {
 
     buildCeiling() {
         this.ceiling_geometry = new THREE.PlaneGeometry(this.floor.height, this.floor.width)
-
-        console.log(
-            'this.floor.height: ', this.floor.height, 
-            'this.floor.width: ', this.floor.width
-        );
         
         this.ceiling_mesh = new THREE.Mesh(this.ceiling_geometry, this.ceiling_material)
         this.ceiling_mesh.position.y = this.height
