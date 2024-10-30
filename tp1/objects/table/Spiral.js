@@ -3,7 +3,7 @@ import * as THREE from "three";
 
 class Spiral extends THREE.Object3D {
 
-    constructor(app, position, rotation, radius = 0.5, turns = 5, segments = 64, height = 3, thickness = 0.05){
+    constructor(app, position, rotation, radius = 0.5, turns = 5, segments = 64, height = 3, thickness = 0.05) {
         super();
         this.app = app;
         this.spiralPosition = position;
@@ -19,7 +19,7 @@ class Spiral extends THREE.Object3D {
         this.build();
     }
 
-    build(){
+    build() {
         this.spiral = new THREE.Group()
         this.spiral.add(this.buildSpiral()); 
         this.spiral.add(this.buildBases(new THREE.Vector3(0.5, 0, 0), new THREE.Vector3(THREE.MathUtils.degToRad(-8), THREE.MathUtils.degToRad(173), 0)));
@@ -29,7 +29,7 @@ class Spiral extends THREE.Object3D {
         this.spiral.scale.set(0.5, 0.5, 0.5);
     }
 
-    buildSpiral(){
+    buildSpiral() {
         const points = [];
         for (let i = 0; i <= this.segments; i++) {
             const t = i / this.segments;
@@ -46,7 +46,7 @@ class Spiral extends THREE.Object3D {
         return spiral;
     }
 
-    buildBases(basePosition, rotation){
+    buildBases(basePosition, rotation) {
         let baseGeometry = new THREE.CircleGeometry(this.thickness, 128);
         let base = new THREE.Mesh(baseGeometry, this.material);
         base.position.set(basePosition.x, basePosition.y, basePosition.z);
@@ -54,7 +54,7 @@ class Spiral extends THREE.Object3D {
         return base;
     }
 
-    draw(){
+    draw() {
         this.app.scene.add(this.spiral);
     }
 

@@ -2,7 +2,7 @@ import * as THREE from 'three'
 
 
 class Chair extends THREE.Object3D {
-    constructor(app, position, chairDimensions = { width: 2, height: 0.2, depth: 2 }){
+    constructor(app, position, chairDimensions = { width: 2, height: 0.2, depth: 2 }) {
         super()
         this.app = app
         this.material = new THREE.MeshStandardMaterial({ 
@@ -18,7 +18,7 @@ class Chair extends THREE.Object3D {
         this.build()
     }
     
-    build(){
+    build() {
         this.chair = new THREE.Group()
 
         var geometry = new THREE.CylinderGeometry( 0.8 / Math.sqrt( 2 ), 1 / Math.sqrt( 2 ), 1, 4, 1 );
@@ -53,7 +53,7 @@ class Chair extends THREE.Object3D {
         this.chair.rotateY(THREE.MathUtils.degToRad(-40))
     }
 
-    draw(){
+    draw() {
         this.app.scene.add(this.chair)
     }
 }

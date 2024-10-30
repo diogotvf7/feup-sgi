@@ -74,7 +74,7 @@ class Flower extends THREE.Object3D {
     this.flower.rotation.set(0, 0, THREE.MathUtils.degToRad(-10));
   } 
 
-  buildBase(){
+  buildBase() {
     let base = new THREE.Mesh(new THREE.SphereGeometry(0.5, 32, 32), this.material);
     base.scale.set(1.1, 1 , 1.1);
     base.position.set(0, -0.7, 0);
@@ -82,7 +82,7 @@ class Flower extends THREE.Object3D {
   }
 
 
-  buildPetalRing(){
+  buildPetalRing() {
     let petal1 = this.buildPetal();
     let petal2 = this.buildPetal();
     let petal3 = this.buildPetal();
@@ -108,7 +108,7 @@ class Flower extends THREE.Object3D {
     return petalRing 
   }
 
-  buildPetal(){
+  buildPetal() {
     if (this.meshes !== null) {
       for (let i = 0; i < this.meshes.length; i++) {
         this.app.scene.remove(this.meshes[i]);

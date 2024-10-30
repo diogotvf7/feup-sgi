@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 
 class Window extends THREE.Object3D {
-    constructor(app, width, height, depth, frame_thickness, color, position) {
+    constructor(app, width, height, depth, frame_thickness, color, position, rotate) {
         super();
         this.app = app;
         this.width = width;
@@ -9,6 +9,7 @@ class Window extends THREE.Object3D {
         this.depth = depth;
         this.frame_thickness = frame_thickness;
         this.window_position = position;
+        this.rotate = rotate;
 
         this.frame_material = new THREE.MeshPhongMaterial({ 
             color: color,
@@ -36,7 +37,9 @@ class Window extends THREE.Object3D {
 
         this.window.receiveShadow = true;
         this.window.castShadow = true;
+
         this.window.position.set(this.window_position.x, this.window_position.y, this.window_position.z)
+        this.window.rotateY(this.rotate)
     }   
 
     buildFrame() {
@@ -91,7 +94,18 @@ class Window extends THREE.Object3D {
 
         this.view = new THREE.Mesh(this.view_geometry, this.view_material)
         this.view.position.z = - this.depth / 2 + 1
+    }
+
+    buildView() {
+        this.view_geometry = new THREE.CylinderGeometry(20, 20, 8, 9, 7, true, 0, 1.1)
         
+        this.view_material = new THREE.MeshStandardMaterial({ 
+            side: THREE.BackSide,
+            map: new THREE.TextureLoader().load('./texture/view.jpg')
+        });
+
+        this.view = new THREE.Mesh(this.view_geometry, this.view_material)
+        this.view.position.z = - this.depth / 2 + 1
     }
 
     draw() {

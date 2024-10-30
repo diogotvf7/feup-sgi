@@ -2,7 +2,7 @@ import * as THREE from "three";
 
 
 class Counter extends THREE.Object3D{
-    constructor(app, diffuse){
+    constructor(app, diffuse) {
         super()
         this.app = app
         this.wall_material = new THREE.MeshPhongMaterial({ 
@@ -13,12 +13,11 @@ class Counter extends THREE.Object3D{
 
         this.balcony_material = new THREE.MeshPhysicalMaterial({ 
             color: "0xffffff",
-            shininess: 0,
         })
         this.build()
     }
 
-    build(){
+    build() {
         this.counter = new THREE.Group()
 
 
@@ -51,12 +50,9 @@ class Counter extends THREE.Object3D{
 
         this.counter.rotateY(-Math.PI / 2)
         this.counter.position.set(10, 0, -5.5)
-
     }
 
-
-
-    draw(){
+    draw() {
         this.app.scene.add(this.counter)
     }
 }
