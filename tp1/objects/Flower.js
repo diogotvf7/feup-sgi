@@ -13,7 +13,6 @@ class Flower extends THREE.Object3D {
 
     this.material = new THREE.MeshPhongMaterial({
       transparent: this.opacity < 1.0,
-      opacity: this.opacity,
       color: 0xff00000,
       side: THREE.DoubleSide,
     });

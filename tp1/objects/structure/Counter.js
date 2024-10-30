@@ -12,7 +12,7 @@ class Counter extends THREE.Object3D{
         })
 
         this.balcony_material = new THREE.MeshPhysicalMaterial({ 
-            color: "0xffffff",
+            color: 0xffffff,
         })
         this.build()
     }

@@ -2,23 +2,21 @@ import * as THREE from 'three'
 import { Window } from './Window.js'
 
 class Wall extends THREE.Object3D {
-    constructor(app, width, height, diffuse, windows_data, translate, rotate, addBulletHoles = false) {
+    constructor(app, width, height, color, windows_data, translate, rotate, bulletHoles) {
         super()
         this.app = app
         this.width = width
         this.height = height        
-        this.diffuse = diffuse
+        this.color = color
         this.windows_data = windows_data
         this.translate = translate
         this.rotate = rotate
-        this.addBulletHoles = addBulletHoles
+        this.bulletHoles = bulletHoles
 
         this.meshes = []
 
-        this.wall_material = new THREE.MeshPhongMaterial({ 
-            color: diffuse,
-            specular: "#000000",
-            shininess: 0,
+        this.wall_material = new THREE.MeshLambertMaterial({ 
+            color: color,
             side: THREE.FrontSide
         }) 
         
@@ -39,6 +37,7 @@ class Wall extends THREE.Object3D {
             )
         })
         if (this.windows_data.length != 0) this.buildView()
+        if (this.bulletHoles.length != 0) this.buildBulletHoles()
 
         this.wall = new THREE.Group()
         this.meshes.forEach(mesh => {
@@ -94,10 +93,6 @@ class Wall extends THREE.Object3D {
             isWall = !isWall
             i++
         }
-
-
-        if (this.addBulletHoles)
-            this.addBulletHoles()
     }
 
     buildFrame(x, y, width, height, depth, frame_thickness, color) {
@@ -186,7 +181,7 @@ class Wall extends THREE.Object3D {
         this.meshes.push(view)
     }
 
-    addBulletHoles() {
+    buildBulletHoles() {
         const bulletHoleGeometry = new THREE.CircleGeometry(0.1, 8, 8) 
     
         const bulletHoleTexture = new THREE.TextureLoader().load("./texture/bullethole.png")
@@ -196,20 +191,13 @@ class Wall extends THREE.Object3D {
             transparent: true
         }) 
     
-        const bulletHolePositions = [
-            { x: -22.4, y: 8, z: 0.5 },
-            { x: -22.4, y: 10, z: -3 },
-            { x: -22.4, y: 12, z: 1 },
-            { x: -22.4, y: 10.5, z: 0 },
-            { x: -22.4, y: 9, z: -1 },
-        ]
-    
-        bulletHolePositions.forEach(pos => {
+        this.bulletHoles.forEach(pos => {
             const bulletHoleMesh = new THREE.Mesh(bulletHoleGeometry, bulletHoleMaterial)
+            
             bulletHoleMesh.position.set(pos.x, pos.y, pos.z)
             bulletHoleMesh.scale.set(4,4,4)
             bulletHoleMesh.rotateY(Math.PI / 2)
-            this.add(bulletHoleMesh)
+            this.app.scene.add(bulletHoleMesh)
         })
     }
     

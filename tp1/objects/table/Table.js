@@ -15,7 +15,7 @@ class Table extends THREE.Object3D {
             format: THREE.RGBAFormat,
             generateMipmaps: true,
             minFilter: THREE.LinearMipmapLinearFilter,
-            encoding: THREE.sRGBEncoding,
+            // encoding: THREE.sRGBEncoding,
         });
 
         this.cubeCamera = new THREE.CubeCamera(0.1, 1000, cubeRenderTarget);
@@ -31,6 +31,8 @@ class Table extends THREE.Object3D {
 
         this.table_leg_material = new THREE.MeshPhongMaterial({ 
             map : new THREE.TextureLoader().load("./texture/wood.jpg"),
+            specular: new THREE.Color(0x555555), 
+            shininess: 50
         }); 
         
         this.init();
