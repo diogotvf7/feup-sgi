@@ -34,14 +34,28 @@ class MyContents  {
       // this.window = new Objects.Window(app, 4, 6, .3, .3, furniture_color, new THREE.Vector3(0, 5, 0))
       
       this.walls = [
-        new Objects.Wall(this.app, floor_width, wall_height, "#696e56", [
-          { x: 5, y: 5, width: 4, height: 6, depth: 0.3, frame_thickness: 0.3, color: furniture_color }
-        ])
+        new Objects.Wall(this.app, floor_width, wall_height, "#696e56", [],
+          new THREE.Vector3(floor_height / 2, 0, - floor_width / 2),
+          - Math.PI / 2,
+        ),
+        new Objects.Wall(this.app, floor_width, wall_height, "#696e56", [],
+          new THREE.Vector3(- floor_height / 2, 0, floor_width / 2),
+          Math.PI / 2,
+        ),
+        new Objects.Wall(this.app, floor_height, wall_height, "#696e56", [],
+          new THREE.Vector3(- floor_height / 2, 0, - floor_width / 2),
+          0,
+        ),
+        new Objects.Wall(this.app, floor_height, wall_height, "#696e56", [
+          { x: floor_height * 0.4, y: 5, width: 4, height: 6, depth: 0.3, frame_thickness: 0.3, color: furniture_color },
+          { x: floor_height * 0.8, y: 5, width: 4, height: 6, depth: 0.3, frame_thickness: 0.3, color: furniture_color }
+        ],
+          new THREE.Vector3(floor_height / 2, 0,floor_width / 2),
+          Math.PI,
+        ),
       ]
-      // new Objects.Walls(this.app, this.floor, 15, "#696e56")
-
       
-      this.ceiling = new Objects.Ceiling(this.app, this.floor, this.walls, "#fbf2d5")
+      this.ceiling = new Objects.Ceiling(this.app, this.floor, wall_height, "#fbf2d5")
 
       this.candle = new Objects.Candle(app, 0.03 ,0.25, new THREE.Vector3(-4.95, 4, -4))
 
@@ -72,7 +86,7 @@ class MyContents  {
         if (this.axis === null) {
           // create and attach the axis to the scene
           this.axis = new MyAxis(this)
-          this.app.scene.add(this.axis)
+          // this.app.scene.add(this.axis)
         }
 
         // add a point light on top of the model
@@ -128,11 +142,11 @@ class MyContents  {
         // const spotLightHelper = new THREE.SpotLightHelper(this.cakeSpotLight)
         // this.app.scene.add(spotLightHelper)
 
-        const sphereGeometry = new THREE.SphereGeometry(0.1, 16, 16)
-        const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 })
-        const lightSphere = new THREE.Mesh(sphereGeometry, sphereMaterial)
-        lightSphere.position.copy(this.cakeSpotLight.position)
-        this.app.scene.add(lightSphere)  
+        // const sphereGeometry = new THREE.SphereGeometry(0.1, 16, 16)
+        // const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 })
+        // const lightSphere = new THREE.Mesh(sphereGeometry, sphereMaterial)
+        // lightSphere.position.copy(this.cakeSpotLight.position)
+        // this.app.scene.add(lightSphere)  
   }
 }
 

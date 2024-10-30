@@ -38,13 +38,13 @@ class Candle extends THREE.Object3D {
 
     }   
 
-    buildCandleBody(){
+    buildCandleBody() {
         this.geometry = new THREE.CylinderGeometry(this.radius, this.radius, this.height, 30);
         this.candleMesh = new THREE.Mesh(this.geometry, this.candleMaterial);
         this.candleMesh.position.y = this.height / 2;
     }
 
-    buildCandleTop(){
+    buildCandleTop() {
         const points = [];
         points.push(new THREE.Vector2(this.radius, 0)); 
         points.push(new THREE.Vector2(this.radius * 0.95, 0.1 * this.radius)); 
@@ -58,7 +58,7 @@ class Candle extends THREE.Object3D {
         this.topMesh.position.y = this.height;
     }
 
-    buildCandleWick(){
+    buildCandleWick() {
         const wickRadius = this.radius * 0.05; 
         const wickHeight = this.height * 0.1; 
 

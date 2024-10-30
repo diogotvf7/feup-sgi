@@ -3,7 +3,7 @@ import * as THREE from "three";
 
 class Frame extends THREE.Object3D {
 
-    constructor(app, position, picture, imgX, imgY, frameWidth, pictureWidth, pictureHeight, withFrame=true, rotation={x:0, y:0, z:0}, ){
+    constructor(app, position, picture, imgX, imgY, frameWidth, pictureWidth, pictureHeight, withFrame=true, rotation={x:0, y:0, z:0}, ) {
         super();
         this.app = app;
         this.framePosition = position;
@@ -35,21 +35,21 @@ class Frame extends THREE.Object3D {
         this.init();
     }
 
-    init(){
+    init() {
         this.framePicture = new THREE.Group()
         this.buildPicture();
-        if(this.withFrame){
+        if (this.withFrame) {
             this.buildFrame();
             this.framePicture.add(this.frame)
             this.framePicture.add(this.img)
-        }else{
+        } else {
             this.framePicture.add(this.img)
         }
         this.framePicture.position.set(this.framePosition.x, this.framePosition.y, this.framePosition.z)
         this.framePicture.rotation.set(this.frameRotation.x, this.frameRotation.y, this.frameRotation.z)
     }
 
-    buildFrame(){
+    buildFrame() {
         const topBottomGeometryFrame = new THREE.BoxGeometry(this.imgX + this.frameWidth * 2, this.frameWidth, 0.5)
         const sideFrame = new THREE.BoxGeometry(this.frameWidth, this.imgY, 0.5)
 
@@ -70,7 +70,7 @@ class Frame extends THREE.Object3D {
         this.frame.add(rightFrame)
     }
 
-    buildPicture(){
+    buildPicture() {
       let planeUVRate = this.imgY / this.imgX;
 
       let planeTextureUVRate = this.pictureWidth / this.pictureHeight;
@@ -86,7 +86,7 @@ class Frame extends THREE.Object3D {
       this.img.position.set(0, this.imgY / 2, 0.2); 
     }
 
-    draw(){
+    draw() {
         this.app.scene.add(this.framePicture);
     }
 }
