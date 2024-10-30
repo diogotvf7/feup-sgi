@@ -25,14 +25,13 @@ class MyContents  {
       this.table = new Objects.Table(app, table_leg_height, table_top_height, 3, .2, furniture_color, new THREE.Vector3(-5, 0, -4))
       this.plate = new Objects.Plate(app, 1.5, 1, 0.2, new THREE.Vector3(-5, table_leg_height + table_top_height, -4))
       this.cake = new Objects.Cake(this.app, 1, 0.5, new THREE.Vector3(-5, 3.6, -4), -Math.PI / 2)
+      this.candle = new Objects.Candle(app, 0.03 ,0.25, new THREE.Vector3(-4.95, 4, -4))
       this.spiral = new Objects.Spiral(this.app, new THREE.Vector3(-6, 3.6, -6), new THREE.Vector3(0, Math.PI / 4, Math.PI / 2), 0.5, 5, 128, 2, 0.1)
 
       this.counter = new Objects.Counter(this.app, "#696e56")
       this.door = new Objects.Door(this.app)
       this.floor = new Objects.Floor(this.app, floor_width, floor_height, "#f28f7e", "#ffffff", 0)
-      
-      // this.window = new Objects.Window(app, 4, 6, .3, .3, furniture_color, new THREE.Vector3(0, 5, 0))
-      
+      this.ceiling = new Objects.Ceiling(this.app, this.floor, wall_height, "#fbf2d5")
       this.walls = [
         new Objects.Wall(this.app, floor_width, wall_height, "#696e56", [],
           new THREE.Vector3(floor_height / 2, 0, - floor_width / 2),
@@ -54,11 +53,7 @@ class MyContents  {
           Math.PI,
         ),
       ]
-      
-      this.ceiling = new Objects.Ceiling(this.app, this.floor, wall_height, "#fbf2d5")
-
-      this.candle = new Objects.Candle(app, 0.03 ,0.25, new THREE.Vector3(-4.95, 4, -4))
-
+            
       this.chair = new Objects.Chair(this.app, new THREE.Vector3(0, 0, -7))
       this.sofa = new Objects.Sofa(app)
 
@@ -113,7 +108,6 @@ class MyContents  {
       this.cake.draw()
       this.spiral.draw()
       this.candle.draw()
-      // this.window.draw()
       this.chair.draw()
       this.sofa.draw()
       this.suitcase.draw()

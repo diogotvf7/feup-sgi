@@ -15,4 +15,3 @@ export { Suitcase } from './Suitcase.js';
 export { Chair } from './table/Chair.js';
 export { Flower } from './Flower.js';
 export { FlowerVase } from './FlowerVase.js';
-export { Window } from './structure/Window.js';
