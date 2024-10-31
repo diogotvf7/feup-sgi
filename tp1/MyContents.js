@@ -62,7 +62,7 @@ class MyContents  {
             
       this.chair = new Objects.Chair(this.app, new THREE.Vector3(0, 0, -7))
       this.sofa = new Objects.Sofa(app)
-      this.newspaper = new Objects.Newspaper(app, 1.5)
+      this.newspaper = new Objects.Newspaper(app, 1.5, this.sofa, new THREE.Vector3(-13, 2.77, 9))
 
       this.suitcase = new Objects.Suitcase(app)
 
@@ -86,7 +86,7 @@ class MyContents  {
         if (this.axis === null) {
           // create and attach the axis to the scene
           this.axis = new MyAxis(this)
-          // this.app.scene.add(this.axis)
+          this.app.scene.add(this.axis)
         }
 
         // add a point light on top of the model
