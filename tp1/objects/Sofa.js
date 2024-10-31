@@ -66,7 +66,7 @@ class Sofa extends THREE.Object3D {
 
         this.sofa.scale.set(5,5,5)
         this.sofa.rotateY(Math.PI)
-        this.sofa.position.set(-8,0,10)
+        this.sofa.position.set(-8,-0.4,10)
 
     }
 
