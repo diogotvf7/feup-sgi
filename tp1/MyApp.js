@@ -21,7 +21,7 @@ class MyApp  {
         this.activeCameraName = null
         this.lastCameraName = null
         this.cameras = []
-        this.frustumSize = 20
+        this.frustumSize = 60
 
         // other attributes
         this.renderer = null
@@ -44,7 +44,7 @@ class MyApp  {
         document.body.appendChild(this.stats.dom)
 
         this.initCameras();
-        this.setActiveCamera('Perspective')
+        this.setActiveCamera('JohnTravolta')
 
         // Create a renderer with Antialiasing
         this.renderer = new THREE.WebGLRenderer({antialias:true});
@@ -73,8 +73,23 @@ class MyApp  {
 
         // Create a basic perspective camera
         const perspective1 = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 )
-        perspective1.position.set(10,10,3)
+        perspective1.position.set(8, 12, -12)
         this.cameras['Perspective'] = perspective1
+
+        //create a perspective view from the case
+        const  perspective2 = new THREE.PerspectiveCamera( 85, aspect, 0.5, 1000)
+        perspective2.position.set(13, 11.5, -5.5); 
+        this.cameras['JohnTravolta'] = perspective2
+
+        const perspective3 = new THREE.PerspectiveCamera(90, aspect, 0.5, 1000)
+        perspective3.position.set(-20, 10, -4)
+        this.cameras['SamuelLJackson'] = perspective3
+
+        //LookAt does not work...
+        const sphereGeometry = new THREE.SphereGeometry(0.1, 32, 32); 
+        const sphereMaterial = new THREE.MeshBasicMaterial({ visible: false }); 
+        this.sphereMesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        
 
         // defines the frustum size for the orthographic cameras
         const left = -this.frustumSize / 2 * aspect
@@ -104,6 +119,14 @@ class MyApp  {
         orthoFront.position.set(0,0, this.frustumSize /4) 
         orthoFront.lookAt( new THREE.Vector3(0,0,0) );
         this.cameras['Front'] = orthoFront
+
+        // create a front view orthographic camera
+        const orthoBack = new THREE.OrthographicCamera( left, right, top, bottom, near, far);
+        orthoBack.up = new THREE.Vector3(0,1,0);
+        orthoBack.position.set(0,0, -this.frustumSize /4) 
+        orthoBack.lookAt( new THREE.Vector3(0,0,0) );
+        this.cameras['Back'] = orthoBack
+
     }
 
     /**
@@ -132,16 +155,20 @@ class MyApp  {
             // call on resize to update the camera aspect ratio
             // among other things
             this.onResize()
+            this.updateSpherePositionForCamera(this.activeCamera)
 
             // are the controls yet?
             if (this.controls === null) {
                 // Orbit controls allow the camera to orbit around a target.
                 this.controls = new OrbitControls( this.activeCamera, this.renderer.domElement );
                 this.controls.enableZoom = true;
+                this.controls.target.copy(this.sphereMesh.position)
                 this.controls.update();
             }
             else {
                 this.controls.object = this.activeCamera
+                this.controls.target.copy(this.sphereMesh.position)
+                this.controls.update();
             }
         }
     }
@@ -200,6 +227,29 @@ class MyApp  {
 
         this.lastCameraName = this.activeCameraName
         this.stats.end()
+    }
+
+    updateSpherePositionForCamera(){
+        const newCameraPos = new THREE.Vector3();
+        console.log(this.activeCameraName)
+
+        switch (this.activeCameraName) {
+            case 'JohnTravolta':
+                newCameraPos.set(0, 0, -5); 
+                break;
+            case 'Perspective':
+                newCameraPos.set(-5, 5, 0); 
+                break;
+            case 'SamuelLJackson':
+                newCameraPos.set(0, 5, 0);
+                break;
+            default:
+                newCameraPos.set(0, 0, 0);
+                break;
+        }
+        console.log(newCameraPos)
+        this.sphereMesh.position.copy(newCameraPos);
+
     }
 }
 
