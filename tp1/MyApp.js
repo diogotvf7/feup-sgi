@@ -84,11 +84,6 @@ class MyApp  {
         const perspective3 = new THREE.PerspectiveCamera(90, aspect, 0.5, 1000)
         perspective3.position.set(-20, 10, -4)
         this.cameras['SamuelLJackson'] = perspective3
-
-        //LookAt does not work...
-        const sphereGeometry = new THREE.SphereGeometry(0.1, 32, 32); 
-        const sphereMaterial = new THREE.MeshBasicMaterial({ visible: false }); 
-        this.sphereMesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
         
 
         // defines the frustum size for the orthographic cameras
@@ -155,19 +150,18 @@ class MyApp  {
             // call on resize to update the camera aspect ratio
             // among other things
             this.onResize()
-            this.updateSpherePositionForCamera(this.activeCamera)
 
             // are the controls yet?
             if (this.controls === null) {
                 // Orbit controls allow the camera to orbit around a target.
                 this.controls = new OrbitControls( this.activeCamera, this.renderer.domElement );
                 this.controls.enableZoom = true;
-                this.controls.target.copy(this.sphereMesh.position)
+                this.controls.target.copy(this.updateSpherePositionForCamera(this.activeCamera))
                 this.controls.update();
             }
             else {
                 this.controls.object = this.activeCamera
-                this.controls.target.copy(this.sphereMesh.position)
+                this.controls.target.copy(this.updateSpherePositionForCamera(this.activeCamera))
                 this.controls.update();
             }
         }
@@ -231,8 +225,6 @@ class MyApp  {
 
     updateSpherePositionForCamera(){
         const newCameraPos = new THREE.Vector3();
-        console.log(this.activeCameraName)
-
         switch (this.activeCameraName) {
             case 'JohnTravolta':
                 newCameraPos.set(0, 0, -5); 
@@ -247,8 +239,7 @@ class MyApp  {
                 newCameraPos.set(0, 0, 0);
                 break;
         }
-        console.log(newCameraPos)
-        this.sphereMesh.position.copy(newCameraPos);
+        return  newCameraPos
 
     }
 }
