@@ -69,6 +69,8 @@ class MyContents  {
       this.diogo_frame = new Objects.Frame(this.app, new THREE.Vector3(0, 6, -12.5), "./texture/diogo.jpg", 4, 4, 0.5, 1200, 1600, ),
       this.jaime_frame = new Objects.Frame(this.app, new THREE.Vector3(-8, 6, -12.5), "./texture/jaime.jpg", 4, 4, 0.5, 640, 640, ),
       this.pulp_fiction_frame = new Objects.Frame(this.app, new THREE.Vector3(-22.4, 5, 6), "./texture/pulpfiction.jpg", 6, 8, 0.5, 1055, 1536, false, { x: 0, y: Math.PI / 2, z: 0 })
+      this.beetle = new Objects.Beetle(this.app, 2, 0.5, new THREE.Vector3(floor_height / 2 - 0.25, wall_height / 2 + 1, - floor_width / 4), Math.PI / 2)
+      this.beetle_frame = new Objects.Frame(this.app, new THREE.Vector3(floor_height / 2, wall_height / 2 + .3, - floor_width / 4), "./texture/track.png", 6, 4, 0.2, 1055, 1536, true, { x: 0, y: - Math.PI / 2, z: 0 })
 
       this.vase = new Objects.Vase(this.app, new THREE.Vector3(-21, 1.1, -2), true);
       this.flowers = [
@@ -76,6 +78,7 @@ class MyContents  {
         new Objects.Flower(this.app, new THREE.Vector3(-20.9, 2.1, -2), 0.5),
         new Objects.Flower(this.app, new THREE.Vector3(-21, 2.3, -1.9), 0.5, new THREE.Vector3(0, 5, 0))
       ];
+
     }
 
     /**
@@ -127,6 +130,8 @@ class MyContents  {
       this.newspaper.draw()
       this.vase.draw();
       this.flowers.forEach(flower => flower.draw())
+      this.beetle.draw()
+      this.beetle_frame.draw()
     }   
 
     illuminate() {
