@@ -14,6 +14,7 @@ class Wall extends THREE.Object3D {
         this.bulletHoles = bulletHoles
 
         this.meshes = []
+        this.outside_lights = []
         this.curtains = []
 
         this.wall_material = new THREE.MeshLambertMaterial({ 
@@ -25,6 +26,8 @@ class Wall extends THREE.Object3D {
     }
 
     init() {
+        this.wall = new THREE.Group()
+
         this.buildWall()
         this.windows_data.forEach(window_data => {
             this.buildFrame(
@@ -54,8 +57,6 @@ class Wall extends THREE.Object3D {
         }
         if (this.bulletHoles.length != 0) this.buildBulletHoles()
         
-
-        this.wall = new THREE.Group()
         this.meshes.forEach(mesh => {
             this.wall.add(mesh)
         })
@@ -67,6 +68,16 @@ class Wall extends THREE.Object3D {
         this.wall.translateY(this.translate.y)
         this.wall.translateZ(this.translate.z)
         this.wall.rotateY(this.rotate)
+
+        for (let i = 0; i < this.outside_lights.length; i++) {
+            this.app.scene.add(this.outside_lights[i])
+
+            this.outside_lights[i].position.x -= this.translate.x
+            this.outside_lights[i].position.y -= this.translate.y
+            this.outside_lights[i].position.z -= this.translate.z
+            const rotationMatrix = new THREE.Matrix4().makeRotationY(this.rotate);
+            this.outside_lights[i].position.applyMatrix4(rotationMatrix);
+        }
     }
 
     buildWall() {       
@@ -170,6 +181,15 @@ class Wall extends THREE.Object3D {
         vertical_divider_mesh.position.y = y + height / 2
         vertical_divider_mesh.position.z = - (depth - divider_depth) / 2
         this.meshes.push(vertical_divider_mesh)
+
+        const light = new THREE.PointLight(0xffb900, 100, 100)
+        light.position.x = x + width / 2
+        light.position.y = y + height / 2
+        light.position.z = - 2
+        this.outside_lights.push(light)
+        
+        // const lightHelper = new THREE.PointLightHelper(light, 1)
+        // this.outside_lights.push(lightHelper)        
     }
 
     buildRod(x, y, width, height) {
