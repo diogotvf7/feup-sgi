@@ -43,7 +43,6 @@ class Floor extends THREE.Object3D {
         const geometry = new THREE.PlaneGeometry(this.height, this.width, 50, 50);
         const floorMesh = new THREE.Mesh(geometry, material);
         floorMesh.receiveShadow = true;
-        floorMesh.castShadow = true;
         floorMesh.rotateX(- Math.PI / 2);
 
         this.add(floorMesh);    

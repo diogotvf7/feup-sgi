@@ -21,15 +21,11 @@ class LightSwitch extends THREE.Object3D {
 
         const box_geometry = new THREE.BoxGeometry(.5, 1, 0.1)
         const box = new THREE.Mesh(box_geometry, box_material)
-        box.castShadow = true
-        box.receiveShadow = true
 
         const interruptor_geometry = new THREE.BoxGeometry(.1, .5, .1)
         this.interruptor = new THREE.Mesh(interruptor_geometry, interruptor_material)
         this.interruptor.position.set(0, 0, 0.05)
         this.interruptor.rotateX(Math.PI / 4)        
-        this.interruptor.castShadow = true
-        this.interruptor.receiveShadow = true
 
         this.light_switch.add(box)
         this.light_switch.add(this.interruptor)

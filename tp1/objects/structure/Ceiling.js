@@ -31,7 +31,7 @@ class Ceiling extends THREE.Object3D {
         this.ceiling_mesh.rotateX(- Math.PI / 2)
 
         this.ceiling_mesh.receiveShadow = true        
-        this.ceiling_mesh.castShadow = true;
+        // this.ceiling_mesh.castShadow = true;
     }
 
     draw() {
