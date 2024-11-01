@@ -34,6 +34,13 @@ class MyGuiInterface  {
         lightFolder.add(this.contents.cakeSpotLight, 'intensity', 0, 1000).name("Cake Spotlight Intensity")
         lightFolder.add(this.contents.lamp.lamp.children[3], 'intensity', 0, 100).name("Lamp Spotlight Intensity")
 
+        const outside_lights = this.contents.walls.filter((wall) => wall.outside_lights.length > 0).map(w => w.outside_lights).flat();
+        lightFolder.add({ outside_light: 100 }, 'outside_light', 0, 500).name("Outside Light").onChange((value) => {
+            outside_lights.forEach(light => {
+                light.intensity = value;
+            });
+        });
+        
         // Camera controls
         const cameraFolder = this.datgui.addFolder('Camera')
         cameraFolder.add(this.app, 'activeCameraName', [ 'Perspective', 'JohnTravolta', 'SamuelLJackson', 'Left', 'Top', 'Front', 'Back'] ).name("active camera");
@@ -50,9 +57,6 @@ class MyGuiInterface  {
                 });
             });
         });
-
-        
-        
     }
 }
 
