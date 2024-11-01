@@ -79,6 +79,8 @@ class MyContents  {
         new Objects.Flower(this.app, new THREE.Vector3(-21, 2.3, -1.9), 0.5, new THREE.Vector3(0, 5, 0))
       ];
 
+      this.little_table = new Objects.LittleTable(this.app, new THREE.Vector3(- floor_height * 0.475, 0, 0))      
+      this.lamp = new Objects.Lamp(this.app, 9, furniture_color, new THREE.Vector3(- floor_height * 0.45, 0, floor_width * 0.4))
     }
 
     /**
@@ -93,7 +95,7 @@ class MyContents  {
         }
 
         // add a point light on top of the model
-        const pointLight = new THREE.PointLight( 0xffffff, 500, 0 )
+        const pointLight = new THREE.PointLight( 0xffffff, 200, 0 )
         pointLight.position.set( 0, 20, 0 )
         this.app.scene.add( pointLight )
 
@@ -103,8 +105,8 @@ class MyContents  {
         // this.app.scene.add( pointLightHelper )
 
         // add an ambient light
-        const ambientLight = new THREE.AmbientLight( 0x555555 )
-        this.app.scene.add( ambientLight )
+        // const ambientLight = new THREE.AmbientLight( 0x555555 )
+        // this.app.scene.add( ambientLight )
 
         this.build()
         this.illuminate()
@@ -132,6 +134,8 @@ class MyContents  {
       this.flowers.forEach(flower => flower.draw())
       this.beetle.draw()
       this.beetle_frame.draw()
+      this.little_table.draw()
+      this.lamp.draw()
     }   
 
     illuminate() {

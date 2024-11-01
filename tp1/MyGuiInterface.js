@@ -32,6 +32,7 @@ class MyGuiInterface  {
         // Lights controls
         const lightFolder = this.datgui.addFolder('Lights')
         lightFolder.add(this.contents.cakeSpotLight, 'intensity', 0, 1000).name("Cake Spotlight Intensity")
+        lightFolder.add(this.contents.lamp.lamp.children[3], 'intensity', 0, 100).name("Lamp Spotlight Intensity")
 
         // Camera controls
         const cameraFolder = this.datgui.addFolder('Camera')
@@ -41,7 +42,6 @@ class MyGuiInterface  {
         // Curtains controls
         const curtainFolder = this.datgui.addFolder('Curtains');
         const walls_with_curtains = this.app.contents.walls.filter((wall) => wall.curtains.length > 0);
-
         walls_with_curtains.forEach((wall, index) => {
             const curtains = wall.curtains
             curtains.forEach((curtain, index) => {
@@ -50,6 +50,8 @@ class MyGuiInterface  {
                 });
             });
         });
+
+        
         
     }
 }
