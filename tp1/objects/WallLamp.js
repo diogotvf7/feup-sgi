@@ -47,8 +47,6 @@ class WallLamp extends THREE.Object3D {
         const tube = new THREE.Mesh(tube_geometry, this.lampMaterial)
         tube.position.set(-.75, 1.5, .5)
         tube.rotateX(- 3 * Math.PI / 4)
-        tube.castShadow = true
-        tube.receiveShadow = true
         this.lamp.add(tube)
 
         const bulb_geometry = new THREE.CapsuleGeometry(.15, .3, 5, 10)

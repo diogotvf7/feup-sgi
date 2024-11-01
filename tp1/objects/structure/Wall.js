@@ -191,8 +191,8 @@ class Wall extends THREE.Object3D {
         light.castShadow = true
         this.outside_lights.push(light)
 
-        const lightHelper = new THREE.PointLightHelper(light, 1)
-        this.outside_lights.push(lightHelper)   
+        // const lightHelper = new THREE.PointLightHelper(light, 1)
+        // this.outside_lights.push(lightHelper)   
           
     }
 
@@ -258,28 +258,29 @@ class Wall extends THREE.Object3D {
     }
 
     buildView() {  // TODO: Melhorar isto, tornar uma vista panorâmica que se adapta à parede      
-        // const geometry = new THREE.CylinderGeometry(
-        //     this.width / 2, 
-        //     this.width / 2,
-        //     this.height * 2,
-        //     10,
-        //     10,
-        //     true,
-        //     0,
-        //     Math.PI
-        // )      
+        const geometry = new THREE.CylinderGeometry(
+            this.width / 8, 
+            this.width / 8,
+            this.height * 1.5,
+            10,
+            10,
+            true,
+            0,
+            Math.PI
+        )      
         
-        // const material = new THREE.MeshStandardMaterial({ 
-        //     side: THREE.BackSide,
-        //     map: new THREE.TextureLoader().load('./texture/view.jpg')
-        // });
+        const material = new THREE.MeshStandardMaterial({ 
+            side: THREE.BackSide,
+            map: new THREE.TextureLoader().load('./texture/view.jpg')
+        });
 
-        // const view = new THREE.Mesh(geometry, material)
-        // view.rotateY(Math.PI / 2)
-        // view.position.x += this.width / 2
-        // view.position.y += this.height / 2
+        const view = new THREE.Mesh(geometry, material)
+        view.rotateY(Math.PI / 2)
+        view.position.x += this.width / 2
+        view.position.y += this.height / 2
+        view.scale.set(1, 1, 4)
 
-        // this.meshes.push(view)
+        this.meshes.push(view)
     }
 
     buildCurtain(x, y, width, height, open_ratio = 0.1) {     
