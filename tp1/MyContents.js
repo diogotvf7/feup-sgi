@@ -148,7 +148,7 @@ class MyContents  {
 
       this.cakeSpotLight.target.position.set(-5, 3.8, -4)
       this.app.scene.add(this.cakeSpotLight.target)
-  
+
       // const spotLightHelper = new THREE.SpotLightHelper(this.cakeSpotLight)
       // this.app.scene.add(spotLightHelper)
 

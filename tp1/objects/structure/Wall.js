@@ -58,6 +58,8 @@ class Wall extends THREE.Object3D {
         if (this.bulletHoles.length != 0) this.buildBulletHoles()
         
         this.meshes.forEach(mesh => {
+            mesh.castShadow = true;
+            mesh.receiveShadow = true;
             this.wall.add(mesh)
         })
 
@@ -186,10 +188,12 @@ class Wall extends THREE.Object3D {
         light.position.x = x + width / 2
         light.position.y = y + height / 2
         light.position.z = - 2
+        light.castShadow = true
         this.outside_lights.push(light)
-        
-        // const lightHelper = new THREE.PointLightHelper(light, 1)
-        // this.outside_lights.push(lightHelper)        
+
+        const lightHelper = new THREE.PointLightHelper(light, 1)
+        this.outside_lights.push(lightHelper)   
+          
     }
 
     buildRod(x, y, width, height) {
@@ -254,28 +258,28 @@ class Wall extends THREE.Object3D {
     }
 
     buildView() {  // TODO: Melhorar isto, tornar uma vista panorâmica que se adapta à parede      
-        const geometry = new THREE.CylinderGeometry(
-            this.width / 2, 
-            this.width / 2,
-            this.height * 2,
-            10,
-            10,
-            true,
-            0,
-            Math.PI
-        )      
+        // const geometry = new THREE.CylinderGeometry(
+        //     this.width / 2, 
+        //     this.width / 2,
+        //     this.height * 2,
+        //     10,
+        //     10,
+        //     true,
+        //     0,
+        //     Math.PI
+        // )      
         
-        const material = new THREE.MeshStandardMaterial({ 
-            side: THREE.BackSide,
-            map: new THREE.TextureLoader().load('./texture/view.jpg')
-        });
+        // const material = new THREE.MeshStandardMaterial({ 
+        //     side: THREE.BackSide,
+        //     map: new THREE.TextureLoader().load('./texture/view.jpg')
+        // });
 
-        const view = new THREE.Mesh(geometry, material)
-        view.rotateY(Math.PI / 2)
-        view.position.x += this.width / 2
-        view.position.y += this.height / 2
+        // const view = new THREE.Mesh(geometry, material)
+        // view.rotateY(Math.PI / 2)
+        // view.position.x += this.width / 2
+        // view.position.y += this.height / 2
 
-        this.meshes.push(view)
+        // this.meshes.push(view)
     }
 
     buildCurtain(x, y, width, height, open_ratio = 0.1) {     
@@ -291,6 +295,9 @@ class Wall extends THREE.Object3D {
         const curtain = new THREE.Mesh(geometry, curtainMaterial);
         curtain.name = `curtain-${x}-${y}`;
         curtain.position.set(x + width / 2, y + height - height * open_ratio / 2, .1); 
+
+        curtain.castShadow = true;
+        curtain.receiveShadow = true;
 
         this.meshes.push(curtain)
         this.curtains.push({ mesh: curtain, open_ratio, width, height, y });

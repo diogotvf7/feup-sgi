@@ -77,6 +77,7 @@ class Lamp extends THREE.Object3D {
     buildLight() {
         const light = new THREE.PointLight(0xffb900, 1, 100)
         light.position.set(0, this.height + 1, 0)
+        light.castShadow = true
         this.lamp.add(light)
     }
 

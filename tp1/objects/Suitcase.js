@@ -22,9 +22,6 @@ class Suitcase extends THREE.Object3D {
         this.suitcase.rotateY(-Math.PI / 2)
         this.suitcase.scale.set(0.8,0.8,0.8)
         this.suitcase.position.set(10, 7, -7)
-
-        this.suitcase.receiveShadow = true
-        this.suitcase.castShadow = true
     }
 
     buildHalfSuitcase() {
@@ -70,14 +67,17 @@ class Suitcase extends THREE.Object3D {
     buildHalfSuitcaseSide(x, y, z, material = this.material) {
         const side = new THREE.BoxGeometry(x, y, z)
         const sideMesh = new THREE.Mesh(side, material)
+        sideMesh.receiveShadow = true
+        sideMesh.castShadow = true
         return sideMesh
     }
 
     draw() {
         this.app.scene.add(this.suitcase)
         const light = new THREE.PointLight(0xe8b63b, 125, 20); 
-        light.position.set(10, 8, -5.5); 
-        
+        light.position.set(10, 8, -5.5);   
+        light.castShadow = true
+
         const lightHelper = new THREE.PointLightHelper(light, 0.5); 
         this.app.scene.add(light)
         this.app.scene.add(lightHelper)

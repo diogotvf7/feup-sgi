@@ -42,6 +42,8 @@ class Sofa extends THREE.Object3D {
         const seat = this.createRoundedBox(2, 0.5, 1, 0.1, 8)
         const seatMesh = new THREE.Mesh(seat, this.sofaMaterial)
         seatMesh.position.set(0, 0.3, 0)
+        seatMesh.castShadow = true
+        seatMesh.receiveShadow = true
         this.sofa.add(seatMesh)
 
         // Backrest
@@ -49,6 +51,8 @@ class Sofa extends THREE.Object3D {
         const backrestMesh = new THREE.Mesh(backrest, this.sofaMaterial);
         backrestMesh.position.set(0, 0.7, -0.4);
         backrestMesh.rotateX(THREE.MathUtils.degToRad(-10))
+        backrestMesh.castShadow = true;
+        backrestMesh.receiveShadow = true;
         this.sofa.add(backrestMesh);
 
         //Armrests
@@ -56,11 +60,15 @@ class Sofa extends THREE.Object3D {
         const left_armrestMesh = new THREE.Mesh(armrest_geometry, this.sofaMaterial)
         left_armrestMesh.position.set(-1.05, 0.4, 0)
         left_armrestMesh.rotateY(Math.PI / 2)
+        left_armrestMesh.castShadow = true
+        left_armrestMesh.receiveShadow = true
         this.sofa.add(left_armrestMesh)
 
         const right_armrestMesh = new THREE.Mesh(armrest_geometry, this.sofaMaterial)
         right_armrestMesh.position.set(1.05, 0.4, 0)
         right_armrestMesh.rotateY(Math.PI / 2)
+        right_armrestMesh.castShadow = true
+        right_armrestMesh.receiveShadow = true
         this.sofa.add(right_armrestMesh)
 
         this.sofa.scale.set(5,5,5)

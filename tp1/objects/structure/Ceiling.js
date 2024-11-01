@@ -29,6 +29,9 @@ class Ceiling extends THREE.Object3D {
         this.ceiling_mesh = new THREE.Mesh(this.ceiling_geometry, this.ceiling_material)
         this.ceiling_mesh.position.y = this.height
         this.ceiling_mesh.rotateX(- Math.PI / 2)
+
+        this.ceiling_mesh.receiveShadow = true        
+        this.ceiling_mesh.castShadow = true;
     }
 
     draw() {
