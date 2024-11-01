@@ -48,6 +48,11 @@ class Table extends THREE.Object3D {
         this.table.add(this.bl_leg_mesh)
         this.table.add(this.br_leg_mesh)
         this.table.position.set(this.tablePosition.x, this.tablePosition.y, this.tablePosition.z)
+
+        this.table.children.forEach((child) => {
+            child.castShadow = true;
+            child.receiveShadow = true;
+        })
     }   
 
     build() {

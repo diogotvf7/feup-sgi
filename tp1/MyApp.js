@@ -44,7 +44,7 @@ class MyApp  {
         document.body.appendChild(this.stats.dom)
 
         this.initCameras();
-        this.setActiveCamera('JohnTravolta')
+        this.setActiveCamera('Develop')
 
         // Create a renderer with Antialiasing
         this.renderer = new THREE.WebGLRenderer({antialias:true});
@@ -63,6 +63,11 @@ class MyApp  {
         // enable shadows
         this.renderer.shadowMap.enabled = true;
         this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+        // For interaction with the scene
+        this.raycaster = new THREE.Raycaster();
+        this.mouse = new THREE.Vector2();
+        window.addEventListener('mousedown', this.checkClick.bind(this), false);
     }
 
     /**
@@ -84,6 +89,10 @@ class MyApp  {
         const perspective3 = new THREE.PerspectiveCamera(90, aspect, 0.5, 1000)
         perspective3.position.set(-20, 10, -4)
         this.cameras['SamuelLJackson'] = perspective3
+
+        const perspective4 = new THREE.PerspectiveCamera(75, aspect, 0.5, 1000)
+        perspective4.position.set(0, 10, 10)
+        this.cameras['Develop'] = perspective4
         
 
         // defines the frustum size for the orthographic cameras
@@ -140,7 +149,6 @@ class MyApp  {
      * it updates the active camera and the controls
      */
     updateCameraIfRequired() {
-
         // camera changed?
         if (this.lastCameraName !== this.activeCameraName) {
             this.lastCameraName = this.activeCameraName;
@@ -164,6 +172,26 @@ class MyApp  {
                 this.controls.target.copy(this.updateSpherePositionForCamera(this.activeCamera))
                 this.controls.update();
             }
+        }
+    }
+
+    checkClick(event) {        
+        const light_switch = this.contents.light_switch;
+
+        this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    
+        this.raycaster.setFromCamera(this.mouse, this.activeCamera);
+        const intersects = this.raycaster.intersectObjects([light_switch.light_switch]);
+    
+        const lights = this.contents.wall_lamps.map(wl => wl.lights).flat();
+
+        if (intersects.length > 0) {
+            light_switch.updateLightSwitch();
+
+            for (let light of lights) {
+                light.visible = !light.visible;
+            } 
         }
     }
 

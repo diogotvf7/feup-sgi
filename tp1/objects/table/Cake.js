@@ -70,6 +70,11 @@ class Cake extends THREE.Object3D {
       0.5 * Math.sin(Math.PI / 2 - angle) * this.radius
     );
 
+    insideCake1.castShadow = true
+    insideCake1.receiveShadow = true
+    insideCake2.castShadow = true
+    insideCake2.receiveShadow = true
+
     const cake = new THREE.Group();
     cake.add(this.cake);
     cake.add(insideCake1);

@@ -11,35 +11,42 @@ class Floor extends THREE.Object3D {
         this.diffuse = diffuse;
         this.specular = specular;
         this.shininess = shininess;
-
-        this.floorMaterial = new THREE.MeshPhongMaterial({ 
-            color: diffuse,
-            specular: specular,
-            emissive: "#000000",
-            shininess: shininess,
-            map: new THREE.TextureLoader().load("./texture/rug.png")
-        }); 
         
         this.init();
-    }
-    /**
-     * builds the floor mesh with material
-     */
-    buildFloor() {
-        this.geometry = new THREE.BoxGeometry(this.height, this.depth, this.width);
-        this.floorMesh = new THREE.Mesh(this.geometry, this.floorMaterial);
-        this.floorMesh.receiveShadow = true;
-        this.floorMesh.castShadow = true;
-
-        this.floorMesh.position.y = - this.depth / 2;
     }
     /**
      * initializes the floor object
      */
     init() {
-        this.buildFloor();
+        const texture = new THREE.TextureLoader().load("./texture/rug.png");
+        texture.wrapS = THREE.MirroredRepeatWrapping;
+        texture.wrapT = THREE.MirroredRepeatWrapping;
 
-        this.add(this.floorMesh);    
+        const planeSizeU = this.width;
+        const planeSizeV = this.height;
+        const planeUVRate = planeSizeV / planeSizeU;
+        const planeTextureUVRate = 1100 / 992
+        const planeTextureRepeatU = 1;
+        const planeTextureRepeatV = planeTextureRepeatU * planeUVRate * planeTextureUVRate;
+        texture.repeat.set(planeTextureRepeatU, planeTextureRepeatV);
+
+        const material = new THREE.MeshPhongMaterial({ 
+            color: this.diffuse,
+            specular: this.specular,
+            emissive: "#000000",
+            shininess: this.shininess,
+            side: THREE.FrontSide,
+            map: texture,
+            displacementMap: texture,
+            displacementScale: .3,
+        }); 
+        const geometry = new THREE.PlaneGeometry(this.height, this.width, 50, 50);
+        const floorMesh = new THREE.Mesh(geometry, material);
+        floorMesh.receiveShadow = true;
+        floorMesh.castShadow = true;
+        floorMesh.rotateX(- Math.PI / 2);
+
+        this.add(floorMesh);    
     }   
     /**
      * draws the floor object
