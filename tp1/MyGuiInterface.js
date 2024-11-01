@@ -29,16 +29,28 @@ class MyGuiInterface  {
      * Initialize the gui interface
      */
     init() {
-
+        // Lights controls
         const lightFolder = this.datgui.addFolder('Lights')
         lightFolder.add(this.contents.cakeSpotLight, 'intensity', 0, 1000).name("Cake Spotlight Intensity")
 
-        // adds a folder to the gui interface for the camera
+        // Camera controls
         const cameraFolder = this.datgui.addFolder('Camera')
         cameraFolder.add(this.app, 'activeCameraName', [ 'Perspective', 'JohnTravolta', 'SamuelLJackson', 'Left', 'Top', 'Front', 'Back'] ).name("active camera");
-        // note that we are using a property from the app 
         cameraFolder.add(this.app.activeCamera.position, 'x', 0, 10).name("x coord")
-        cameraFolder.open()
+
+        // Curtains controls
+        const curtainFolder = this.datgui.addFolder('Curtains');
+        const walls_with_curtains = this.app.contents.walls.filter((wall) => wall.curtains.length > 0);
+
+        walls_with_curtains.forEach((wall, index) => {
+            const curtains = wall.curtains
+            curtains.forEach((curtain, index) => {
+                curtainFolder.add(curtain, 'open_ratio', 0, 1).name(`Curtain ${index + 1}`).onChange((value) => {
+                    wall.updateCurtain(curtain, value);
+                });
+            });
+        });
+        
     }
 }
 

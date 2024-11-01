@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { Window } from './Window.js'
+import { BezierCurve } from '../../helpers/deCasteljau.js'
 
 class Wall extends THREE.Object3D {
     constructor(app, width, height, color, windows_data, translate, rotate, bulletHoles) {
@@ -14,6 +14,7 @@ class Wall extends THREE.Object3D {
         this.bulletHoles = bulletHoles
 
         this.meshes = []
+        this.curtains = []
 
         this.wall_material = new THREE.MeshLambertMaterial({ 
             color: color,
@@ -35,9 +36,24 @@ class Wall extends THREE.Object3D {
                 window_data.frame_thickness,
                 window_data.color,
             )
+            this.buildRod(
+                window_data.x,
+                window_data.y,
+                window_data.width,
+                window_data.height,
+            )
+            this.buildCurtain(
+                window_data.x,
+                window_data.y,
+                window_data.width,
+                window_data.height,
+            )
         })
-        if (this.windows_data.length != 0) this.buildView()
+        if (this.windows_data.length != 0) {
+            this.buildView()
+        }
         if (this.bulletHoles.length != 0) this.buildBulletHoles()
+        
 
         this.wall = new THREE.Group()
         this.meshes.forEach(mesh => {
@@ -103,8 +119,8 @@ class Wall extends THREE.Object3D {
             color: color,
             specular: color,
             emissive: color,
-        }); 
-        
+        })
+
         const horizontal_frame_geometry = new THREE.BoxGeometry(width, frame_thickness, depth)
         const vertical_frame_geometry = new THREE.BoxGeometry(frame_thickness, height, depth)
         const horizontal_divider_geometry = new THREE.BoxGeometry(width, divider_thickness, divider_depth)
@@ -124,27 +140,27 @@ class Wall extends THREE.Object3D {
 
         // left frame
         const left_frame_mesh = new THREE.Mesh(vertical_frame_geometry, frame_material)
-        left_frame_mesh.position.x = x + frame_thickness / 2
+        left_frame_mesh.position.x = x
         left_frame_mesh.position.y = y + height / 2
         this.meshes.push(left_frame_mesh)
 
         // right frame
         const right_frame_mesh = new THREE.Mesh(vertical_frame_geometry, frame_material)
-        right_frame_mesh.position.x =  x + width - frame_thickness / 2
+        right_frame_mesh.position.x = x + width
         right_frame_mesh.position.y = y + height / 2
         this.meshes.push(right_frame_mesh)
 
         // top horizontal divider   
         const top_horizontal_divider_mesh = new THREE.Mesh(horizontal_divider_geometry, frame_material)
         top_horizontal_divider_mesh.position.x = x + width / 2
-        top_horizontal_divider_mesh.position.y = y + height - frame_thickness / 2 - (height - frame_thickness * 2) / 3 
+        top_horizontal_divider_mesh.position.y = y + height * 2 / 3 
         top_horizontal_divider_mesh.position.z = - (depth - divider_depth) / 2
         this.meshes.push(top_horizontal_divider_mesh)
 
         // bottom horizontal divider   
         const bottom_horizontal_divider_mesh = new THREE.Mesh(horizontal_divider_geometry, frame_material)
         bottom_horizontal_divider_mesh.position.x = x + width / 2
-        bottom_horizontal_divider_mesh.position.y = y + height - frame_thickness / 2 - (height - frame_thickness * 2) * 2 / 3 
+        bottom_horizontal_divider_mesh.position.y = y + height / 3 
         bottom_horizontal_divider_mesh.position.z = - (depth - divider_depth) / 2
         this.meshes.push(bottom_horizontal_divider_mesh)
 
@@ -154,6 +170,67 @@ class Wall extends THREE.Object3D {
         vertical_divider_mesh.position.y = y + height / 2
         vertical_divider_mesh.position.z = - (depth - divider_depth) / 2
         this.meshes.push(vertical_divider_mesh)
+    }
+
+    buildRod(x, y, width, height) {
+        const rod_material = new THREE.MeshStandardMaterial({ 
+            color: 0x000000,
+            emissive: 0x000000, 
+            roughness: 1, 
+            metalness: 0.5
+        })
+
+        // rod
+        const rod_geometry = new THREE.CylinderGeometry(0.15, 0.15, width * 1.5, 32)
+        const rod = new THREE.Mesh(rod_geometry, rod_material)
+        rod.position.x = x + width / 2
+        rod.position.y = y + height + 0.5
+        rod.position.z = 0.5
+        rod.rotateZ(Math.PI / 2)
+        this.meshes.push(rod)
+
+        // rod left support
+        const rod_left_tip_geometry = new THREE.CylinderGeometry(0.15, 0.25, width * 0.2, 8)
+        const rod_left_tip = new THREE.Mesh(rod_left_tip_geometry, rod_material)
+        rod_left_tip.position.x = x - width * 0.3
+        rod_left_tip.position.y = y + height + 0.5
+        rod_left_tip.position.z = 0.5
+        rod_left_tip.rotateZ(-Math.PI / 2)
+        this.meshes.push(rod_left_tip)
+
+        // rod right support
+        const rod_right_tip_geometry = new THREE.CylinderGeometry(0.15, 0.25, width * 0.2, 8)
+        const rod_right_tip = new THREE.Mesh(rod_right_tip_geometry, rod_material)
+        rod_right_tip.position.x = x + width * 1.5 - width * 0.2
+        rod_right_tip.position.y = y + height + 0.5
+        rod_right_tip.position.z = 0.5
+        rod_right_tip.rotateZ(Math.PI / 2)
+        this.meshes.push(rod_right_tip)
+
+        const path = new BezierCurve([
+            new THREE.Vector3(0,   3,   0),
+            new THREE.Vector3(3,   3,   0),
+            new THREE.Vector3(0,   3,   0),
+            new THREE.Vector3(-1,  0,   0),
+            new THREE.Vector3(1,   .5,  0),
+            new THREE.Vector3(1,   1.5, 0),
+        ])
+                
+        // rod left support
+        const rod_left_support_geometry = new THREE.TubeGeometry( path, 60, 0.15, 4)
+        const rod_left_support = new THREE.Mesh(rod_left_support_geometry, rod_material)
+        rod_left_support.position.x = x - width * 0.2
+        rod_left_support.position.y = y + height * 2 / 3
+        rod_left_support.rotateY(- Math.PI / 2)
+        this.meshes.push(rod_left_support)
+                
+        // rod right support
+        const rod_right_support_geometry = new THREE.TubeGeometry( path, 60, 0.15, 4)
+        const rod_right_support = new THREE.Mesh(rod_right_support_geometry, rod_material)
+        rod_right_support.position.x = x + width * 1.5 - width * 0.3
+        rod_right_support.position.y = y + height * 2 / 3
+        rod_right_support.rotateY(- Math.PI / 2)
+        this.meshes.push(rod_right_support)
     }
 
     buildView() {  // TODO: Melhorar isto, tornar uma vista panorâmica que se adapta à parede      
@@ -181,6 +258,24 @@ class Wall extends THREE.Object3D {
         this.meshes.push(view)
     }
 
+    buildCurtain(x, y, width, height, open_ratio = 0.1) {     
+        const curtainMaterial = new THREE.MeshLambertMaterial({
+            color: "#CE880B",
+            side: THREE.DoubleSide,
+            transparent: true,
+            opacity: 0.9,
+            map: new THREE.TextureLoader().load('./texture/curtain.png')
+        });
+
+        const geometry = new THREE.PlaneGeometry(width, height * open_ratio);
+        const curtain = new THREE.Mesh(geometry, curtainMaterial);
+        curtain.name = `curtain-${x}-${y}`;
+        curtain.position.set(x + width / 2, y + height - height * open_ratio / 2, .1); 
+
+        this.meshes.push(curtain)
+        this.curtains.push({ mesh: curtain, open_ratio, width, height, y });
+    }
+
     buildBulletHoles() {
         const bulletHoleGeometry = new THREE.CircleGeometry(0.1, 8, 8) 
     
@@ -201,6 +296,15 @@ class Wall extends THREE.Object3D {
         })
     }
     
+    updateCurtain(curtainObj, new_open_ratio) {
+        const { mesh, width, height, y } = curtainObj;
+        curtainObj.open_ratio = new_open_ratio;
+    
+        mesh.geometry.dispose();
+        mesh.geometry = new THREE.PlaneGeometry(width, height * new_open_ratio);
+        mesh.position.y = y + height - height * new_open_ratio / 2;
+    }
+
     draw() {
         this.app.scene.add(this.wall)
     }
