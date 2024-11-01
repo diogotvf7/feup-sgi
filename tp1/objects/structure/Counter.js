@@ -2,9 +2,12 @@ import * as THREE from "three";
 
 
 class Counter extends THREE.Object3D{
-    constructor(app, diffuse) {
+    constructor(app, height, wall_height, diffuse) {
         super()
         this.app = app
+        this.height = height
+        this.wall_height = wall_height
+
         this.wall_material = new THREE.MeshPhongMaterial({ 
             color: diffuse,
             specular: "#000000",
@@ -21,36 +24,35 @@ class Counter extends THREE.Object3D{
         this.counter = new THREE.Group()
 
 
-        const base_geometry = new THREE.BoxGeometry( 14, 6, 2);
+        const base_geometry = new THREE.BoxGeometry(14, this.height, 2);
         const base = new THREE.Mesh( base_geometry, this.wall_material );
         base.castShadow = true
         base.receiveShadow = true
         base.position.set(0, 3, 0)
 
-        const right_geometry = new THREE.BoxGeometry(1,9, 2)
+        const right_geometry = new THREE.BoxGeometry(1, this.wall_height - this.height, 2)
         const right = new THREE.Mesh( right_geometry, this.wall_material)
         right.castShadow = true
         right.receiveShadow = true
-        right.position.set(6.5, 10.5, 0)
+        right.position.set(6.5, this.height + (this.wall_height - this.height) / 2, 0)
 
-        const left_geometry = new THREE.BoxGeometry(2.5, 9 , 2)
+        const left_geometry = new THREE.BoxGeometry(2.5, this.wall_height - this.height, 2)
         const left = new THREE.Mesh( left_geometry, this.wall_material)
         left.castShadow = true
         left.receiveShadow = true
-        left.position.set(-5.75, 10.5, 0)
+        left.position.set(-5.75,  this.height + (this.wall_height - this.height) / 2, 0)
 
-
-        const balcony_geometry = new THREE.BoxGeometry(10.5, 0.6,3)
+        const balcony_geometry = new THREE.BoxGeometry(10.5, 0.6, 3)
         const balcony = new THREE.Mesh( balcony_geometry, this.balcony_material)
         balcony.castShadow = true
         balcony.receiveShadow = true
         balcony.position.set(0.75, 6.3, 0)
 
-        const balcony_geometry_left = new THREE.BoxGeometry(0.5, 9,2)
-        const balcony_left = new THREE.Mesh( balcony_geometry_left, this.balcony_material)
+        const balcony_geometry_left = new THREE.BoxGeometry(0.5, this.wall_height - this.height, 2)
+        const balcony_left = new THREE.Mesh(balcony_geometry_left, this.balcony_material)
         balcony_left.castShadow = true
         balcony_left.receiveShadow = true
-        balcony_left.position.set(-4.25, 10.5, 0)
+        balcony_left.position.set(-4.25, this.height + (this.wall_height - this.height) / 2, 0)
 
         this.counter.add(base)
         this.counter.add(right)
