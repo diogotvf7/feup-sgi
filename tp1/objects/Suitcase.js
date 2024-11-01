@@ -22,6 +22,9 @@ class Suitcase extends THREE.Object3D {
         this.suitcase.rotateY(-Math.PI / 2)
         this.suitcase.scale.set(0.8,0.8,0.8)
         this.suitcase.position.set(10, 7, -7)
+
+        this.suitcase.receiveShadow = true
+        this.suitcase.castShadow = true
     }
 
     buildHalfSuitcase() {

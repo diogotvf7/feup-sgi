@@ -16,7 +16,8 @@ class Floor extends THREE.Object3D {
             color: diffuse,
             specular: specular,
             emissive: "#000000",
-            shininess: shininess
+            shininess: shininess,
+            map: new THREE.TextureLoader().load("./texture/rug.png")
         }); 
         
         this.init();
