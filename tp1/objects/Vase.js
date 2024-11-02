@@ -2,7 +2,14 @@ import * as THREE from "three";
 
 import { MyNurbsBuilder } from "../helpers/MyNurbsBuilder.js";
 
-
+/**
+ * @class Vase
+ * @extends THREE.Object3D
+ * @description This class creates a vase. The vase is made of a NURBS ( Non-Uniform Rational B-Spline) surface.
+ * @param {App} app - The app object.
+ * @param {THREE.Vector3} position - The position of the vase.
+ * @param {boolean} withFlower - If the vase will have a flower, it adds dirt to the vase.
+ */
 class Vase extends THREE.Object3D {
   constructor(app, position, withFlower = false) {
     super();

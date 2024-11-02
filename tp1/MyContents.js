@@ -33,7 +33,7 @@ class MyContents  {
       this.door2 = new Objects.Door(this.app, new THREE.Vector3(- floor_height / 2 + 4.5, 0, - floor_width / 2 + .3), 0)
       this.door3 = new Objects.Door(this.app, new THREE.Vector3(floor_height / 2 - .3, 0, 8), - Math.PI / 2)
 
-      this.floor = new Objects.Floor(this.app, floor_width, floor_height, "#f28f7e", "#ffffff", 0)
+      this.floor = new Objects.Floor(this.app, floor_width, floor_height, "#f28f7e")
       this.ceiling = new Objects.Ceiling(this.app, this.floor, wall_height, "#fbf2d5")
       this.walls = [
         new Objects.Wall(this.app, floor_width, wall_height, "#696e56", [],
@@ -65,7 +65,7 @@ class MyContents  {
             
       this.chair = new Objects.Chair(this.app, new THREE.Vector3(0, 0, -7))
       this.sofa = new Objects.Sofa(app)
-      this.newspaper = new Objects.Newspaper(app, 1.5, this.sofa, new THREE.Vector3(-13, 2.77, 9))
+      this.newspaper = new Objects.Newspaper(app, 1.5, new THREE.Vector3(-13, 2.77, 9))
 
       this.suitcase = new Objects.Suitcase(app)
 
@@ -100,8 +100,8 @@ class MyContents  {
         // create once 
         if (this.axis === null) {
           // create and attach the axis to the scene
-          this.axis = new MyAxis(this)
-          this.app.scene.add(this.axis)
+          // this.axis = new MyAxis(this)
+          // this.app.scene.add(this.axis)
         }
 
         // add a point light on top of the model

@@ -1,5 +1,17 @@
 import * as THREE from 'three'
 
+/**
+ * @class Table
+ * @extends THREE.Object3D
+ * @description This class creates a glass table that reflects the environment. This is achieved by using a CubeCamera to render the environment to a texture that is used as the environment map of the table.
+ * @param {App} app - The app object.
+ * @param {number} radius - The radius of the table top.
+ * @param {number} table_top_height - The height of the table top.
+ * @param {number} table_leg_height - The height of the table legs.
+ * @param {number} table_leg_radius - The radius of the table legs.
+ * @param {string} color - The color of the table top.
+ * @param {THREE.Vector3} position - The position of the table.
+ */
 class Table extends THREE.Object3D {
     constructor(app, radius, table_top_height, table_leg_height, table_leg_radius, color, position) {
         super();
@@ -15,7 +27,6 @@ class Table extends THREE.Object3D {
             format: THREE.RGBAFormat,
             generateMipmaps: true,
             minFilter: THREE.LinearMipmapLinearFilter,
-            // encoding: THREE.sRGBEncoding,
         });
 
         this.cubeCamera = new THREE.CubeCamera(0.1, 1000, cubeRenderTarget);

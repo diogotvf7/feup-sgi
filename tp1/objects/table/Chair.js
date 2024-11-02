@@ -1,6 +1,14 @@
 import * as THREE from 'three'
 
 
+/**
+ * @class Chair
+ * @extends THREE.Object3D
+ * @description This class creates a chair
+ * @param {App} app - The app object.
+ * @param {THREE.Vector3} position - The position of the chair.
+ * @param {Object} chairDimensions - An object with dimensions for the chair.
+ */
 class Chair extends THREE.Object3D {
     constructor(app, position, chairDimensions = { width: 2, height: 0.2, depth: 2 }) {
         super()

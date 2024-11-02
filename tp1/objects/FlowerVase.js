@@ -2,6 +2,13 @@ import * as THREE from 'three'
 import {Vase} from './Vase.js'
 import {Flower} from './Flower.js'
 
+/**
+ * @class FlowerVase
+ * @description This class creates a vase with flowers
+ * @param {App} app - The app object.
+ * @param {THREE.Vector3} vasePosition - The position of the vase.
+ * @param {Array<THREE.Vector3>} flowerPositions - The positions of the flowers.
+ */
 class FlowerVase {
     constructor(app, vasePosition, flowerPositions) {
         this.app = app

@@ -1,6 +1,14 @@
 import * as THREE from 'three';
 
 
+/**
+ * @class Door
+ * @extends THREE.Object3D
+ * @description This class creates a door with a realistic texture and a handle.
+ * @param {App} app - The app object.
+ * @param {THREE.Vector3} translate - The translation vector of the door.
+ * @param {number} rotate - The rotation angle of the door.
+ */
 class Door extends THREE.Object3D {
     constructor(app, translate, rotate) {
         super();

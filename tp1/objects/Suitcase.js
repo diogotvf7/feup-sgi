@@ -1,5 +1,11 @@
 import * as THREE from 'three';
 
+/**
+ * @class Suitcase
+ * @extends THREE.Object3D
+ * @description This class creates a super misterious and shiny suitcase just like the one from Pulp Fiction.
+ * @param {App} app - The app object.
+ */
 class Suitcase extends THREE.Object3D {
     constructor(app) {
         super();

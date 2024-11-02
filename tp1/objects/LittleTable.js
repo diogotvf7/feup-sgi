@@ -1,6 +1,13 @@
 import * as THREE from 'three'
 import { BezierCurve } from '../helpers/deCasteljau.js'
 
+/**
+ * @class LittleTable
+ * @extends THREE.Object3D
+ * @description This class creates a small transparent table.
+ * @param {App} app - The app object.
+ * @param {THREE.Vector3} position - The position of the table.
+ */
 class LittleTable extends THREE.Object3D {
     constructor(app, position) {
         super();

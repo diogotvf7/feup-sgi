@@ -1,6 +1,21 @@
 import * as THREE from "three";
 
 
+/**
+ * @class Frame
+ * @extends THREE.Object3D
+ * @description This class creates a frame with a picture inside.
+ * @param {App} app - The app object.
+ * @param {THREE.Vector3} position - The position of the frame.
+ * @param {string} picture - The path to the picture.
+ * @param {number} imgX - The width of the picture.
+ * @param {number} imgY - The height of the picture.
+ * @param {number} frameWidth - The width of the frame.
+ * @param {number} pictureWidth - The width of the picture.
+ * @param {number} pictureHeight - The height of the picture.
+ * @param {boolean} withFrame - If the frame should be drawn.
+ * @param {object} rotation - The rotation of the frame.
+ */
 class Frame extends THREE.Object3D {
 
     constructor(app, position, picture, imgX, imgY, frameWidth, pictureWidth, pictureHeight, withFrame=true, rotation={x:0, y:0, z:0}, ) {

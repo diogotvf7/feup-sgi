@@ -1,15 +1,23 @@
 import * as THREE from "three";
 
-
+/**
+ * @class Counter
+ * @extends THREE.Object3D
+ * @description This class creates the counter of the room.
+ * @param {App} app - The app object.
+ * @param {number} height - The height of the counter.
+ * @param {number} wall_height - The height of the wall. Used to determine the distance between the counter and the ceiling.
+ * @param {string} color - The color of the counter.
+ */
 class Counter extends THREE.Object3D{
-    constructor(app, height, wall_height, diffuse) {
+    constructor(app, height, wall_height, color) {
         super()
         this.app = app
         this.height = height
         this.wall_height = wall_height
 
         this.wall_material = new THREE.MeshPhongMaterial({ 
-            color: diffuse,
+            color: color,
             specular: "#000000",
             shininess: 0,
         })
@@ -22,7 +30,6 @@ class Counter extends THREE.Object3D{
 
     build() {
         this.counter = new THREE.Group()
-
 
         const base_geometry = new THREE.BoxGeometry(14, this.height, 2);
         const base = new THREE.Mesh( base_geometry, this.wall_material );

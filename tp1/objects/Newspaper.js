@@ -1,13 +1,21 @@
 import * as THREE from 'three'
 import { MyNurbsBuilder } from "../helpers/MyNurbsBuilder.js";
 
+/**
+ * @class Newspaper
+ * @extends THREE.Object3D
+ * @description This class creates a newspaper. The newspaper is composed of four pages. Each page is made of a NURBS ( Non-Uniform Rational B-Spline) surface. For this newspaper, actual pages of the New York Times were used - from the edition of the Berlin Wall fall.
+ * @param {App} app - The app object.
+ * @param {number} height - The height of the newspaper.
+ * @param {THREE.Texture} surface - The texture of the newspaper.
+ * @param {THREE.Vector3} translate - The translation of the newspaper.
+ */
 class Newspaper extends THREE.Object3D {
-    constructor(app, height, surface, translate) {
+    constructor(app, height, translate) {
         super();
         this.app = app;
         this.height = height
         this.width = height * 8 / 12
-        this.surface = surface
         this.translate = translate
 
         this.front = new THREE.TextureLoader().load("./texture/nyt.png");

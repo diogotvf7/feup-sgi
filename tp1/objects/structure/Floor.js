@@ -1,16 +1,23 @@
 import * as THREE from 'three';
 
+/**
+ * @class Floor
+ * @extends THREE.Object3D
+ * @description This class creates a floor with a realistic texture. Besides usgin the texture, it also uses a displacement map to give a more realistic look.
+ * @param {App} app - The app object.
+ * @param {number} width - The width of the floor.
+ * @param {number} height - The height of the floor.
+ * @param {string} color - The color of the floor.
+ */
 class Floor extends THREE.Object3D {
-    constructor(app, width, height, diffuse, specular, shininess) {
+    constructor(app, width, height, color) {
         super();
         this.app = app;
         this.width = width;        
         this.height = height;
         this.depth = 1;
 
-        this.diffuse = diffuse;
-        this.specular = specular;
-        this.shininess = shininess;
+        this.color = color;
         
         this.init();
     }
@@ -31,10 +38,7 @@ class Floor extends THREE.Object3D {
         texture.repeat.set(planeTextureRepeatU, planeTextureRepeatV);
 
         const material = new THREE.MeshPhongMaterial({ 
-            color: this.diffuse,
-            specular: this.specular,
-            emissive: "#000000",
-            shininess: this.shininess,
+            color: this.color,
             side: THREE.FrontSide,
             map: texture,
             displacementMap: texture,
