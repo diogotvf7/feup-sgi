@@ -162,15 +162,6 @@ class MyContents  {
 
       this.cakeSpotLight.target.position.set(-5, 3.8, -4)
       this.app.scene.add(this.cakeSpotLight.target)
-
-      // const spotLightHelper = new THREE.SpotLightHelper(this.cakeSpotLight)
-      // this.app.scene.add(spotLightHelper)
-
-      // const sphereGeometry = new THREE.SphereGeometry(0.1, 16, 16)
-      // const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 })
-      // const lightSphere = new THREE.Mesh(sphereGeometry, sphereMaterial)
-      // lightSphere.position.copy(this.cakeSpotLight.position)
-      // this.app.scene.add(lightSphere)  
   }
 }
 
