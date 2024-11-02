@@ -10,7 +10,7 @@
 ----
 ## Project information
 
-Our project's inspiration was to recreate the famous apartment scene from the popular movie Pulp Fiction. To achieve that goal in the best way possible, we created a THREE.js scene utilizing simple geometry, curves, materials and lights to create a realistic and immersive environment.
+Our project is inspired by the iconic apartment scene from the popular movie Pulp Fiction. To recreate this environment as realistically as possible, we developed a scene using THREE.js, employing geometry, curves, materials, and lighting to make it as immersive as we could.
 
 <p align="center">
   <img src="./images/perspective.png">
@@ -58,7 +58,7 @@ In our scene, through the use of the GUI.Interface in the right top corner , the
 
 <p align="center">
   <img src="./images/switch.gif">
-  <p align="center">Figure 2: Window<p>
+  <p align="center">Figure 2: Wall Lights<p>
 <p>
 
 #### Cameras Controls
@@ -90,7 +90,7 @@ The construction of windows is automatic. This is because we only have to say wh
 
 <p align="center">
   <img src="./images/window.png">
-  <p align="center">Figure 2: Window<p>
+  <p align="center">Figure 3: Window<p>
 <p>
 
 #### Table
@@ -101,7 +101,7 @@ The back rest of a chair is a trapezoid. To create that effect, we used a *Cylin
 
 <p align="center">
   <img src="./images/table.png">
-  <p align="center">Figure 3: Table<p>
+  <p align="center">Figure 4: Table<p>
 <p>
 
 
@@ -110,21 +110,21 @@ The flower is a very interesting part of our project as we wanted to do somethin
 
 <p align="center">
   <img src="./images/flower.png">
-  <p align="center">Figure 4: Flowers<p>
+  <p align="center">Figure 5: Flowers<p>
 <p>
 
 #### Extra Objects
 
 To enhance our scene, some non-mandatory objects were addded. Some of them didn't require to use any special geometry while others were more challenging.
 - Lamp : Built using *CylinderGeometry*
-- LightSwitch: Built using *BoxGeometry*, however it is an interactive object with sound, as explained before, by cliking it directly we can turn on/off the wall lights.
+- LightSwitch:  Built with BoxGeometry and interactive; clicking it toggles wall lights with a sound effect.
 - Counter: Built using *BoxGeometry*
 - LittleTable: *BoxGeometry* and *TubeGeometry* with *BezierCurves* associated
 - Sofa: More challenging to build, because to create the shape of a sofa, which normally has rounded edges, we used *THREE.Shape()* with an *ExtrudeGeometry()*
 
 <p align="center">
   <img src="./images/sofa.png">
-  <p align="center">Figure 5: Sofa<p>
+  <p align="center">Figure 6: Sofa<p>
 <p>
 
 - Suitcase: Built using *BoxGeometry*
@@ -132,9 +132,9 @@ To enhance our scene, some non-mandatory objects were addded. Some of them didn'
 
 <p align="center">
   <img src="./images/bulletHoles.png">
-  <p align="center">Figure 6: Bullet Holes<p>
+  <p align="center">Figure 7: Bullet Holes<p>
 <p>
 
 ## Issues/Problems
 
-- Textures for sofa were not correctly applied, like they were for the rest of the objects,  due to the complexity of the object
+- We had difficulty correctly applying textures to the sofa due to its complex shape.
