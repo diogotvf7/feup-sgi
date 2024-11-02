@@ -1,7 +1,11 @@
 import * as THREE from "three";
 import { MyNurbsBuilder } from "../helpers/MyNurbsBuilder.js";
 
-
+/**
+ * @class Flower
+ * @extends THREE.Object3D
+ * @description This class creates a flower. The flower is composed of a stem and three rings of petals. Each ring has three petals. Each petal is made of a NURBS ( Non-Uniform Rational B-Spline) surface.
+ */
 class Flower extends THREE.Object3D {
   constructor(app, position, scale = 1, rotation = new THREE.Vector3(0, 0, 0)) {
     super();

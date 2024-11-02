@@ -1,6 +1,12 @@
 import * as THREE from 'three';
 
 
+/**
+ * @class Sofa
+ * @extends THREE.Object3D
+ * @description This class creates a sofa where you can read a newspaper.
+ * @param {App} app - The app object.
+ */
 class Sofa extends THREE.Object3D {
     constructor(app) {
         super();

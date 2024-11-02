@@ -1,5 +1,16 @@
 import * as THREE from "three";
 
+/**
+ * @class Cake
+ * @extends THREE.Object3D
+ * @description This class creates a red velvet cake with a slice taken from it.
+ * @param {App} app - The app object.
+ * @param {number} radius - The radius of the cake.
+ * @param {number} height - The height of the cake.
+ * @param {THREE.Vector3} position - The position of the cake.
+ * @param {number} rotation - The rotation of the cake.
+ * @param {boolean} isSlice - If the cake is a slice or not.
+ */
 class Cake extends THREE.Object3D {
   constructor(app, radius, height, position, rotation=0, isSlice=false) {
     super();

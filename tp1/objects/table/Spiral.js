@@ -1,8 +1,20 @@
 import * as THREE from "three";
 
 
+/**
+ * @class Spiral
+ * @extends THREE.Object3D
+ * @description This class creates a spiral spring.
+ * @param {App} app - The app object.
+ * @param {THREE.Vector3} position - The position of the spiral.
+ * @param {THREE.Vector3} rotation - The rotation of the spiral.
+ * @param {number} radius - The radius of the spiral.
+ * @param {number} turns - The number of turns of the spiral.
+ * @param {number} segments - The number of segments of the spiral.
+ * @param {number} height - The height of the spiral.
+ * @param {number} thickness - The thickness of the spiral.
+ */
 class Spiral extends THREE.Object3D {
-
     constructor(app, position, rotation, radius = 0.5, turns = 5, segments = 64, height = 3, thickness = 0.05) {
         super();
         this.app = app;

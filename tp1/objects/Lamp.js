@@ -1,5 +1,15 @@
 import * as THREE from 'three'
 
+/**
+ * @class Lamp
+ * @extends THREE.Object3D
+ * @description This class creates a vertical lamp with a light source that can be adjusted in intensity through the GUI.
+ * @param {App} app - The app object.
+ * @param {number} height - The height of the lamp.
+ * @param {string} color - The color of the lamp.
+ * @param {THREE.Vector3} position - The position of the lamp.
+ * @param {THREE.Vector3} rotation - The rotation of the lamp.
+ */
 class Lamp extends THREE.Object3D {
     constructor(app, height, color, position) {
         super();

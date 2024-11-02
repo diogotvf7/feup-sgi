@@ -1,6 +1,14 @@
 import * as THREE from 'three';
 import { BezierCurve } from '../helpers/deCasteljau.js'
 
+/**
+ * @class WallLamp
+ * @extends THREE.Object3D
+ * @description This class creates a wall lamp with two bulbs. The lights can be turned on and off by clicking on the light switch.
+ * @param {App} app - The app object.
+ * @param {THREE.Vector3} translate - The position of the wall lamp.
+ * @param {number} rotate - The rotation of the wall lamp.
+ */
 class WallLamp extends THREE.Object3D {
     constructor(app, translate, rotate) {
         super();

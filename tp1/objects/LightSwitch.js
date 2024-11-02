@@ -1,5 +1,13 @@
 import * as THREE from 'three'
 
+/**
+ * @class LightSwitch
+ * @extends THREE.Object3D
+ * @description This class creates a clickable light switch that turns on and off the wall lamps. The switch actually rotates to simulate the action of turning on and off the lights and produces a sound.
+ * @param {App} app - The app object.
+ * @param {THREE.Vector3} translate - The position of the light switch.
+ * @param {number} rotate - The rotation of the light switch.
+ */
 class LightSwitch extends THREE.Object3D {
     constructor(app, translate, rotate) {
         super();
@@ -34,6 +42,10 @@ class LightSwitch extends THREE.Object3D {
         this.light_switch.rotateY(this.rotate)
     }   
 
+    /**
+     * @method updateLightSwitch
+     * @description This method updates the light switch by rotating the interruptor and playing a sound.
+     */
     updateLightSwitch() {
         if (this.on) {
             const off = new Audio('./sounds/light-switch-off.mp3');

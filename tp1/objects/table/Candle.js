@@ -1,5 +1,14 @@
 import * as THREE from 'three';
 
+/**
+ * @class Candle
+ * @extends THREE.Object3D
+ * @description This class creates a candle with a flame on top of it.
+ * @param {App} app - The app object.
+ * @param {number} radius - The radius of the candle.
+ * @param {number} height - The height of the candle.
+ * @param {THREE.Vector3} position - The position of the candle.
+ */
 class Candle extends THREE.Object3D {
     constructor(app, radius, height, position) {
         super();

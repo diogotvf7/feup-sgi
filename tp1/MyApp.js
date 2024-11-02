@@ -34,7 +34,6 @@ class MyApp  {
      * initializes the application
      */
     init() {
-                
         // Create an empty scene
         this.scene = new THREE.Scene();
         this.scene.background = new THREE.Color( 0x101010 );
@@ -175,6 +174,10 @@ class MyApp  {
         }
     }
 
+    /**
+     * @method checkClick
+     * @description This method is used for checking if the light switch was clicked and, if so, turning the lights on and off and updating the light switch state. It uses raycasting to check if the mouse position when clicked intersects with the light switch position.
+     */ 
     checkClick(event) {        
         const light_switch = this.contents.light_switch;
 
@@ -251,7 +254,7 @@ class MyApp  {
         this.stats.end()
     }
 
-    updateSpherePositionForCamera(){
+    updateSpherePositionForCamera() {
         const newCameraPos = new THREE.Vector3();
         switch (this.activeCameraName) {
             case 'JohnTravolta':

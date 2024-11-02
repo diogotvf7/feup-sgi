@@ -1,6 +1,19 @@
 import * as THREE from 'three'
 import { BezierCurve } from '../../helpers/deCasteljau.js'
 
+/**
+ * @class Wall
+ * @extends THREE.Object3D
+ * @description This class creates a wall with windows, curtains, and bullet holes.
+ * @param {App} app - The app object.
+ * @param {number} width - The width of the wall.
+ * @param {number} height - The height of the wall.
+ * @param {string} color - The color of the wall.
+ * @param {Array} windows_data - The data of the windows. This array contains objects with the following properties: x, y, width, height, depth, frame_thickness, color. A hole, a frame, a rod, a curtain and a light are automatically created using that information. A view that encapsulates the entire wall is also added if there are windows.
+ * @param {THREE.Vector3} translate - The translation vector of the wall.
+ * @param {number} rotate - The rotation angle of the wall.
+ * @param {Array} bulletHoles - The positions of the bullet holes.
+ */
 class Wall extends THREE.Object3D {
     constructor(app, width, height, color, windows_data, translate, rotate, bulletHoles) {
         super()
@@ -81,7 +94,10 @@ class Wall extends THREE.Object3D {
             this.outside_lights[i].position.applyMatrix4(rotationMatrix);
         }
     }
-
+    
+    /**
+     * Checks the existence of windows and builds the wall accordingly - including or not holes in the place of the window.
+     */
     buildWall() {       
         const breakpoints = [0]
         this.windows_data.forEach(window => {
@@ -124,6 +140,16 @@ class Wall extends THREE.Object3D {
         }
     }
 
+    /**
+     * Builds a frame for a window and also the exterior light
+     * @param {*} x - The x position of the window in relation to the wall's bottom left corner.
+     * @param {*} y - The y position of the window in relation to the wall's bottom left corner.
+     * @param {*} width - The width of the window.
+     * @param {*} height - The height of the window.
+     * @param {*} depth - The depth of the window frame.
+     * @param {*} frame_thickness - The thickness of the window frame.
+     * @param {*} color - The color of the window frame.
+     */
     buildFrame(x, y, width, height, depth, frame_thickness, color) {
         const divider_thickness = frame_thickness * .4
         const divider_depth = depth * .6
@@ -196,6 +222,13 @@ class Wall extends THREE.Object3D {
           
     }
 
+    /**
+     * Builds a rod above the window
+     * @param {*} x - The x position of the window in relation to the wall's bottom left corner.
+     * @param {*} y - The y position of the window in relation to the wall's bottom left corner.
+     * @param {*} width - The width of the window.
+     * @param {*} height - The height of the window.
+     */
     buildRod(x, y, width, height) {
         const rod_material = new THREE.MeshStandardMaterial({ 
             color: 0x000000,
@@ -257,7 +290,10 @@ class Wall extends THREE.Object3D {
         this.meshes.push(rod_right_support)
     }
 
-    buildView() {  // TODO: Melhorar isto, tornar uma vista panorâmica que se adapta à parede      
+    /**
+     * Builds a view behind the wall. This half stretched cylinder creates the impression of a view from the inside of the room. 
+     */
+    buildView() {      
         const geometry = new THREE.CylinderGeometry(
             this.width / 8, 
             this.width / 8,
@@ -283,6 +319,14 @@ class Wall extends THREE.Object3D {
         this.meshes.push(view)
     }
 
+    /**
+     * Builds a curtain for a window with a given open ratio.
+     * @param {*} x - The x position of the window in relation to the wall's bottom left corner.
+     * @param {*} y - The y position of the window in relation to the wall's bottom left corner.
+     * @param {*} width - The width of the window.
+     * @param {*} height - The height of the window.
+     * @param {*} open_ratio - The open ratio of the curtain.
+     */
     buildCurtain(x, y, width, height, open_ratio = 0.1) {     
         const curtainMaterial = new THREE.MeshLambertMaterial({
             color: "#CE880B",
@@ -304,6 +348,9 @@ class Wall extends THREE.Object3D {
         this.curtains.push({ mesh: curtain, open_ratio, width, height, y });
     }
 
+    /**
+     * Adds bullet holes on the wall.
+     */
     buildBulletHoles() {
         const bulletHoleGeometry = new THREE.CircleGeometry(0.1, 8, 8) 
     
@@ -324,6 +371,11 @@ class Wall extends THREE.Object3D {
         })
     }
     
+    /**
+     * This function is used to update the open ratio of a curtain according to the interactions with the gui.
+     * @param {*} curtainObj - The curtain object.
+     * @param {*} new_open_ratio - The new open ratio of the curtain.
+     */
     updateCurtain(curtainObj, new_open_ratio) {
         const { mesh, width, height, y } = curtainObj;
         curtainObj.open_ratio = new_open_ratio;

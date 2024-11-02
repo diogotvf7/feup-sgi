@@ -1,8 +1,16 @@
 import * as THREE from 'three';
 
+/**
+ * @class Plate
+ * @extends THREE.Object3D
+ * @description This class creates a plate for the cake.
+ * @param {App} app - The app object.
+ * @param {number} radiusTop - The radius of the top of the plate.
+ * @param {number} radiusBottom - The radius of the bottom of the plate.
+ * @param {number} height - The height of the plate.
+ * @param {THREE.Vector3} position - The position of the plate.
+ */
 class Plate extends THREE.Object3D {
-    
-    
     constructor(app, radiusTop, radiusBottom, height, position) {
         super();
         this.app = app;

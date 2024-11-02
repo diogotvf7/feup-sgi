@@ -1,5 +1,15 @@
 import * as THREE from 'three'
 
+/**
+ * @class Beetle
+ * @extends THREE.Object3D
+ * @description This class creates a minimalist silhouette of a volkswagen beetle.
+ * @param {App} app - The app object.
+ * @param {number} size - The size of the beetle.
+ * @param {number} thickness - The thickness of the silhouette.
+ * @param {THREE.Vector3} translate - The translation of the beetle.
+ * @param {number} rotate - The rotation of the beetle.
+ */
 class Beetle extends THREE.Object3D {
     constructor(app, size, thickness, translate, rotate) {
         super();
