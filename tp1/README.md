@@ -53,7 +53,7 @@ The scene provides to the user the ability to control a different of set  of par
 In our scene, through the use of the GUI.Interface in the right top corner , the user can control the scene 's lights. 
   - The user can control the **intensity of the spotlight pointed at the cake** in the center of the table. 
   - The light **intensity of the candle next to the movie official poster**. 
-  - The ***outside light intensity*** which has a direct impact on the overall brightness of the scene. Important to notice that the outside light is a directional light. It is possible to see in the scene the shadows from the windows frame, from the other objects etc.
+  - The **outside light intensity** which has a direct impact on the overall brightness of the scene. Important to notice that the outside light is a directional light. It is possible to see in the scene the shadows from the windows frame, from the other objects etc.
   - The user can also turn on/off the **wall lights**. However this is not done using the guiInterface but rather by clicking the button itself. It even makes a sound :)
 
 <p align="center">
