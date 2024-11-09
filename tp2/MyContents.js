@@ -1,6 +1,6 @@
 import { MyAxis } from './MyAxis.js';
 import { MyFileReader } from './parser/MyFileReader.js';
-import { loadCameras, loadGlobals, loadFog, loadTextures, loadMaterials } from './loaders/index.js';
+import { loadCameras, loadGlobals, loadFog, loadTextures, loadMaterials, loadObjects } from './loaders/index.js';
 
 
 
@@ -42,7 +42,7 @@ class MyContents {
     }
 
     onAfterSceneLoadedAndBeforeRender(data) {
-        let { globals, fog, cameras, textures, materials } = data.yasf
+        let { globals, fog, cameras, textures, materials, graph } = data.yasf
         
         let actions = {
             globals: () => {
@@ -61,11 +61,13 @@ class MyContents {
                 this.app.setActiveCamera(initialCamera)
             },
             textures: () => {
-                let texturesSettings = loadTextures.execute(textures)
+                this.texturesSettings = loadTextures.execute(textures)
             },
             materials: () => {
-                loadMaterials.execute(materials, textures)
-                
+                this.materialsSetttings = loadMaterials.execute(materials, this.texturesSettings)
+            },
+            objects: () => {
+                let myObjects = loadObjects.execute(graph, this.materialsSetttings)
             }
         };
     

@@ -3,3 +3,4 @@ export { loadGlobals } from './loadGlobals.js';
 export { loadFog } from './loadFog.js';
 export { loadMaterials } from './loadMaterials.js'
 export { loadTextures } from './loadTextures.js'
+export { loadObjects } from './loadObjects.js'
