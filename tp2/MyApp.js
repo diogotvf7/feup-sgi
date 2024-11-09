@@ -111,8 +111,6 @@ class MyApp  {
     setActiveCamera(cameraName) {   
         this.activeCameraName = cameraName
         this.activeCamera = this.cameras[this.activeCameraName]
-        console.log(this.activeCameraName)
-        console.log(this.activeCamera)
     }
 
     /**
@@ -176,6 +174,7 @@ class MyApp  {
     */
     render () {
 
+        //TODO:Shouldn't need to do this, camera should already be set by the time we get here for some reason it is not
         if (!this.activeCamera) {
             console.log("Camera not loaded yet, waiting...");
             requestAnimationFrame(this.render.bind(this));

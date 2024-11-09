@@ -1,7 +1,6 @@
-import * as THREE from 'three';
 import { MyAxis } from './MyAxis.js';
 import { MyFileReader } from './parser/MyFileReader.js';
-import { loadCameras, loadGlobals, loadFog } from './loaders/index.js';
+import { loadCameras, loadGlobals, loadFog, loadTextures, loadMaterials } from './loaders/index.js';
 
 
 
@@ -19,7 +18,7 @@ class MyContents {
         this.axis = null
 
         this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
-        this.reader.open("scenes/demo/demo.json");
+        this.reader.open("scenes/demo.json");
     }
 
     /**
@@ -43,31 +42,36 @@ class MyContents {
     }
 
     onAfterSceneLoadedAndBeforeRender(data) {
+        let { globals, fog, cameras, textures, materials } = data.yasf
         
-        let { globals, fog, cameras} = data.yasf
-
-        //Load Global Settings
-        if(globals){
-            let globalsSettings = loadGlobals.execute(globals)
-            this.app.scene.background = globalsSettings.background
-            this.app.lights['ambient'] = globalsSettings.ambient
-            this.app.scene.add(globalsSettings.ambient)
-        }
-
-        //Load Fog
-        if(fog){
-            let fogSettings = loadFog.execute(fog)
-            this.app.scene.fog = fogSettings
-        }
-
-        if(cameras){
-            let [initialCamera, allCameras] = loadCameras.execute(cameras)
-            this.app.cameras = allCameras
-            this.app.setActiveCamera(initialCamera)
-        }
-
-
-
+        let actions = {
+            globals: () => {
+                let globalsSettings = loadGlobals.execute(globals)
+                this.app.scene.background = globalsSettings.background
+                this.app.lights['ambient'] = globalsSettings.ambient
+                this.app.scene.add(globalsSettings.ambient)
+            },
+            fog: () => {
+                let fogSettings = loadFog.execute(fog)
+                this.app.scene.fog = fogSettings
+            },
+            cameras: () => {
+                let [initialCamera, allCameras] = loadCameras.execute(cameras)
+                this.app.cameras = allCameras
+                this.app.setActiveCamera(initialCamera)
+            },
+            textures: () => {
+                let texturesSettings = loadTextures.execute(textures)
+            },
+            materials: () => {
+                loadMaterials.execute(materials, textures)
+                
+            }
+        };
+    
+        Object.keys(actions).forEach(key => {
+            actions[key]();
+        });
     }
 
     update() {
