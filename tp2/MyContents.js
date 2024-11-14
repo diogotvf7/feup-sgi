@@ -18,7 +18,7 @@ class MyContents {
         this.axis = null
 
         this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
-        this.reader.open("scenes/demo.json");
+        this.reader.open("scenes/SGI_TP2_XML_T06_G07_v1.json");
     }
 
     /**
