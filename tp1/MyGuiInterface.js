@@ -57,6 +57,9 @@ class MyGuiInterface  {
                 });
             });
         });
+
+        const sofaFolder = this.datgui.addFolder('Sofa');
+		sofaFolder.add(this.contents.sofa.sofa.position, 'x', -20, 20).name("Sofa");
     }
 }
 

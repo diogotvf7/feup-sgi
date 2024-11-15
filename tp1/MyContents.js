@@ -1,5 +1,4 @@
 import * as THREE from "three"
-import { MyAxis } from "./MyAxis.js"
 import * as Objects from "./objects/index.js"
 
 /**
@@ -22,7 +21,7 @@ class MyContents  {
       const floor_height = 45
       const wall_height = 16
 
-      this.table = new Objects.Table(app, table_leg_height, table_top_height, 3, .2, furniture_color, new THREE.Vector3(-5, 0, -4))
+      this.table = new Objects.Table(app, table_leg_height, table_top_height, 3, .2, furniture_color, {x: -5, y : 0, z : -4})
       this.plate = new Objects.Plate(app, 1.5, 1, 0.2, new THREE.Vector3(-5, table_leg_height + table_top_height, -4))
       this.cake = new Objects.Cake(this.app, 1, 0.5, new THREE.Vector3(-5, 3.6, -4), -Math.PI / 2)
       this.candle = new Objects.Candle(app, 0.03 ,0.25, new THREE.Vector3(-4.95, 3.8, -4))
@@ -66,6 +65,8 @@ class MyContents  {
       this.chair = new Objects.Chair(this.app, new THREE.Vector3(0, 0, -7))
       this.sofa = new Objects.Sofa(app)
       this.newspaper = new Objects.Newspaper(app, 1.5, new THREE.Vector3(-13, 2.77, 9))
+
+      this.sofa.add(this.newspaper.newspaper)
 
       this.suitcase = new Objects.Suitcase(app)
 
@@ -162,15 +163,6 @@ class MyContents  {
 
       this.cakeSpotLight.target.position.set(-5, 3.8, -4)
       this.app.scene.add(this.cakeSpotLight.target)
-
-      // const spotLightHelper = new THREE.SpotLightHelper(this.cakeSpotLight)
-      // this.app.scene.add(spotLightHelper)
-
-      // const sphereGeometry = new THREE.SphereGeometry(0.1, 16, 16)
-      // const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 })
-      // const lightSphere = new THREE.Mesh(sphereGeometry, sphereMaterial)
-      // lightSphere.position.copy(this.cakeSpotLight.position)
-      // this.app.scene.add(lightSphere)  
   }
 }
 
