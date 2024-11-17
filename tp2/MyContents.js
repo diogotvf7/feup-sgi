@@ -1,6 +1,6 @@
 import { MyAxis } from './MyAxis.js';
 import { MyFileReader } from './parser/MyFileReader.js';
-import { loadCameras, loadGlobals, loadFog, loadTextures, loadMaterials, loadObjects } from './loaders/index.js';
+import { loadCameras, loadGlobals, loadTextures, loadMaterials, loadObjects } from './loaders/index.js';
 
 
 
@@ -43,34 +43,33 @@ class MyContents {
     }
 
     onAfterSceneLoadedAndBeforeRender(data) {
-        let { globals, fog, cameras, textures, materials, graph } = data.yasf
+        let { globals, cameras, textures, materials, graph } = data.yasf
         
         let actions = {
-            globals: () => {
-                let globalsSettings = loadGlobals.execute(globals)
-                this.app.scene.background = globalsSettings.background
-                this.app.lights['ambient'] = globalsSettings.ambient
-                this.app.scene.add(globalsSettings.ambient)
-            },
-            fog: () => {
-                let fogSettings = loadFog.execute(fog)
-                this.app.scene.fog = fogSettings
-            },
-            cameras: () => {
-                let [initialCamera, allCameras] = loadCameras.execute(cameras)
-                this.app.cameras = allCameras
-                this.app.setActiveCamera(initialCamera)
-            },
             textures: () => {
                 this.texturesSettings = loadTextures.execute(textures)
             },
             materials: () => {
                 this.materialsSetttings = loadMaterials.execute(materials, this.texturesSettings)
             },
+            globals: () => {
+                let globalsSettings = loadGlobals.execute(globals)
+                this.app.scene.background = globalsSettings.background
+                this.app.lights['ambient'] = globalsSettings.ambient
+                this.app.scene.add(globalsSettings.ambient)
+                this.app.scene.fog = globalsSettings.fog
+                this.app.scene.add(globalsSettings.skybox)
+            },
+            cameras: () => {
+                let [initialCamera, allCameras] = loadCameras.execute(cameras)
+                this.app.cameras = allCameras
+                this.app.setActiveCamera(initialCamera)
+            },
             objects: () => {
                 const objects = loadObjects.execute(graph, this.materialsSetttings)
                 
                 for (let object of objects) {
+                    console.log(object)
                     this.app.scene.add(object)
                 }
             }
