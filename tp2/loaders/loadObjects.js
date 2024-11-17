@@ -19,8 +19,8 @@ export const loadObjects = {
  * @param {*} materialref Material reference passed by the parent node (will be used if the node does not have a materialref itself)
  * @returns 
  */
-const dfs = (data, materials, node, materialref=null, debug=false) => {        
-    if (debug) console.log("[NODE] ", node.name);
+const dfs = (data, materials, node, materialref=null, debug=false, depth=1) => {        
+    if (debug) console.log("[+]", " ".repeat(depth*2), node.name);
     
     const object = new THREE.Group();
     object.name = node.name;
@@ -32,14 +32,14 @@ const dfs = (data, materials, node, materialref=null, debug=false) => {
 
     for (let key in node.children) {
         const info = node.children[key];
-        const child = data[key];
+        const child = data[info.nodeId];
         if (child) {
             child.name = key;
         }        
 
         switch (info.type) {
             case 'noderef':
-                let newNode = dfs(data, materials, child, material, debug);
+                let newNode = dfs(data, materials, child, material, debug, depth+1);
                 object.add(newNode);
                 break;
             case 'pointlight':
@@ -71,7 +71,7 @@ const dfs = (data, materials, node, materialref=null, debug=false) => {
                 break;
             default:
                 throw new Error('Unknown object type: ' + node.children[key].type);
-        }
+        }        
     }
 
     transform(object, node.transforms);
@@ -165,7 +165,7 @@ const transform = (object, transforms) => {
                 object.translateY(transform.amount.y);
                 object.translateZ(transform.amount.z);
                 break;
-            case 'rotate':                
+            case 'rotate':
                 object.rotateX(degreesToRadians(transform.amount.x));
                 object.rotateY(degreesToRadians(transform.amount.y));
                 object.rotateZ(degreesToRadians(transform.amount.z));

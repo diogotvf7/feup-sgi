@@ -36,9 +36,35 @@
         "textures": {
             "tableTop": {
                 "filepath": "scenes/textures/tableTop.jpg"
+            },
+            "floor": {
+                "filepath": "scenes/textures/floor.jpg"
             }
         },
         "materials": {
+            "floor": {
+                "color": {
+                    "r": 0.8,
+                    "g": 0.8,
+                    "b": 0.8
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "floor",
+                "texlength_s": 1,
+                "texlength_t": 1
+            },
             "tableTop": {
                 "color": {
                     "r": 0.8,
@@ -150,9 +176,17 @@
             "scene": {
                 "type": "node",
                 "children": {
-                    "table": {
+                    "tableGroup1": {
                         "type": "noderef",
-                        "nodeId": "table"
+                        "nodeId": "tableGroup1"
+                    },
+                    "tableGroup2": {
+                        "type": "noderef",
+                        "nodeId": "tableGroup2"
+                    },
+                    "floor": {
+                        "type": "noderef",
+                        "nodeId": "floor"
                     },
                     "pointLight": {
                         "type": "pointlight",
@@ -174,6 +208,259 @@
                     }
                 }
             },
+            "floor": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "floor"
+                },
+                "transforms": [
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": -90,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "rectanglePrim": {
+                        "type": "rectangle",
+                        "xy1": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "xy2": {
+                            "x": 176,
+                            "y": 120
+                        }
+                    }
+                }
+            },
+            "tableGroup1": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 90,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -25,
+                            "y": 0,
+                            "z": -60
+                        }
+                    }
+                ],
+                "children": {
+                    "table1": {
+                        "type": "noderef",
+                        "nodeId": "table1"
+                    },
+                    "table2": {
+                        "type": "noderef",
+                        "nodeId": "table2"
+                    },
+                    "table3": {
+                        "type": "noderef",
+                        "nodeId": "table3"
+                    },
+                    "table4": {
+                        "type": "noderef",
+                        "nodeId": "table4"
+                    },
+                    "table5": {
+                        "type": "noderef",
+                        "nodeId": "table5"
+                    },
+                    "table6": {
+                        "type": "noderef",
+                        "nodeId": "table6"
+                    }
+                }
+            },
+            "tableGroup2": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 90,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -25,
+                            "y": 0,
+                            "z": -5
+                        }
+                    }
+                ],
+                "children": {
+                    "table1": {
+                        "type": "noderef",
+                        "nodeId": "table1"
+                    },
+                    "table2": {
+                        "type": "noderef",
+                        "nodeId": "table2"
+                    },
+                    "table3": {
+                        "type": "noderef",
+                        "nodeId": "table3"
+                    },
+                    "table4": {
+                        "type": "noderef",
+                        "nodeId": "table4"
+                    }
+                }
+            },
+            "table1": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 6,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "table": {
+                        "type": "noderef",
+                        "nodeId": "table"
+                    }
+                }
+            },
+            "table2": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 180,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 6,
+                            "z": -12
+                        }
+                    }
+                ],
+                "children": {
+                    "table": {
+                        "type": "noderef",
+                        "nodeId": "table"
+                    }
+                }
+            },
+            "table3": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 20,
+                            "y": 6,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "table": {
+                        "type": "noderef",
+                        "nodeId": "table"
+                    }
+                }
+            },
+            "table4": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 180,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -20,
+                            "y": 6,
+                            "z": -12
+                        }
+                    }
+                ],
+                "children": {
+                    "table": {
+                        "type": "noderef",
+                        "nodeId": "table"
+                    }
+                }
+            },
+            "table5": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 40,
+                            "y": 6,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "table": {
+                        "type": "noderef",
+                        "nodeId": "table"
+                    }
+                }
+            },
+            "table6": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 180,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -40,
+                            "y": 6,
+                            "z": -12
+                        }
+                    }
+                ],
+                "children": {
+                    "table": {
+                        "type": "noderef",
+                        "nodeId": "table"
+                    }
+                }
+            },
             "table": {
                 "type": "node",
                 "children": {
@@ -181,13 +468,13 @@
                         "type": "noderef",
                         "nodeId": "tableTop"
                     },
-                    "tableLeg1": {
+                    "rightLeg": {
                         "type": "noderef",
-                        "nodeId": "tableLeg1"
+                        "nodeId": "rightLeg"
                     },
-                    "tableLeg2": {
+                    "leftLeg": {
                         "type": "noderef",
-                        "nodeId": "tableLeg2"
+                        "nodeId": "leftLeg"
                     }
                 }
             },
@@ -222,7 +509,7 @@
                     }
                 }
             },
-            "tableLeg1": {
+            "rightLeg": {
                 "type": "node",
                 "transforms": [
                     {
@@ -235,25 +522,13 @@
                     }
                 ],
                 "children": {
-                    "tableLegCenter": {
+                    "tableLeg": {
                         "type": "noderef",
-                        "nodeId": "tableLegCenter"
-                    },
-                    "tableLegSide1": {
-                        "type": "noderef",
-                        "nodeId": "tableLegSide1"
-                    },
-                    "tableLegSide2": {
-                        "type": "noderef",
-                        "nodeId": "tableLegSide2"
-                    },
-                    "tableLegSupport": {
-                        "type": "noderef",
-                        "nodeId": "tableLegSupport"
+                        "nodeId": "tableLeg"
                     }
                 }
             },
-            "tableLeg2": {
+            "leftLeg": {
                 "type": "node",
                 "transforms": [
                     {
@@ -265,6 +540,15 @@
                         }
                     }
                 ],
+                "children": {
+                    "tableLeg": {
+                        "type": "noderef",
+                        "nodeId": "tableLeg"
+                    }
+                }
+            },
+            "tableLeg": {
+                "type": "node",
                 "children": {
                     "tableLegCenter": {
                         "type": "noderef",
