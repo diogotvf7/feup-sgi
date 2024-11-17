@@ -18,7 +18,8 @@ class MyContents {
         this.axis = null
 
         this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
-        this.reader.open("scenes/SGI_TP2_XML_T06_G07_v1.json");
+        // this.reader.open("scenes/SGI_TP2_XML_T06_G07_v1.json");
+        this.reader.open("scenes/cube.json");
     }
 
     /**
@@ -67,7 +68,11 @@ class MyContents {
                 this.materialsSetttings = loadMaterials.execute(materials, this.texturesSettings)
             },
             objects: () => {
-                let myObjects = loadObjects.execute(graph, this.materialsSetttings)
+                const objects = loadObjects.execute(graph, this.materialsSetttings)
+                
+                for (let object of objects) {
+                    this.app.scene.add(object)
+                }
             }
         };
     

@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 export const loadCameras = {
-    execute: function(data){
+    execute: function(data) {
         let initialCamera = data.initial
         let cameras = []
 
@@ -44,7 +44,7 @@ export const loadCameras = {
             );
         }
 
-        for(let key in data){
+        for(let key in data) {
             if (key == 'initial') continue
 
             let cameraData = data[key]
