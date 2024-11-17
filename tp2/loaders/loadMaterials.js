@@ -21,7 +21,6 @@ export const loadMaterials = {
                 transparent: material.transparent, //boolean - mandatory
                 opacity: material.opacity, //float - mandatory
                 wireframe: material.wireframe ? material.wireframe : false, //Boolean - optional
-                //TODO: Not sure here either
                 flatShading: material.shading === 'flat', 
                 bumpScale : material.bumpscale ? material.bumpscale : 1, //Float - optional
                 bumpMap : material.bumpref ? new THREE.TextureLoader().load(material.bumpref) : null, //Object - optional
