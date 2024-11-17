@@ -5,7 +5,7 @@ export const loadObjects = {
         const root = data[data.rootid];
         root.name = data.rootid;
 
-        const scene = dfs(data, materials, root, null);
+        const scene = dfs(data, materials, root, null, true);
         
         return scene.children;
     }
@@ -19,7 +19,9 @@ export const loadObjects = {
  * @param {*} materialref Material reference passed by the parent node (will be used if the node does not have a materialref itself)
  * @returns 
  */
-const dfs = (data, materials, node, materialref) => {        
+const dfs = (data, materials, node, materialref=null, debug=false) => {        
+    if (debug) console.log("[NODE] ", node.name);
+    
     const object = new THREE.Group();
     object.name = node.name;
 
@@ -37,7 +39,7 @@ const dfs = (data, materials, node, materialref) => {
 
         switch (info.type) {
             case 'noderef':
-                let newNode = dfs(data, materials, child, material);
+                let newNode = dfs(data, materials, child, material, debug);
                 object.add(newNode);
                 break;
             case 'pointlight':

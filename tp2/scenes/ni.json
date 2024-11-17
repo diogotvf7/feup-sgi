@@ -1,0 +1,406 @@
+{
+    "yasf": {
+        "globals": {
+            "background": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0
+            },
+            "ambient": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0
+            },
+            "fog": {
+                "color": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "near": 100.0,
+                "far": 200.0
+            },
+            "skybox": {
+                "size": {"x": 50, "y": 50, "z": 50},
+                "center": {"x": 0, "y": 0, "z": 0},
+                "emissive": {"r": 0, "g": 0, "b": 0},
+                "intensity": 0,
+                "front": "scenes/skybox/front.jpg",              
+                "back": "scenes/skybox/back.jpg",               
+                "up": "scenes/skybox/up.jpg",                 
+                "down": "scenes/skybox/down.jpg",
+                "left": "scenes/skybox/left.jpg",
+                "right": "scenes/skybox/right.jpg"
+            }
+        },
+        "textures": {
+            "tableTop": {
+                "filepath": "scenes/textures/tableTop.jpg"
+            }
+        },
+        "materials": {
+            "tableTop": {
+                "color": {
+                    "r": 0.8,
+                    "g": 0.8,
+                    "b": 0.8
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "tableTop",
+                "texlength_s": 1,
+                "texlength_t": 1
+            },
+            "tableLegBlue": {
+                "color": {
+                    "r": 0.2,
+                    "g": 0.3,
+                    "b": 0.55
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.33,
+                    "g": 0.33,
+                    "b": 0.33
+                },
+                "shininess": 100,
+                "transparent": false,
+                "opacity": 1.0,
+                "texlength_s": 1,
+                "texlength_t": 1
+            },
+            "tableLegGrey": {
+                "color": {
+                    "r": 0.33,
+                    "g": 0.33,
+                    "b": 0.33
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.33,
+                    "g": 0.33,
+                    "b": 0.33
+                },
+                "shininess": 100,
+                "transparent": false,
+                "opacity": 1.0,
+                "texlength_s": 1,
+                "texlength_t": 1
+            }
+        },
+        "cameras": {
+            "initial": "cam1",
+            "cam1": {
+                "type": "perspective",
+                "angle": 60,
+                "near": 0.1,
+                "far": 1000,
+                "location": {
+                    "x": 15,
+                    "y": 15,
+                    "z": 15
+                },
+                "target": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            },
+            "cam2": {
+                "type": "orthogonal",
+                "near": 0.1,
+                "far": 1000,
+                "location": {
+                    "x": 0,
+                    "y": 15,
+                    "z": 15
+                },
+                "target": {
+                    "x": 0,
+                    "y": 15,
+                    "z": 0
+                },
+                "left": -5,
+                "right": 5,
+                "bottom": -5,
+                "top": 5
+            }
+        },
+        "graph": {
+            "rootid": "scene",
+            "scene": {
+                "type": "node",
+                "children": {
+                    "table": {
+                        "type": "noderef",
+                        "nodeId": "table"
+                    },
+                    "pointLight": {
+                        "type": "pointlight",
+                        "enabled": true,
+                        "color": {
+                            "r": 0.5,
+                            "g": 0.6,
+                            "b": 0.8
+                        },
+                        "intensity": 200,
+                        "distance": 1000,
+                        "decay": 2.0,
+                        "castshadow": false,
+                        "position": {
+                            "x": 0,
+                            "y": 5,
+                            "z": 5
+                        }
+                    }
+                }
+            },
+            "table": {
+                "type": "node",
+                "children": {
+                    "tableTop": {
+                        "type": "noderef",
+                        "nodeId": "tableTop"
+                    },
+                    "tableLeg1": {
+                        "type": "noderef",
+                        "nodeId": "tableLeg1"
+                    },
+                    "tableLeg2": {
+                        "type": "noderef",
+                        "nodeId": "tableLeg2"
+                    }
+                }
+            },
+            "tableTop": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "tableTop"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 5.25,
+                            "z": -2
+                        }
+                    }
+                ],
+                "children": {
+                    "boxPrim": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 20,
+                            "y": 0.5,
+                            "z": 16
+                        }
+                    }
+                }
+            },
+            "tableLeg1": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 8,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "tableLegCenter": {
+                        "type": "noderef",
+                        "nodeId": "tableLegCenter"
+                    },
+                    "tableLegSide1": {
+                        "type": "noderef",
+                        "nodeId": "tableLegSide1"
+                    },
+                    "tableLegSide2": {
+                        "type": "noderef",
+                        "nodeId": "tableLegSide2"
+                    },
+                    "tableLegSupport": {
+                        "type": "noderef",
+                        "nodeId": "tableLegSupport"
+                    }
+                }
+            },
+            "tableLeg2": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -8,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "tableLegCenter": {
+                        "type": "noderef",
+                        "nodeId": "tableLegCenter"
+                    },
+                    "tableLegSide1": {
+                        "type": "noderef",
+                        "nodeId": "tableLegSide1"
+                    },
+                    "tableLegSide2": {
+                        "type": "noderef",
+                        "nodeId": "tableLegSide2"
+                    },
+                    "tableLegSupport": {
+                        "type": "noderef",
+                        "nodeId": "tableLegSupport"
+                    }
+                }
+            },
+            "tableLegCenter": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "tableLegGrey"
+                },
+                "transforms": [
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1,
+                            "y": 1,
+                            "z": 6
+                        }
+                    }
+                ],
+                "children": {
+                    "cylinderPrim": {
+                        "type": "cylinder",
+                        "height": 10,
+                        "top": 0.5,
+                        "base": 0.5
+                    }
+                }
+            },
+            "tableLegSide1": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "tableLegBlue"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 3
+                        }
+                    }
+                ],
+                "children": {
+                    "boxPrim": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 1,
+                            "y": 10,
+                            "z": 1
+                        }
+                    }
+                }
+            },
+            "tableLegSide2": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "tableLegBlue"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": -3
+                        }
+                    }
+                ],
+                "children": {
+                    "boxPrim": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 1,
+                            "y": 10,
+                            "z": 1
+                        }
+                    }
+                }
+            },
+            "tableLegSupport": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "tableLegBlue"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": -5.5,
+                            "z": -2
+                        }
+                    }
+                ],
+                "children": {
+                    "boxPrim": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 1,
+                            "y": 1,
+                            "z": 16
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
