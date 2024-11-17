@@ -14,8 +14,8 @@ export const loadMaterials = {
             //Is it MeshPhong ? 
             materials[key] = new THREE.MeshPhongMaterial({
                 color: new THREE.Color(material.color.r, material.color.g, material.color.b), //color - mandatory
-                specular: new THREE.Color(material.specular.r, material.specular.g, material.specular.b), //color - mandatory 
                 emissive: new THREE.Color(material.emissive.r, material.emissive.g, material.emissive.b), //color - mandatory
+                specular: new THREE.Color(material.specular.r, material.specular.g, material.specular.b), //color - mandatory 
                 shininess: material.shininess, //float - mandatory
                 side: material.twosided ? THREE.DoubleSide : THREE.FrontSide, //default false -> FrontSide - optional
                 transparent: material.transparent, //boolean - mandatory
@@ -25,7 +25,7 @@ export const loadMaterials = {
                 flatShading: material.shading === 'flat', 
                 bumpScale : material.bumpscale ? material.bumpscale : 1, //Float - optional
                 bumpMap : material.bumpref ? new THREE.TextureLoader().load(material.bumpref) : null, //Object - optional
-                map : material.textureref ? textures.get(material.textureref) : null, //Object - optional
+                map : material.textureref ? textures[material.textureref] : null, //Object - optional
             })
         }
         
