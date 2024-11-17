@@ -78,9 +78,9 @@ const transform = (object, transforms) => {
                 object.translateZ(transform.amount.z);
                 break;
             case 'rotate':                
-                // object.rotateX(transform.amount.x);
-                // object.rotateY(transform.amount.y);
-                // object.rotateZ(transform.amount.z);
+                object.rotateX(degreesToRadians(transform.amount.x));
+                object.rotateY(degreesToRadians(transform.amount.y));
+                object.rotateZ(degreesToRadians(transform.amount.z));
                 break;
             case 'scale':
                 object.scale.set(transform.amount.x, transform.amount.y, transform.amount.z);
@@ -99,6 +99,9 @@ const transform = (object, transforms) => {
 const buildRectangle = (xy1, xy2, material) => {
     const width = Math.abs(xy1.x - xy2.x);
     const height = Math.abs(xy1.y - xy2.y);
+
+    console.log('Material:', material);
+    
 
     const geometry = new THREE.PlaneGeometry(width, height);
     const mesh = new THREE.Mesh(geometry, material);
@@ -127,3 +130,5 @@ const buildPointLight = (enabled, color, intensity, distance, decay, castshadow,
 const buildLightHelper = (light) => {
     return new THREE.PointLightHelper(light);
 }
+
+const degreesToRadians = (degrees) => degrees * (Math.PI / 180);
