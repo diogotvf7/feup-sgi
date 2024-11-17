@@ -19,9 +19,7 @@ export const loadObjects = {
  * @param {*} materialref Material reference passed by the parent node (will be used if the node does not have a materialref itself)
  * @returns 
  */
-const dfs = (data, materials, node, materialref) => {    
-    console.log(`[NODE]: ${node.name}`);
-    
+const dfs = (data, materials, node, materialref) => {        
     const object = new THREE.Group();
     object.name = node.name;
 
@@ -35,10 +33,7 @@ const dfs = (data, materials, node, materialref) => {
         const child = data[key];
         if (child) {
             child.name = key;
-        }
-
-        console.log(`[CHILD]: ${key}`);
-        
+        }        
 
         switch (info.type) {
             case 'noderef':
@@ -53,8 +48,24 @@ const dfs = (data, materials, node, materialref) => {
                 object.add(lightHelper);
                 break;
             case 'rectangle':
-                const rectangle = buildRectangle(info.xy1, info.xy2, material);
+                const rectangle = buildRectangle(info, material);
                 object.add(rectangle);
+                break;
+            case 'triangle':
+                const triangle = buildTriangle(info, material);
+                object.add(triangle);
+                break;
+            case 'box':
+                const box = buildBox(info, material);
+                object.add(box);
+                break;
+            case 'cylinder':
+                const cylinder = buildCylinder(info, material);
+                object.add(cylinder);
+                break;
+            case 'sphere':
+                const sphere = buildSphere(info, material);
+                object.add(sphere);
                 break;
             default:
                 throw new Error('Unknown object type: ' + node.children[key].type);
@@ -66,29 +77,6 @@ const dfs = (data, materials, node, materialref) => {
     return object;
 }
 
-const transform = (object, transforms) => {
-    for (let key in transforms) {
-        let transform = transforms[key];
-        
-        console.log(`[TRANSFORM]: ${key}-${transform.type}`);
-        switch (transform.type) {
-            case 'translate':
-                object.translateX(transform.amount.x);
-                object.translateY(transform.amount.y);
-                object.translateZ(transform.amount.z);
-                break;
-            case 'rotate':                
-                object.rotateX(degreesToRadians(transform.amount.x));
-                object.rotateY(degreesToRadians(transform.amount.y));
-                object.rotateZ(degreesToRadians(transform.amount.z));
-                break;
-            case 'scale':
-                object.scale.set(transform.amount.x, transform.amount.y, transform.amount.z);
-                break;
-        }
-    }
-}
-
 /**
  * Build a rectangle mesh
  * @param {*} xy1 bottom left corner
@@ -96,16 +84,50 @@ const transform = (object, transforms) => {
  * @param {*} material Material to be applied to the rectangle
  * @returns the rectangle mesh
  */
-const buildRectangle = (xy1, xy2, material) => {
+const buildRectangle = ({ xy1, xy2, parts_x = 1, parts_y = 1 }, material) => {
     const width = Math.abs(xy1.x - xy2.x);
     const height = Math.abs(xy1.y - xy2.y);
 
-    console.log('Material:', material);
-    
-
-    const geometry = new THREE.PlaneGeometry(width, height);
+    const geometry = new THREE.PlaneGeometry(width, height, parts_x, parts_y);
     const mesh = new THREE.Mesh(geometry, material);
     return mesh;    
+};
+
+
+const buildTriangle = ({xyz1, xyz2, xyz3}, material) => {
+    const geometry = new THREE.Geometry();
+    geometry.vertices.push(
+        new THREE.Vector3(xyz1.x, xyz1.y, xyz1.z),
+        new THREE.Vector3(xyz2.x, xyz2.y, xyz2.z),
+        new THREE.Vector3(xyz3.x, xyz3.y, xyz3.z)
+    );
+
+    geometry.faces.push(new THREE.Face3(0, 1, 2));
+    geometry.computeFaceNormals();
+    const mesh = new THREE.Mesh(geometry, material);
+    return mesh;
+}
+
+const buildBox = ({xyz1, xyz2, parts_x=1, parts_y=1, parts_z=1}, material) => {
+    const width = Math.abs(xyz1.x - xyz2.x);
+    const height = Math.abs(xyz1.y - xyz2.y);
+    const depth = Math.abs(xyz1.z - xyz2.z);
+
+    const geometry = new THREE.BoxGeometry(width, height, depth, parts_x, parts_y, parts_z);
+    const mesh = new THREE.Mesh(geometry, material);
+    return mesh;
+}
+
+const buildCylinder = ({base, top, height, slices, stacks, capsclose=false, thetaStart=0, thetaLength=2*Math.PI}, material) => {
+    const geometry = new THREE.CylinderGeometry(base, top, height, slices, stacks, capsclose, thetaStart, thetaLength);
+    const mesh = new THREE.Mesh(geometry, material);
+    return mesh;
+}
+
+const buildSphere = ({radius, slices, stacks, thetaStart=0, thetaLength=2*Math.PI, phiStart=0, phiLength=Math.PI}, material) => {
+    const geometry = new THREE.SphereGeometry(radius, slices, stacks, thetaStart, thetaLength, phiStart, phiLength);
+    const mesh = new THREE.Mesh(geometry, material);
+    return mesh;
 }
 
 /**
@@ -129,6 +151,28 @@ const buildPointLight = (enabled, color, intensity, distance, decay, castshadow,
 
 const buildLightHelper = (light) => {
     return new THREE.PointLightHelper(light);
+}
+
+const transform = (object, transforms) => {
+    for (let key in transforms) {
+        let transform = transforms[key];
+        
+        switch (transform.type) {
+            case 'translate':
+                object.translateX(transform.amount.x);
+                object.translateY(transform.amount.y);
+                object.translateZ(transform.amount.z);
+                break;
+            case 'rotate':                
+                object.rotateX(degreesToRadians(transform.amount.x));
+                object.rotateY(degreesToRadians(transform.amount.y));
+                object.rotateZ(degreesToRadians(transform.amount.z));
+                break;
+            case 'scale':
+                object.scale.set(transform.amount.x, transform.amount.y, transform.amount.z);
+                break;
+        }
+    }
 }
 
 const degreesToRadians = (degrees) => degrees * (Math.PI / 180);
