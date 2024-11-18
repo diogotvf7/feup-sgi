@@ -7,32 +7,47 @@
                 "b": 0.0
             },
             "ambient": {
-                "r": 1.0,
-                "g": 1.0,
-                "b": 1.0
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0
             },
             "fog": {
                 "color": {
-                    "r": 0,
-                    "g": 0,
-                    "b": 0
+                    "r": 1.0,
+                    "g": 1.0,
+                    "b": 1.0
                 },
-                "near": 100.0,
-                "far": 200.0
+                "near": 1.0,
+                "far": 100.0
             },
             "skybox": {
-                "size": {"x": 50, "y": 50, "z": 50},
-                "center": {"x": 0, "y": 0, "z": 0},
-                "emissive": {"r": 0, "g": 0, "b": 0},
-                "intensity": 0,
-                "front": "scenes/skybox/front.jpg",              
-                "back": "scenes/skybox/back.jpg",               
-                "up": "scenes/skybox/up.jpg",                 
-                "down": "scenes/skybox/down.jpg",
-                "left": "scenes/skybox/left.jpg",
-                "right": "scenes/skybox/right.jpg"
+
+            "size": {"x": 10.0, "y": 10.0, "z": 10.0},
+
+            "center": {"x": 0.0, "y": 0.0, "z": 0.0},
+
+            "emissive": {"r": 0.1, "g": 0.1, "b": 0.1},
+
+            "intensity": 0.1,
+
+            "front": "scenes/textures/pine.jpg",              
+
+            "back": "scenes/textures/pine.jpg",             
+
+            "up": "scenes/textures/pine.jpg",                 
+
+            "down": "scenes/textures/pine.jpg",
+
+            "left": "scenes/textures/scratchedWall.jpg",
+
+            "right": "scenes/textures/scratchedWall.jpg"
+
             }
         },
+
+
+
+
         "textures": {
             "leftWallTex": {
                 "filepath": "scenes/textures/scratchedWall.jpg"
@@ -739,6 +754,20 @@
                             "x": 0.5,
                             "y": 0.5
                         }
+                    }
+                }
+            },
+            "leg":{
+                "type":"node",
+                "children":{
+                    "cylinderPrim":{
+                        "type":"cylinder",
+                        "base" : 0.05,
+                        "top" : 0.05,
+                        "height" : 0.5,
+                        "slices" : 20,
+                        "stacks" : 20,
+                        "capsclose":true
                     }
                 }
             }

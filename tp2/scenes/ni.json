@@ -36,9 +36,35 @@
         "textures": {
             "tableTop": {
                 "filepath": "scenes/textures/tableTop.jpg"
+            },
+            "floor": {
+                "filepath": "scenes/textures/floor.jpg"
             }
         },
         "materials": {
+            "floor": {
+                "color": {
+                    "r": 0.8,
+                    "g": 0.8,
+                    "b": 0.8
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 10,
+                "transparent": false,
+                "opacity": 1.0,
+                "textureref": "floor",
+                "texlength_s": 1,
+                "texlength_t": 1
+            },
             "tableTop": {
                 "color": {
                     "r": 0.8,
@@ -106,7 +132,7 @@
                 "texlength_s": 1,
                 "texlength_t": 1
             },
-            "wardrobeMaterial" : {
+            "billyMaterial" : {
                 "color": {
                     "r": 0.6,
                     "g": 0.61,
@@ -172,13 +198,29 @@
             "scene": {
                 "type": "node",
                 "children": {
-                    "wardrobe": {
+                    "slimBilly": {
                         "type": "noderef",
-                        "nodeId": "wardrobe"
+                        "nodeId": "slimBilly"
                     },
-                    "table": {
+                    "largeBilly1": {
                         "type": "noderef",
-                        "nodeId": "table"
+                        "nodeId": "largeBilly1"
+                    },
+                    "largeBilly2": {
+                        "type": "noderef",
+                        "nodeId": "largeBilly2"
+                    },
+                    "tableGroup1": {
+                        "type": "noderef",
+                        "nodeId": "tableGroup1"
+                    },
+                    "tableGroup2": {
+                        "type": "noderef",
+                        "nodeId": "tableGroup2"
+                    },
+                    "floor": {
+                        "type": "noderef",
+                        "nodeId": "floor"
                     },
                     "pointLight": {
                         "type": "pointlight",
@@ -200,6 +242,259 @@
                     }
                 }
             },
+            "floor": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "floor"
+                },
+                "transforms": [
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": -90,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "rectanglePrim": {
+                        "type": "rectangle",
+                        "xy1": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "xy2": {
+                            "x": 17.6,
+                            "y": 12.0
+                        }
+                    }
+                }
+            },
+            "tableGroup1": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 90,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -2.5,
+                            "y": 0,
+                            "z": -6
+                        }
+                    }
+                ],
+                "children": {
+                    "table1": {
+                        "type": "noderef",
+                        "nodeId": "table1"
+                    },
+                    "table2": {
+                        "type": "noderef",
+                        "nodeId": "table2"
+                    },
+                    "table3": {
+                        "type": "noderef",
+                        "nodeId": "table3"
+                    },
+                    "table4": {
+                        "type": "noderef",
+                        "nodeId": "table4"
+                    },
+                    "table5": {
+                        "type": "noderef",
+                        "nodeId": "table5"
+                    },
+                    "table6": {
+                        "type": "noderef",
+                        "nodeId": "table6"
+                    }
+                }
+            },
+            "tableGroup2": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 90,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -2.5,
+                            "y": 0,
+                            "z": -0.5
+                        }
+                    }
+                ],
+                "children": {
+                    "table1": {
+                        "type": "noderef",
+                        "nodeId": "table1"
+                    },
+                    "table2": {
+                        "type": "noderef",
+                        "nodeId": "table2"
+                    },
+                    "table3": {
+                        "type": "noderef",
+                        "nodeId": "table3"
+                    },
+                    "table4": {
+                        "type": "noderef",
+                        "nodeId": "table4"
+                    }
+                }
+            },
+            "table1": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0.6,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "table": {
+                        "type": "noderef",
+                        "nodeId": "table"
+                    }
+                }
+            },
+            "table2": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 180,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0.6,
+                            "z": -1.2
+                        }
+                    }
+                ],
+                "children": {
+                    "table": {
+                        "type": "noderef",
+                        "nodeId": "table"
+                    }
+                }
+            },
+            "table3": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 2,
+                            "y": 0.6,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "table": {
+                        "type": "noderef",
+                        "nodeId": "table"
+                    }
+                }
+            },
+            "table4": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 180,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -2,
+                            "y": 0.6,
+                            "z": -1.2
+                        }
+                    }
+                ],
+                "children": {
+                    "table": {
+                        "type": "noderef",
+                        "nodeId": "table"
+                    }
+                }
+            },
+            "table5": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 4,
+                            "y": 0.6,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "table": {
+                        "type": "noderef",
+                        "nodeId": "table"
+                    }
+                }
+            },
+            "table6": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 180,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -4,
+                            "y": 0.6,
+                            "z": -1.2
+                        }
+                    }
+                ],
+                "children": {
+                    "table": {
+                        "type": "noderef",
+                        "nodeId": "table"
+                    }
+                }
+            },
             "table": {
                 "type": "node",
                 "children": {
@@ -207,69 +502,266 @@
                         "type": "noderef",
                         "nodeId": "tableTop"
                     },
-                    "tableLeg1": {
+                    "rightLeg": {
                         "type": "noderef",
-                        "nodeId": "tableLeg1"
+                        "nodeId": "rightLeg"
                     },
-                    "tableLeg2": {
+                    "leftLeg": {
                         "type": "noderef",
-                        "nodeId": "tableLeg2"
+                        "nodeId": "leftLeg"
                     }
                 }
             },
-            "wardrobe": {
+            "largeBilly1": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.5,
+                            "y": 1,
+                            "z": 1
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": -90,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 1.25,
+                            "y": 0,
+                            "z": -7.75
+                        }
+                    }
+                ],
+                "children": {
+                    "billy": {
+                        "type": "noderef",
+                        "nodeId": "billy"
+                    }
+                }
+            },
+            "largeBilly2": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1.5,
+                            "y": 1,
+                            "z": 1
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": -90,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -1.25,
+                            "y": 0,
+                            "z": -7.75
+                        }
+                    }
+                ],
+                "children": {
+                    "billy": {
+                        "type": "noderef",
+                        "nodeId": "billy"
+                    }
+                }
+            },
+            "slimBilly": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": -5
+                        }
+                    }
+                ],
+                "children": {
+                    "billy": {
+                        "type": "noderef",
+                        "nodeId": "billy"
+                    }
+                }
+            },
+            "billy": {
                 "type": "node",
                 "children": {
-                    "wardrobeVertical" : {
+                    "billyVertical" : {
                         "type": "noderef",
-                        "nodeId":"wardrobeVertical"
+                        "nodeId":"billyVertical"
                     },
-                    "wardrobeLateral" : {
+                    "billyLateral" : {
                         "type": "noderef",
-                        "nodeId":"wardrobeLateral"
+                        "nodeId":"billyLateral"
                     },
-                    "wardrobeBack" : {
+                    "billyBack" : {
                         "type": "noderef",
-                        "nodeId":"wardrobeBack"
+                        "nodeId":"billyBack"
                     },
-                    "wardrobeMiddles" : {
+                    "billyMiddles" : {
                         "type": "noderef",
-                        "nodeId":"wardrobeMiddles"
+                        "nodeId":"billyMiddles"
                     }
                 }
             },
-            "wardrobeMiddles" : {
+            "billyMiddles" : {
                 "type" : "node",
                 "children" : {
-                    "wardrobeMiddle1" : {
+                    "billyMiddle1" : {
                         "type" : "noderef",
-                        "nodeId" : "wardrobeMiddle1"
+                        "nodeId" : "billyMiddle1"
                     },
-                    "wardrobeMiddle2" : {
+                    "billyMiddle2" : {
                         "type" : "noderef",
-                        "nodeId" : "wardrobeMiddle2"
+                        "nodeId" : "billyMiddle2"
                     },
-                    "wardrobeMiddle3" : {
+                    "billyMiddle3" : {
                         "type" : "noderef",
-                        "nodeId" : "wardrobeMiddle3"
+                        "nodeId" : "billyMiddle3"
+                    },
+                    "billyMiddle4" : {
+                        "type" : "noderef",
+                        "nodeId" : "billyMiddle4"
+                    },
+                    "billyMiddle5" : {
+                        "type" : "noderef",
+                        "nodeId" : "billyMiddle5"
                     }
                 }
             },
-            "wardrobeMiddle1" : {
+            "billyMiddle1" : {
                 "type": "node",
                 "materialref": {
-                    "materialId": "wardrobeMaterial"
+                    "materialId": "billyMaterial"
                 },
                 "transforms": [
                     {
                         "type": "translate",
                         "amount": {
                             "x": 0,
-                            "y": 12,
+                            "y": 0.85,
                             "z": 0
                         }
                     }
                 ],
+                "children": {
+                    "shelf": {
+                        "type": "noderef",
+                        "nodeId": "shelf"
+                    }
+                }
+            },
+            "billyMiddle2" : {
+                "type": "node",
+                "materialref": {
+                    "materialId": "billyMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 1.45,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "shelf": {
+                        "type": "noderef",
+                        "nodeId": "shelf"
+                    }
+                }
+            },
+            "billyMiddle3" : {
+                "type": "node",
+                "materialref": {
+                    "materialId": "billyMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 2.05,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "shelf": {
+                        "type": "noderef",
+                        "nodeId": "shelf"
+                    }
+                }
+            },
+            "billyMiddle4" : {
+                "type": "node",
+                "materialref": {
+                    "materialId": "billyMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 2.65,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "shelf": {
+                        "type": "noderef",
+                        "nodeId": "shelf"
+                    }
+                }
+            },
+            "billyMiddle5" : {
+                "type": "node",
+                "materialref": {
+                    "materialId": "billyMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 3.25,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "shelf": {
+                        "type": "noderef",
+                        "nodeId": "shelf"
+                    }
+                }
+            },
+            "shelf": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "billyMaterial"
+                },
                 "children": {
                     "boxPrim": {
                         "type": "box",
@@ -279,87 +771,25 @@
                             "z": 0
                         },
                         "xyz2": {
-                            "x": 6,
-                            "y": 0.5,
-                            "z": 5
+                            "x": 1.6,
+                            "y": 0.05,
+                            "z": 1.5
                         }
                     }
                 }
             },
-            "wardrobeMiddle2" : {
-                "type": "node",
-                "materialref": {
-                    "materialId": "wardrobeMaterial"
-                },
-                "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": 0,
-                            "y": 8,
-                            "z": 0
-                        }
-                    }
-                ],
-                "children": {
-                    "boxPrim": {
-                        "type": "box",
-                        "xyz1": {
-                            "x": 0,
-                            "y": 0,
-                            "z": 0
-                        },
-                        "xyz2": {
-                            "x": 6,
-                            "y": 0.5,
-                            "z": 5
-                        }
-                    }
-                }
-            },
-            "wardrobeMiddle3" : {
-                "type": "node",
-                "materialref": {
-                    "materialId": "wardrobeMaterial"
-                },
-                "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": 0,
-                            "y": 5,
-                            "z": 0
-                        }
-                    }
-                ],
-                "children": {
-                    "boxPrim": {
-                        "type": "box",
-                        "xyz1": {
-                            "x": 0,
-                            "y": 0,
-                            "z": 0
-                        },
-                        "xyz2": {
-                            "x": 6,
-                            "y": 0.5,
-                            "z": 5
-                        }
-                    }
-                }
-            },
-            "wardrobeBack" : {
+            "billyBack" : {
                 "type" : "node",
                 "materialref": {
-                    "materialId": "wardrobeMaterial"
+                    "materialId": "billyMaterial"
                 },
                 "transforms": [
                     {
                         "type": "translate",
                         "amount": {
                             "x": 0,
-                            "y": 7.5,
-                            "z": -2.75
+                            "y": 2.0625,
+                            "z": -0.75
                         }
                     }
                 ],
@@ -372,37 +802,37 @@
                             "z": 0
                         },
                         "xyz2": {
-                            "x": 6,
-                            "y": 15.5,
-                            "z": 0.5
+                            "x": 1.6,
+                            "y": 4.125,
+                            "z": 0.125
                         }
                     }
                 }
             },
-            "wardrobeLateral" : {
+            "billyLateral" : {
                 "type" : "node",
                 "children" : {
-                    "wardrobeLeft" : {
+                    "billyLeft" : {
                         "type" : "noderef",
-                        "nodeId" : "wardrobeLeft"
+                        "nodeId" : "billyLeft"
                     },
-                    "wardrobeRight" : {
+                    "billyRight" : {
                         "type" : "noderef",
-                        "nodeId" : "wardrobeRight"
+                        "nodeId" : "billyRight"
                     }
                 }
             },
-            "wardrobeLeft" : {
+            "billyLeft" : {
                 "type": "node",
                 "materialref": {
-                    "materialId": "wardrobeMaterial"
+                    "materialId": "billyMaterial"
                 },
                 "transforms": [
                     {
                         "type": "translate",
                         "amount": {
-                            "x": -2.75,
-                            "y": 7.5,
+                            "x": -0.75,
+                            "y": 2.0625,
                             "z": 0
                         }
                     }
@@ -416,24 +846,24 @@
                             "z": 0
                         },
                         "xyz2": {
-                            "x": 0.5,
-                            "y": 15.5,
-                            "z": 5
+                            "x": 0.125,
+                            "y": 4.125,
+                            "z": 1.5
                         }
                     }
                 }
             },
-            "wardrobeRight" : {
+            "billyRight" : {
                 "type": "node",
                 "materialref": {
-                    "materialId": "wardrobeMaterial"
+                    "materialId": "billyMaterial"
                 },
                 "transforms": [
                     {
                         "type": "translate",
                         "amount": {
-                            "x": 2.75,
-                            "y": 7.5,
+                            "x": 0.75,
+                            "y": 2.0625,
                             "z": 0
                         }
                     }
@@ -447,37 +877,37 @@
                             "z": 0
                         },
                         "xyz2": {
-                            "x": 0.5,
-                            "y": 15.5,
-                            "z": 5
+                            "x": 0.125,
+                            "y": 4.125,
+                            "z": 1.5
                         }
                     }
                 }
             },
-            "wardrobeVertical": {
+            "billyVertical": {
                 "type": "node",
                 "children": {
-                    "wardrobeBase" : {
+                    "billyBase" : {
                         "type": "noderef",
-                        "nodeId":"wardrobeBase"
+                        "nodeId":"billyBase"
                     },
-                    "wardrobeTop" : {
+                    "billyTop" : {
                         "type": "noderef",
-                        "nodeId": "wardrobeTop"
+                        "nodeId": "billyTop"
                     }
                 }
             },
-            "wardrobeBase" : {
+            "billyBase" : {
                 "type": "node",
                 "materialref": {
-                    "materialId": "wardrobeMaterial"
+                    "materialId": "billyMaterial"
                 },
                 "transforms": [
                     {
                         "type": "translate",
                         "amount": {
                             "x": 0,
-                            "y": 0,
+                            "y": 0.125,
                             "z": 0
                         }
                     }
@@ -491,24 +921,24 @@
                             "z": 0
                         },
                         "xyz2": {
-                            "x": 6,
-                            "y": 0.5,
-                            "z": 5
+                            "x": 1.6,
+                            "y": 0.25,
+                            "z": 1.5
                         }
                     }
                 }
             },
-            "wardrobeTop" : {
+            "billyTop" : {
                 "type": "node",
                 "materialref": {
-                    "materialId": "wardrobeMaterial"
+                    "materialId": "billyMaterial"
                 },
                 "transforms": [
                     {
                         "type": "translate",
                         "amount": {
                             "x": 0,
-                            "y": 15,
+                            "y": 4,
                             "z": 0
                         }
                     }
@@ -522,9 +952,9 @@
                             "z": 0
                         },
                         "xyz2": {
-                            "x": 6,
-                            "y": 0.5,
-                            "z": 5
+                            "x": 1.6,
+                            "y": 0.25,
+                            "z": 1.5
                         }
                     }
                 }
@@ -539,8 +969,8 @@
                         "type": "translate",
                         "amount": {
                             "x": 0,
-                            "y": 5.25,
-                            "z": -2
+                            "y": 0.525,
+                            "z": -0.2
                         }
                     }
                 ],
@@ -553,56 +983,53 @@
                             "z": 0
                         },
                         "xyz2": {
-                            "x": 20,
-                            "y": 0.5,
-                            "z": 16
+                            "x": 2,
+                            "y": 0.05,
+                            "z": 1.6
                         }
                     }
                 }
             },
-            "tableLeg1": {
+            "rightLeg": {
                 "type": "node",
                 "transforms": [
                     {
                         "type": "translate",
                         "amount": {
-                            "x": 8,
+                            "x": 0.8,
                             "y": 0,
                             "z": 0
                         }
                     }
                 ],
                 "children": {
-                    "tableLegCenter": {
+                    "tableLeg": {
                         "type": "noderef",
-                        "nodeId": "tableLegCenter"
-                    },
-                    "tableLegSide1": {
-                        "type": "noderef",
-                        "nodeId": "tableLegSide1"
-                    },
-                    "tableLegSide2": {
-                        "type": "noderef",
-                        "nodeId": "tableLegSide2"
-                    },
-                    "tableLegSupport": {
-                        "type": "noderef",
-                        "nodeId": "tableLegSupport"
+                        "nodeId": "tableLeg"
                     }
                 }
             },
-            "tableLeg2": {
+            "leftLeg": {
                 "type": "node",
                 "transforms": [
                     {
                         "type": "translate",
                         "amount": {
-                            "x": -8,
+                            "x": -0.8,
                             "y": 0,
                             "z": 0
                         }
                     }
                 ],
+                "children": {
+                    "tableLeg": {
+                        "type": "noderef",
+                        "nodeId": "tableLeg"
+                    }
+                }
+            },
+            "tableLeg": {
+                "type": "node",
                 "children": {
                     "tableLegCenter": {
                         "type": "noderef",
@@ -631,9 +1058,9 @@
                     {
                         "type": "scale",
                         "amount": {
-                            "x": 1,
-                            "y": 1,
-                            "z": 6
+                            "x": 0.1,
+                            "y": 0.1,
+                            "z": 0.6
                         }
                     }
                 ],
@@ -657,7 +1084,7 @@
                         "amount": {
                             "x": 0,
                             "y": 0,
-                            "z": 3
+                            "z": 0.3
                         }
                     }
                 ],
@@ -670,9 +1097,9 @@
                             "z": 0
                         },
                         "xyz2": {
-                            "x": 1,
-                            "y": 10,
-                            "z": 1
+                            "x": 0.1,
+                            "y": 1,
+                            "z": 0.1
                         }
                     }
                 }
@@ -688,7 +1115,7 @@
                         "amount": {
                             "x": 0,
                             "y": 0,
-                            "z": -3
+                            "z": -0.3
                         }
                     }
                 ],
@@ -701,9 +1128,9 @@
                             "z": 0
                         },
                         "xyz2": {
-                            "x": 1,
-                            "y": 10,
-                            "z": 1
+                            "x": 0.1,
+                            "y": 1,
+                            "z": 0.1
                         }
                     }
                 }
@@ -718,8 +1145,8 @@
                         "type": "translate",
                         "amount": {
                             "x": 0,
-                            "y": -5.5,
-                            "z": -2
+                            "y": -0.55,
+                            "z": -0.2
                         }
                     }
                 ],
@@ -732,9 +1159,9 @@
                             "z": 0
                         },
                         "xyz2": {
-                            "x": 1,
-                            "y": 1,
-                            "z": 16
+                            "x": 0.1,
+                            "y": 0.1,
+                            "z": 1.6
                         }
                     }
                 }

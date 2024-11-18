@@ -18,7 +18,6 @@ class MyContents {
         this.axis = null
 
         this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
-        // this.reader.open("scenes/SGI_TP2_XML_T06_G07_v1.json");
         this.reader.open("scenes/ni.json");
     }
 
@@ -66,7 +65,8 @@ class MyContents {
                 this.app.setActiveCamera(initialCamera)
             },
             objects: () => {
-                loadObjects.execute(graph, this.materialsSetttings).forEach(object => {
+                [...loadObjects.execute(graph, this.materialsSetttings)] // fix to stupid bug
+                .forEach(object => {
                     this.app.scene.add(object)
                 })
             }
