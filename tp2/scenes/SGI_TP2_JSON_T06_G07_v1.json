@@ -198,30 +198,6 @@
             "scene": {
                 "type": "node",
                 "children": {
-                    "slimBilly": {
-                        "type": "noderef",
-                        "nodeId": "slimBilly"
-                    },
-                    "largeBilly1": {
-                        "type": "noderef",
-                        "nodeId": "largeBilly1"
-                    },
-                    "largeBilly2": {
-                        "type": "noderef",
-                        "nodeId": "largeBilly2"
-                    },
-                    "tableGroup1": {
-                        "type": "noderef",
-                        "nodeId": "tableGroup1"
-                    },
-                    "tableGroup2": {
-                        "type": "noderef",
-                        "nodeId": "tableGroup2"
-                    },
-                    "floor": {
-                        "type": "noderef",
-                        "nodeId": "floor"
-                    },
                     "pointLight": {
                         "type": "pointlight",
                         "enabled": true,
@@ -239,7 +215,15 @@
                             "y": 5,
                             "z": 5
                         }
-                    }
+                    },
+                    "nodesList": [
+                        "slimBilly",
+                        "largeBilly1",
+                        "largeBilly2",
+                        "tableGroup1",
+                        "tableGroup2",
+                        "floor"
+                    ]
                 }
             },
             "floor": {
@@ -292,30 +276,14 @@
                     }
                 ],
                 "children": {
-                    "table1": {
-                        "type": "noderef",
-                        "nodeId": "table1"
-                    },
-                    "table2": {
-                        "type": "noderef",
-                        "nodeId": "table2"
-                    },
-                    "table3": {
-                        "type": "noderef",
-                        "nodeId": "table3"
-                    },
-                    "table4": {
-                        "type": "noderef",
-                        "nodeId": "table4"
-                    },
-                    "table5": {
-                        "type": "noderef",
-                        "nodeId": "table5"
-                    },
-                    "table6": {
-                        "type": "noderef",
-                        "nodeId": "table6"
-                    }
+                    "nodesList": [
+                        "table1",
+                        "table2",
+                        "table3",
+                        "table4",
+                        "table5",
+                        "table6"
+                    ]
                 }
             },
             "tableGroup2": {
@@ -339,22 +307,12 @@
                     }
                 ],
                 "children": {
-                    "table1": {
-                        "type": "noderef",
-                        "nodeId": "table1"
-                    },
-                    "table2": {
-                        "type": "noderef",
-                        "nodeId": "table2"
-                    },
-                    "table3": {
-                        "type": "noderef",
-                        "nodeId": "table3"
-                    },
-                    "table4": {
-                        "type": "noderef",
-                        "nodeId": "table4"
-                    }
+                    "nodesList": [
+                        "table1",
+                        "table2",
+                        "table3",
+                        "table4"
+                    ]
                 }
             },
             "table1": {
@@ -370,10 +328,9 @@
                     }
                 ],
                 "children": {
-                    "table": {
-                        "type": "noderef",
-                        "nodeId": "table"
-                    }
+                    "nodesList": [
+                        "table"
+                    ]
                 }
             },
             "table2": {
@@ -397,10 +354,9 @@
                     }
                 ],
                 "children": {
-                    "table": {
-                        "type": "noderef",
-                        "nodeId": "table"
-                    }
+                    "nodesList": [
+                        "table"
+                    ]
                 }
             },
             "table3": {
@@ -416,10 +372,9 @@
                     }
                 ],
                 "children": {
-                    "table": {
-                        "type": "noderef",
-                        "nodeId": "table"
-                    }
+                    "nodesList": [
+                        "table"
+                    ]
                 }
             },
             "table4": {
@@ -443,10 +398,9 @@
                     }
                 ],
                 "children": {
-                    "table": {
-                        "type": "noderef",
-                        "nodeId": "table"
-                    }
+                    "nodesList": [
+                        "table"
+                    ]
                 }
             },
             "table5": {
@@ -462,10 +416,9 @@
                     }
                 ],
                 "children": {
-                    "table": {
-                        "type": "noderef",
-                        "nodeId": "table"
-                    }
+                    "nodesList": [
+                        "table"
+                    ]
                 }
             },
             "table6": {
@@ -489,27 +442,19 @@
                     }
                 ],
                 "children": {
-                    "table": {
-                        "type": "noderef",
-                        "nodeId": "table"
-                    }
+                    "nodesList": [
+                        "table"
+                    ]
                 }
             },
             "table": {
                 "type": "node",
                 "children": {
-                    "tableTop": {
-                        "type": "noderef",
-                        "nodeId": "tableTop"
-                    },
-                    "rightLeg": {
-                        "type": "noderef",
-                        "nodeId": "rightLeg"
-                    },
-                    "leftLeg": {
-                        "type": "noderef",
-                        "nodeId": "leftLeg"
-                    }
+                    "nodesList": [
+                        "tableTop", 
+                        "rightLeg", 
+                        "leftLeg"   
+                    ]
                 }
             },
             "largeBilly1": {
@@ -541,10 +486,9 @@
                     }
                 ],
                 "children": {
-                    "billy": {
-                        "type": "noderef",
-                        "nodeId": "billy"
-                    }
+                    "nodesList": [
+                        "billy"
+                    ]
                 }
             },
             "largeBilly2": {
@@ -576,10 +520,9 @@
                     }
                 ],
                 "children": {
-                    "billy": {
-                        "type": "noderef",
-                        "nodeId": "billy"
-                    }
+                    "nodesList": [
+                        "billy"
+                    ]
                 }
             },
             "slimBilly": {
@@ -595,56 +538,32 @@
                     }
                 ],
                 "children": {
-                    "billy": {
-                        "type": "noderef",
-                        "nodeId": "billy"
-                    }
+                    "nodesList": [
+                        "billy"
+                    ]
                 }
             },
             "billy": {
                 "type": "node",
                 "children": {
-                    "billyVertical" : {
-                        "type": "noderef",
-                        "nodeId":"billyVertical"
-                    },
-                    "billyLateral" : {
-                        "type": "noderef",
-                        "nodeId":"billyLateral"
-                    },
-                    "billyBack" : {
-                        "type": "noderef",
-                        "nodeId":"billyBack"
-                    },
-                    "billyMiddles" : {
-                        "type": "noderef",
-                        "nodeId":"billyMiddles"
-                    }
+                    "nodesList": [
+                        "billyVertical",
+                        "billyLateral",
+                        "billyBack",
+                        "billyMiddles"
+                    ]
                 }
             },
             "billyMiddles" : {
                 "type" : "node",
                 "children" : {
-                    "billyMiddle1" : {
-                        "type" : "noderef",
-                        "nodeId" : "billyMiddle1"
-                    },
-                    "billyMiddle2" : {
-                        "type" : "noderef",
-                        "nodeId" : "billyMiddle2"
-                    },
-                    "billyMiddle3" : {
-                        "type" : "noderef",
-                        "nodeId" : "billyMiddle3"
-                    },
-                    "billyMiddle4" : {
-                        "type" : "noderef",
-                        "nodeId" : "billyMiddle4"
-                    },
-                    "billyMiddle5" : {
-                        "type" : "noderef",
-                        "nodeId" : "billyMiddle5"
-                    }
+                    "nodesList": [
+                        "billyMiddle1",
+                        "billyMiddle2",
+                        "billyMiddle3",
+                        "billyMiddle4",
+                        "billyMiddle5"
+                    ]
                 }
             },
             "billyMiddle1" : {
@@ -663,10 +582,9 @@
                     }
                 ],
                 "children": {
-                    "shelf": {
-                        "type": "noderef",
-                        "nodeId": "shelf"
-                    }
+                    "nodesList": [
+                        "shelf"
+                    ]
                 }
             },
             "billyMiddle2" : {
@@ -685,10 +603,9 @@
                     }
                 ],
                 "children": {
-                    "shelf": {
-                        "type": "noderef",
-                        "nodeId": "shelf"
-                    }
+                    "nodesList": [
+                        "shelf"
+                    ]
                 }
             },
             "billyMiddle3" : {
@@ -707,10 +624,9 @@
                     }
                 ],
                 "children": {
-                    "shelf": {
-                        "type": "noderef",
-                        "nodeId": "shelf"
-                    }
+                    "nodesList": [
+                        "shelf"
+                    ]
                 }
             },
             "billyMiddle4" : {
@@ -729,10 +645,9 @@
                     }
                 ],
                 "children": {
-                    "shelf": {
-                        "type": "noderef",
-                        "nodeId": "shelf"
-                    }
+                    "nodesList": [
+                        "shelf"
+                    ]
                 }
             },
             "billyMiddle5" : {
@@ -751,10 +666,9 @@
                     }
                 ],
                 "children": {
-                    "shelf": {
-                        "type": "noderef",
-                        "nodeId": "shelf"
-                    }
+                    "nodesList": [
+                        "shelf"
+                    ]
                 }
             },
             "shelf": {
@@ -812,14 +726,10 @@
             "billyLateral" : {
                 "type" : "node",
                 "children" : {
-                    "billyLeft" : {
-                        "type" : "noderef",
-                        "nodeId" : "billyLeft"
-                    },
-                    "billyRight" : {
-                        "type" : "noderef",
-                        "nodeId" : "billyRight"
-                    }
+                    "nodesList": [
+                        "billyLeft",
+                        "billyRight"
+                    ]
                 }
             },
             "billyLeft" : {
@@ -887,14 +797,10 @@
             "billyVertical": {
                 "type": "node",
                 "children": {
-                    "billyBase" : {
-                        "type": "noderef",
-                        "nodeId":"billyBase"
-                    },
-                    "billyTop" : {
-                        "type": "noderef",
-                        "nodeId": "billyTop"
-                    }
+                    "nodesList": [
+                        "billyBase",
+                        "billyTop"
+                    ]
                 }
             },
             "billyBase" : {
@@ -1003,10 +909,9 @@
                     }
                 ],
                 "children": {
-                    "tableLeg": {
-                        "type": "noderef",
-                        "nodeId": "tableLeg"
-                    }
+                    "nodesList": [
+                        "tableLeg"
+                    ]
                 }
             },
             "leftLeg": {
@@ -1022,31 +927,20 @@
                     }
                 ],
                 "children": {
-                    "tableLeg": {
-                        "type": "noderef",
-                        "nodeId": "tableLeg"
-                    }
+                    "nodesList": [
+                        "tableLeg"
+                    ]
                 }
             },
             "tableLeg": {
                 "type": "node",
                 "children": {
-                    "tableLegCenter": {
-                        "type": "noderef",
-                        "nodeId": "tableLegCenter"
-                    },
-                    "tableLegSide1": {
-                        "type": "noderef",
-                        "nodeId": "tableLegSide1"
-                    },
-                    "tableLegSide2": {
-                        "type": "noderef",
-                        "nodeId": "tableLegSide2"
-                    },
-                    "tableLegSupport": {
-                        "type": "noderef",
-                        "nodeId": "tableLegSupport"
-                    }
+                    "nodesList": [
+                        "tableLegCenter",
+                        "tableLegSide1",
+                        "tableLegSide2",
+                        "tableLegSupport"
+                    ]
                 }
             },
             "tableLegCenter": {
