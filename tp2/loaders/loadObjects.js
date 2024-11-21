@@ -5,7 +5,7 @@ export const loadObjects = {
         const root = data[data.rootid];
         root.name = data.rootid;
 
-        const scene = dfs(data, materials, root, null, true);
+        const scene = dfs(data, materials, root, null, false, true);
         
         return scene.children;
     }
@@ -19,10 +19,10 @@ export const loadObjects = {
  * @param {*} materialref Material reference passed by the parent node (will be used if the node does not have a materialref itself)
  * @returns 
  */
-const dfs = (data, materials, node, materialref=null, debug=false, depth=1) => {        
-    if (debug) console.log("[+]", " ".repeat(depth*2), node.name);
+const dfs = (data, materials, node, materialref=null, isLod=false, debug=false, depth=1) => {        
+    if (debug) console.log(`[${isLod ? 'L' : 'G'}]`, " ".repeat(depth*2), node.name);
     
-    const object = new THREE.Group();
+    const object = isLod ? new THREE.LOD() : new THREE.Group();
     object.name = node.name;
 
     let material = null;
@@ -30,54 +30,72 @@ const dfs = (data, materials, node, materialref=null, debug=false, depth=1) => {
     else if (materialref) material = materialref;
     
 
-    for (let key in node.children) {
-        const info = node.children[key];
-        const child = data[info.nodeId];
-        if (child) {
-            child.name = key;
-        }        
+    for (let key in node.children) {        
+        switch (key) {
+            case "nodesList":
+                const nodesList = node.children[key];
+                nodesList.forEach(key => {
+                    const child = data[key];
+                    child.name = key;
 
-        switch (info.type) {
-            case 'noderef':
-                let newNode = dfs(data, materials, child, material, debug, depth+1);
-                object.add(newNode);
+                    const newNode = dfs(data, materials, child, material, false, debug, depth+1);
+                    object.add(newNode);
+                });
                 break;
-            case 'pointlight':
-                const pointlight = buildPointLight(info.enabled, info.color, info.intensity, info.distance, info.decay, info.castshadow, info.position);
-                object.add(pointlight);
-                
-                const lightHelper = buildLightHelper(pointlight);
-                object.add(lightHelper);
-                break;
-            case 'rectangle':
-                const rectangle = buildRectangle(info, material);
-                object.add(rectangle);
-                break;
-            case 'triangle':
-                const triangle = buildTriangle(info, material);
-                object.add(triangle);
-                break;
-            case 'box':
-                const box = buildBox(info, material);
-                object.add(box);
-                break;
-            case 'cylinder':
-                const cylinder = buildCylinder(info, material);
-                object.add(cylinder);
-                break;
-            case 'sphere':
-                const sphere = buildSphere(info, material);
-                object.add(sphere);
+            case "lodsList":
+                const lodsList = node.children[key];
+                lodsList.forEach(key => {
+                    const child = data[key];
+                    child.name = key;
+
+                    const newNode = dfs(data, materials, child, material, true, debug, depth+1);
+                    object.add(newNode);
+                });
                 break;
             default:
-                throw new Error('Unknown object type: ' + node.children[key].type);
-        }        
+                const info = node.children[key];
+
+                switch (info.type) {
+                    case 'pointlight':
+                        const pointlight = buildPointLight(info.enabled, info.color, info.intensity, info.distance, info.decay, info.castshadow, info.position);
+                        object.add(pointlight);
+                        
+                        const lightHelper = buildLightHelper(pointlight);
+                        object.add(lightHelper);
+                        break;
+                    case 'rectangle':
+                        const rectangle = buildRectangle(info, material);
+                        object.add(rectangle);
+                        break;
+                    case 'triangle':
+                        const triangle = buildTriangle(info, material);
+                        object.add(triangle);
+                        break;
+                    case 'box':
+                        const box = buildBox(info, material);
+                        object.add(box);
+                        break;
+                    case 'cylinder':
+                        const cylinder = buildCylinder(info, material);
+                        object.add(cylinder);
+                        break;
+                    case 'sphere':
+                        const sphere = buildSphere(info, material);
+                        object.add(sphere);
+                        break;
+                    default:
+                        throw new Error('Unknown object type: ' + node.children[key].type);
+                }        
+
+                break;
+        }
     }
 
     transform(object, node.transforms);
 
     return object;
 }
+
 
 /**
  * Build a rectangle mesh

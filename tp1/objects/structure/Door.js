@@ -36,31 +36,33 @@ class Door extends THREE.Object3D {
         const doorWidth = 1;
         const doorHeight = 2;
         const doorDepth = .05;
-        this.door = new THREE.Group()
+        const door = new THREE.Group()
 
         const doorGeometry = this.createRectangle(doorWidth, doorHeight, doorDepth);
         const doorMesh = new THREE.Mesh(doorGeometry, this.doorMaterial);
         doorMesh.position.set(0, doorHeight / 2, 0);
-        this.door.add(doorMesh);
+        door.add(doorMesh);
 
         const frameThickness = .05;
         const frameGeometry = this.createRectangle(doorWidth + frameThickness * 2, doorHeight + frameThickness * 2, frameThickness);
         const frameMesh = new THREE.Mesh(frameGeometry, this.doorMaterial);
         frameMesh.position.set(0, (doorHeight + frameThickness) / 2, -frameThickness / 2);
-        this.door.add(frameMesh);
+        door.add(frameMesh);
 
         const handleGeometry = new THREE.SphereGeometry(0.05, 16, 16);
         const handleMesh = new THREE.Mesh(handleGeometry, this.handleMaterial);
         handleMesh.position.set(-doorWidth / 4, doorHeight / 2, 0.06); 
-        this.door.add(handleMesh);
+        door.add(handleMesh);
     
-        this.door.scale.set(6,6,4.5)
-        this.door.position.set(this.translate.x, this.translate.y, this.translate.z)
-        this.door.rotateY(this.rotate)
+        door.scale.set(6,6,4.5)
+        door.position.set(this.translate.x, this.translate.y, this.translate.z)
+        door.rotateY(this.rotate)
+
+        this.children.push(door);
     }
 
     draw() {
-        this.app.scene.add(this.door);
+        this.app.scene.add(this.children[0]);
     }
 }
 
