@@ -24,7 +24,12 @@ export const loadMaterials = {
                 let texlength_s = material_data.texlength_s ? material_data.texlength_s : 1 
                 let texlength_t = material_data.texlength_t ? material_data.texlength_t : 1   
                 
-                material.map =  textures[material_data.textureref]
+                let texture = textures[material_data.textureref]
+                texture.wrapS = texlength_s
+                texture.wrapT = texlength_t
+                
+                material.map = texture  
+
                 //Do we generate mipmaps for this automatically ? 
                 if (material_data.bumpref){
                     material.bumpScale = material_data.bumpscale ? material_data.bumpscale : 1
