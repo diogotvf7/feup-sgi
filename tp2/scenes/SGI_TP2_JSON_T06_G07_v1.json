@@ -25,12 +25,12 @@
                 "center": {"x": 0, "y": 0, "z": 0},
                 "emissive": {"r": 0, "g": 0, "b": 0},
                 "intensity": 0,
-                "front": "scenes/skybox/front.jpg",              
-                "back": "scenes/skybox/back.jpg",               
-                "up": "scenes/skybox/up.jpg",                 
-                "down": "scenes/skybox/down.jpg",
-                "left": "scenes/skybox/left.jpg",
-                "right": "scenes/skybox/right.jpg"
+                "front": "scenes/textures/front.jpg",              
+                "back": "scenes/textures/back.jpg",               
+                "up": "scenes/textures/up.jpg",                 
+                "down": "scenes/textures/down.jpg",
+                "left": "scenes/textures/left.jpg",
+                "right": "scenes/textures/right.jpg"
             }
         },
         "textures": {
