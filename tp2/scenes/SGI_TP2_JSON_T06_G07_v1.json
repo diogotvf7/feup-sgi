@@ -39,6 +39,9 @@
             },
             "floor": {
                 "filepath": "scenes/textures/floor.jpg"
+            },
+            "wall": {
+                "filepath": "scenes/textures/wall.jpg"
             }
         },
         "materials": {
@@ -49,21 +52,56 @@
                     "b": 0.8
                 },
                 "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
+                    "r": 0.1,
+                    "g": 0.1,
+                    "b": 0.1
                 },
                 "specular": {
                     "r": 0.0,
                     "g": 0.0,
                     "b": 0.0
                 },
-                "shininess": 10,
-                "transparent": false,
-                "opacity": 1.0,
                 "textureref": "floor",
                 "texlength_s": 1,
                 "texlength_t": 1
+            },
+            "wall": {
+                "color": {
+                    "r": 1,
+                    "g": 1,
+                    "b": 1
+                },
+                "emissive": {
+                    "r": 0.4,
+                    "g": 0.4,
+                    "b": 0.4
+                },
+                "specular": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "shininess": 10,
+                "textureref": "wall",
+                "texlength_s": 1,
+                "texlength_t": 1
+            },
+            "door": {
+                "color": {
+                    "r": 0.7,
+                    "g": 0.75,
+                    "b": 0.73
+                },
+                "emissive": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "specular": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                }
             },
             "tableTop": {
                 "color": {
@@ -223,9 +261,150 @@
                         "tableGroup1",
                         "tableGroup2",
                         "tableGroup3",
+                        "walls",
+                        "door",
                         "floor"
                     ]
                 }
+            },
+            "walls": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "wall"
+                },
+                "children": {
+                    "nodesList": [
+                        "wall1",
+                        "wall2",
+                        "wall3"
+                    ]
+                }
+
+            },
+            "wall1": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 90,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 13.5,
+                            "z": -35
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "wall"
+                    ]
+                }
+            },
+            "wall2": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": -90,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 13.5,
+                            "z": -35
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "wall"
+                    ]
+                }
+            },
+            "wall3": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 180,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 13.5,
+                            "z": -35
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "wall"
+                    ]
+                }
+            },
+            "wall": {
+                "type": "node",
+                "children": {
+                    "rectanglePrim": {
+                        "type": "rectangle",
+                        "xy1": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "xy2": {
+                            "x": 70,
+                            "y": 30
+                        }
+                    }
+                }
+            },
+            "door": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "door"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 25,
+                            "y": 11,
+                            "z": 35
+                        }
+                    }
+                ],
+                "children": {
+                    "boxPrim": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 10,
+                            "y": 22,
+                            "z": 0.3
+                        }
+                    }
+                }                
             },
             "floor": {
                 "type": "node",

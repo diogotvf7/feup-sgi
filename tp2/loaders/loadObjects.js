@@ -105,6 +105,9 @@ const dfs = (data, materials, node, materialref=null, isLod=false, debug=false, 
  * @returns the rectangle mesh
  */
 const buildRectangle = ({ xy1, xy2, parts_x = 1, parts_y = 1 }, material) => {
+    console.log('[DEBUG]  ', material);
+    
+    
     const width = Math.abs(xy1.x - xy2.x);
     const height = Math.abs(xy1.y - xy2.y);
 
