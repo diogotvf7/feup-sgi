@@ -14,8 +14,6 @@ export const loadGlobals = {
         )
 
         for (let texture of textureRefs){
-            console.log(texture)
-
             let material = new THREE.MeshStandardMaterial({
                 map:  new THREE.TextureLoader().load(texture),
                 side: THREE.BackSide, 

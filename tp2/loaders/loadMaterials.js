@@ -5,27 +5,37 @@ export const loadMaterials = {
         let materials = {}
 
         for (let key in data) {
-            let material = data[key]
-        
-            //TODO: Dont know what do with this
-            let texlength_s = material.texlength_s ? material.texlength_s : 1 
-            let texlength_t = material.texlength_t ? material.texlength_t : 1   
+            let material_data = data[key] 
 
-            //Is it MeshPhong ? 
-            materials[key] = new THREE.MeshPhongMaterial({
-                color: new THREE.Color(material.color.r, material.color.g, material.color.b), //color - mandatory
-                emissive: new THREE.Color(material.emissive.r, material.emissive.g, material.emissive.b), //color - mandatory
-                specular: new THREE.Color(material.specular.r, material.specular.g, material.specular.b), //color - mandatory 
-                shininess: material.shininess, //float - mandatory
-                side: material.twosided ? THREE.DoubleSide : THREE.FrontSide, //default false -> FrontSide - optional
-                transparent: material.transparent, //boolean - mandatory
-                opacity: material.opacity, //float - mandatory
-                wireframe: material.wireframe ? material.wireframe : false, //Boolean - optional
-                flatShading: material.shading === 'flat', 
-                bumpScale : material.bumpscale ? material.bumpscale : 1, //Float - optional
-                bumpMap : material.bumpref ? new THREE.TextureLoader().load(material.bumpref) : null, //Object - optional
-                map : material.textureref ? textures[material.textureref] : null, //Object - optional
+            let material = new THREE.MeshPhongMaterial({
+                color: new THREE.Color(material_data.color.r, material_data.color.g, material_data.color.b), //color - mandatory
+                emissive: new THREE.Color(material_data.emissive.r, material_data.emissive.g, material_data.emissive.b), //color - mandatory
+                specular: new THREE.Color(material_data.specular.r, material_data.specular.g, material_data.specular.b), //color - mandatory 
+                shininess: material_data.shininess, //float - mandatory
+                side: material_data.twosided ? THREE.DoubleSide : THREE.FrontSide, //default false -> FrontSide - optional
+                transparent: material_data.transparent, //boolean - mandatory
+                opacity: material_data.opacity, //float - mandatory
+                wireframe: material_data.wireframe ? material_data.wireframe : false, //Boolean - optional
+                flatShading: material_data.shading === 'flat', 
             })
+
+            if (material_data.textureref) {
+                //TOODO: What to do with this
+                let texlength_s = material_data.texlength_s ? material_data.texlength_s : 1 
+                let texlength_t = material_data.texlength_t ? material_data.texlength_t : 1   
+                
+                material.map =  textures[material_data.textureref]
+                //Do we generate mipmaps for this automatically ? 
+                if (material_data.bumpref){
+                    material.bumpScale = material_data.bumpscale ? material_data.bumpscale : 1
+                    material.bumpMap =  textures[material_data.bumpref]
+                }
+                if(material_data.specularref){
+                    let texture_ = textures[material_data.specularref]
+                    material.specularMap = textures[material_data.specularref]
+                }   
+            }
+            materials[key] = material
         }
         
         return materials
