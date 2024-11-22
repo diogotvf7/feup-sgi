@@ -141,14 +141,14 @@ const buildBox = ({xyz1, xyz2, parts_x=1, parts_y=1, parts_z=1}, material) => {
     return mesh;
 }
 
-const buildCylinder = ({base, top, height, slices, stacks, capsclose=false, thetaStart=0, thetaLength=2*Math.PI}, material) => {
-    const geometry = new THREE.CylinderGeometry(base, top, height, slices, stacks, capsclose, thetaStart, thetaLength);
+const buildCylinder = ({base, top, height, slices, stacks, capsclose=false, thetaStart=0, thetaLength=360}, material) => {
+    const geometry = new THREE.CylinderGeometry(base, top, height, slices, stacks, !capsclose, degreesToRadians(thetaStart), degreesToRadians(thetaLength));
     const mesh = new THREE.Mesh(geometry, material);
     return mesh;
 }
 
 const buildSphere = ({radius, slices, stacks, thetaStart=0, thetaLength=2*Math.PI, phiStart=0, phiLength=Math.PI}, material) => {
-    const geometry = new THREE.SphereGeometry(radius, slices, stacks, thetaStart, thetaLength, phiStart, phiLength);
+    const geometry = new THREE.SphereGeometry(radius, slices, stacks, degreesToRadians(thetaStart), degreesToRadians(thetaLength), degreesToRadians(phiStart), degreesToRadians(phiLength));
     const mesh = new THREE.Mesh(geometry, material);
     return mesh;
 }
