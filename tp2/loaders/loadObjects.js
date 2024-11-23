@@ -57,12 +57,23 @@ const dfs = (data, materials, node, materialref=null, isLod=false, debug=false, 
 
                 switch (info.type) {
                     case 'pointlight':
-                        const pointlight = buildPointLight(info.enabled, info.color, info.intensity, info.distance, info.decay, info.castshadow, info.position);
-                        object.add(pointlight);
-                        
-                        const lightHelper = buildLightHelper(pointlight);
-                        object.add(lightHelper);
+                        if(info.enabled !== false){
+                            const pointlight = buildPointLight(info.color, info.intensity, info.distance, info.decay, info.castshadow, info.position);
+                            object.add(pointlight);
+                            
+                            const pointLightHelper = buildLightHelper(pointlight);
+                            object.add(pointLightHelper);
+                        }
                         break;
+                    case 'spotlight':
+                        if(info.enabled !== false){
+                            const spotlight = buildSpotLight(info.color, info.intensity, info.distance, info.angle, info.decay, info.penumbra, info.position, info.target, info.castshadow, info.shadowfar, info.shadowmapsize)
+                            object.add(spotlight)
+    
+                            const spotLightHelper = buildLightHelper(spotlight)
+                            object.add(spotLightHelper)
+                        }
+                        break
                     case 'rectangle':
                         const rectangle = buildRectangle(info, material);
                         object.add(rectangle);
@@ -83,6 +94,10 @@ const dfs = (data, materials, node, materialref=null, isLod=false, debug=false, 
                         const sphere = buildSphere(info, material);
                         object.add(sphere);
                         break;
+                    case 'cone':
+                        const cone = buildCone(info, material)
+                        object.add(cone)
+                        break
                     default:
                         throw new Error('Unknown object type: ' + node.children[key].type);
                 }        
@@ -153,6 +168,12 @@ const buildSphere = ({radius, slices, stacks, thetaStart=0, thetaLength=2*Math.P
     return mesh;
 }
 
+const buildCone = ({radius, height, radialSegments = 32, heightSegments = 1, thetaStart = 0, thetaLength = 2*Math.PI}, material) => {
+    const geometry = new THREE.ConeGeometry(radius, height, radialSegments, heightSegments, thetaStart, thetaLength)
+    const mesh = new THREE.Mesh(geometry, material)
+    return mesh
+}
+
 /**
  * Build a point light
  * @param {*} enabled 
@@ -164,13 +185,23 @@ const buildSphere = ({radius, slices, stacks, thetaStart=0, thetaLength=2*Math.P
  * @param {*} position 
  * @returns 
  */
-const buildPointLight = (enabled, color, intensity, distance, decay, castshadow, position) => {
-    if (!enabled) return null;
+const buildPointLight = (color, intensity, distance, decay, castshadow, position) => {
     const light = new THREE.PointLight(color, intensity, distance, decay);
     light.castShadow = castshadow;
     light.position.set(position.x, position.y, position.z);
     return light;
 }
+
+const buildSpotLight = (color, intensity = 1, distance = 1000, angle, decay = 2, penumbra = 1, position, target, castshadow = false, shadowfar = 500, shadowmapsize = 512) => {
+    const light = new THREE.SpotLight(color, intensity, distance, angle, penumbra, decay)
+    light.castShadow = castshadow
+    light.position.set(position.x, position.y, position.z)
+    light.target.position.set(target.x, target.y, target.z)
+    light.shadowfar = shadowfar
+    light.shadowmapsize = shadowmapsize
+    return light
+}
+
 
 const buildLightHelper = (light) => {
     return new THREE.PointLightHelper(light);
