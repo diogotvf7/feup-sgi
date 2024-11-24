@@ -81,6 +81,9 @@
                     "g": 0.0,
                     "b": 0.0
                 },
+                "shininess" : 0.0,
+                "transparent" : false,
+                "opacity" : 0,
                 "textureref": "floor",
                 "texlength_s": 1,
                 "texlength_t": 1
@@ -102,6 +105,8 @@
                     "b": 0
                 },
                 "shininess": 10,
+                "transparent" : false,
+                "opacity" : 0,
                 "textureref": "wall",
                 "texlength_s": 1,
                 "texlength_t": 1
@@ -121,7 +126,10 @@
                     "r": 0,
                     "g": 0,
                     "b": 0
-                }
+                },
+                "shininess": 10,
+                "transparent" : false,
+                "opacity" : 0
             },
             "tableTop": {
                 "color": {
@@ -250,6 +258,9 @@
                     "g": 0.0,
                     "b": 0.0
                 },
+                "shininess": 10,
+                "transparent" : false,
+                "opacity" : 0,
                 "textureref": "video",
                 "texlength_s": 1,
                 "texlength_t": 1
@@ -271,6 +282,9 @@
                     "g": 0,
                     "b": 0
                 },
+                "shininess": 10,
+                "transparent" : false,
+                "opacity" : 0,
                 "textureref": "code",
                 "texlength_s": 1,
                 "texlength_t": 1
@@ -291,6 +305,7 @@
                     "g": 0,
                     "b": 0
                 },
+                "shininess": 10,
                 "transparent": true,
                 "opacity": 0.4
             },
@@ -312,7 +327,8 @@
                 },
                 "opacity": 1,
                 "shininess": 100,
-                "transparent" : false
+                "transparent" : false,
+                "twosided" : true 
             }
         },
         "cameras": {
@@ -384,14 +400,14 @@
                             "g": 0.6,
                             "b": 0.8
                         },
-                        "intensity": 1,
+                        "intensity": 0.5,
                         "distance": 1,
                         "decay": 2.0,
                         "castshadow": false,
                         "position": {
                             "x": -19,
                             "y": 8.3,
-                            "z": 22.8
+                            "z": 23.1
                         }
                     },
                     "nodesList": [
@@ -1430,6 +1446,7 @@
                     "nodesList" : [
                         "projectorCase",
                         "projectorPointer",
+                        "projectorPointerCase",
                         "projectorScreen"
                     ]
                 }
@@ -1482,6 +1499,39 @@
                     "spherePrim": {
                         "type": "sphere",
                         "radius" : 0.3
+                    }
+                }   
+            },
+            "projectorPointerCase" : {
+                "type": "node",
+                "transforms" : [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -19,
+                            "y": 8.3,
+                            "z": 22.5  
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": -90,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children" : {
+                    "cylinderPrim": {
+                        "type": "cylinder",
+                        "base" : 0.2,
+                        "top": 0.4,
+                        "slices" : 32,
+                        "stacks" : 1,
+                        "height" : 0.8,
+                        "capsclose" : false
+
                     }
                 }   
             },

@@ -150,20 +150,20 @@ const buildBox = ({xyz1, xyz2, parts_x=1, parts_y=1, parts_z=1}, material) => {
     return mesh;
 }
 
-const buildCylinder = ({base, top, height, slices, stacks, capsclose=false, thetaStart=0, thetaLength=360}, material) => {
-    const geometry = new THREE.CylinderGeometry(base, top, height, slices, stacks, !capsclose, degreesToRadians(thetaStart), degreesToRadians(thetaLength));
+const buildCylinder = ({base, top, height, slices = 32, stacks = 1, capsclose=false, thetastart=0, thetalength=360}, material) => {
+    const geometry = new THREE.CylinderGeometry(base, top, height, slices, stacks, !capsclose, degreesToRadians(thetastart), degreesToRadians(thetalength));
     const mesh = new THREE.Mesh(geometry, material);
     return mesh;
 }
 
-const buildSphere = ({radius, slices=32, stacks=16, thetaStart=0, thetaLength=180, phiStart=0, phiLength=360}, material) => {
-    const geometry = new THREE.SphereGeometry(radius, slices, stacks, phiStart, degreesToRadians(phiLength), thetaStart, degreesToRadians(thetaLength))
+const buildSphere = ({radius, slices=32, stacks=16, thetastart=0, thetalength=180, phistart=0, philength=360}, material) => {
+    const geometry = new THREE.SphereGeometry(radius, slices, stacks, phistart, degreesToRadians(philength), thetastart, degreesToRadians(thetalength))
     const mesh = new THREE.Mesh(geometry, material);
     return mesh;
 }
 
-const buildCone = ({radius, height, radialSegments = 32, heightSegments = 1, thetaStart = 0, thetaLength = 2*Math.PI}, material) => {
-    const geometry = new THREE.ConeGeometry(radius, height, radialSegments, heightSegments, thetaStart, thetaLength)
+const buildCone = ({radius, height, radialSegments = 32, heightSegments = 1, thetastart = 0, thetalength = 2*Math.PI}, material) => {
+    const geometry = new THREE.ConeGeometry(radius, height, radialSegments, heightSegments, thetastart, thetalength)
     const mesh = new THREE.Mesh(geometry, material)
     return mesh
 }
