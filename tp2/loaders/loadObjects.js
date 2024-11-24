@@ -59,19 +59,13 @@ const dfs = (data, materials, node, materialref=null, isLod=false, debug=false, 
                     case 'pointlight':
                         if(info.enabled !== false){
                             const pointlight = buildPointLight(info.color, info.intensity, info.distance, info.decay, info.castshadow, info.position);
-                            object.add(pointlight);
-                            
-                            const pointLightHelper = buildLightHelper(pointlight);
-                            object.add(pointLightHelper);
+                            object.add(pointlight);                            
                         }
                         break;
                     case 'spotlight':
                         if(info.enabled !== false){
                             const spotlight = buildSpotLight(info.color, info.intensity, info.distance, info.angle, info.decay, info.penumbra, info.position, info.target, info.castshadow, info.shadowfar, info.shadowmapsize)
                             object.add(spotlight)
-    
-                            const spotLightHelper = buildLightHelper(spotlight)
-                            object.add(spotLightHelper)
                         }
                         break
                     case 'rectangle':
@@ -162,8 +156,8 @@ const buildCylinder = ({base, top, height, slices, stacks, capsclose=false, thet
     return mesh;
 }
 
-const buildSphere = ({radius, slices, stacks, thetaStart=0, thetaLength=2*Math.PI, phiStart=0, phiLength=Math.PI}, material) => {
-    const geometry = new THREE.SphereGeometry(radius, slices, stacks, degreesToRadians(thetaStart), degreesToRadians(thetaLength), degreesToRadians(phiStart), degreesToRadians(phiLength));
+const buildSphere = ({radius, slices=32, stacks=16, thetaStart=0, thetaLength=180, phiStart=0, phiLength=360}, material) => {
+    const geometry = new THREE.SphereGeometry(radius, slices, stacks, phiStart, degreesToRadians(phiLength), thetaStart, degreesToRadians(thetaLength))
     const mesh = new THREE.Mesh(geometry, material);
     return mesh;
 }
@@ -192,19 +186,24 @@ const buildPointLight = (color, intensity, distance, decay, castshadow, position
     return light;
 }
 
-const buildSpotLight = (color, intensity = 1, distance = 1000, angle, decay = 2, penumbra = 1, position, target, castshadow = false, shadowfar = 500, shadowmapsize = 512) => {
-    const light = new THREE.SpotLight(color, intensity, distance, angle, penumbra, decay)
+const buildSpotLight = (color, intensity = 1, distance = 10, angle, decay = 2, penumbra = 1, position, target, castshadow = false, shadowfar = 500, shadowmapsize = 512) => {
+    const light = new THREE.SpotLight(color, intensity, distance, degreesToRadians(angle), penumbra, decay)
     light.castShadow = castshadow
     light.position.set(position.x, position.y, position.z)
     light.target.position.set(target.x, target.y, target.z)
     light.shadowfar = shadowfar
     light.shadowmapsize = shadowmapsize
+
     return light
 }
 
 
 const buildLightHelper = (light) => {
     return new THREE.PointLightHelper(light);
+}
+
+const buildSpotLightHelper = (light) => {
+    return new THREE.SpotLightHelper(light);
 }
 
 const transform = (object, transforms) => {

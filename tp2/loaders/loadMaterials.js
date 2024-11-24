@@ -20,24 +20,24 @@ export const loadMaterials = {
             })
 
             if (material_data.textureref) {
-                //TOODO: What to do with this
                 let texlength_s = material_data.texlength_s ? material_data.texlength_s : 1 
                 let texlength_t = material_data.texlength_t ? material_data.texlength_t : 1   
                 
-                let texture = textures[material_data.textureref]
-                texture.wrapS = texlength_s
-                texture.wrapT = texlength_t
-                
+                let texture = textures[material_data.textureref]                
                 material.map = texture  
 
                 //Do we generate mipmaps for this automatically ? 
                 if (material_data.bumpref){
                     material.bumpScale = material_data.bumpscale ? material_data.bumpscale : 1
                     material.bumpMap =  textures[material_data.bumpref]
+                    texture.wrapS = texlength_s
+                    texture.wrapT = texlength_t
                 }
                 if(material_data.specularref){
                     let texture_ = textures[material_data.specularref]
                     material.specularMap = textures[material_data.specularref]
+                    texture.wrapS = texlength_s
+                    texture.wrapT = texlength_t
                 }   
             }
             materials[key] = material

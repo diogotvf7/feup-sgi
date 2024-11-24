@@ -25,23 +25,43 @@
                 "center": {"x": 0, "y": 0, "z": 0},
                 "emissive": {"r": 0, "g": 0, "b": 0},
                 "intensity": 0,
-                "front": "scenes/textures/front.jpg",              
-                "back": "scenes/textures/back.jpg",               
-                "up": "scenes/textures/up.jpg",                 
-                "down": "scenes/textures/down.jpg",
-                "left": "scenes/textures/left.jpg",
-                "right": "scenes/textures/right.jpg"
+                "front": "scenes/textures/skybox/front.jpg",              
+                "back": "scenes/textures/skybox/back.jpg",               
+                "up": "scenes/textures/skybox/up.jpg",                 
+                "down": "scenes/textures/skybox/down.jpg",
+                "left": "scenes/textures/skybox/left.jpg",
+                "right": "scenes/textures/skybox/right.jpg"
             }
         },
         "textures": {
             "tableTop": {
-                "filepath": "scenes/textures/tableTop.jpg"
+                "filepath": "scenes/textures/tableTop.jpg",
+                "isVideo" : false
             },
             "floor": {
-                "filepath": "scenes/textures/floor.jpg"
+                "filepath": "scenes/textures/floor.jpg",
+                "isVideo" : false
             },
             "wall": {
-                "filepath": "scenes/textures/wall.jpg"
+                "filepath": "scenes/textures/wall.jpg",
+                "isVideo" : false
+            },
+            "video": {
+                "filepath" : "scenes/textures/pulpfiction.mp4",
+                "isVideo" : true
+            },
+            "code": {
+                "filepath": "scenes/textures/mipMapCode/code.jpg",
+                "isVideo" : false,
+                "mipmap0" : "scenes/textures/mipMapCode/code1024.jpg",
+                "mipmap1" : "scenes/textures/mipMapCode/code512.jpg",
+                "mipmap2" : "scenes/textures/mipMapCode/code256.jpg",
+                "mipmap3" : "scenes/textures/mipMapCode/code128.jpg",
+                "mipmap4" : "scenes/textures/mipMapCode/code64.jpg",
+                "mipmap5" : "scenes/textures/mipMapCode/code32.jpg",
+                "mipmap6" : "scenes/textures/mipMapCode/code16.jpg",
+                "mipmap7" : "scenes/textures/mipMapCode/code8.jpg"
+                
             }
         },
         "materials": {
@@ -192,25 +212,107 @@
                 "texlength_s": 1,
                 "texlength_t": 1 
             },
-            "lightBeamMaterial" : {
+            "frameMaterial": {
                 "color": {
-                    "r" : 1,
-                    "g" : 0.98,
-                    "b" : 0.98
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
                 },
                 "emissive": {
-                    "r" : 1,
-                    "g" : 0.98,
-                    "b" : 0.98
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
                 },
                 "specular": {
-                    "r" : 1,
-                    "g" : 0.98,
-                    "b" : 0.98
+                    "r": 0,
+                    "g": 0,
+                    "b": 0    
                 },
-                "opacity" : 0.3,
-                "transparent" : true,
-                "twosided" : true
+                "shininess": 100,
+                "transparent": false,
+                "opacity": 1.0,
+                "texlength_s": 1,
+                "texlength_t": 1
+            },
+            "screen": {
+                "color": {
+                    "r": 1,
+                    "g": 1,
+                    "b": 1
+                },
+                "emissive": {
+                    "r": 0.02,
+                    "g": 0.02,
+                    "b": 0.02
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "textureref": "video",
+                "texlength_s": 1,
+                "texlength_t": 1
+            }
+            ,
+            "code": {
+                "color": {
+                    "r": 1,
+                    "g": 1,
+                    "b": 1
+                },
+                "emissive": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "specular": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "textureref": "code",
+                "texlength_s": 1,
+                "texlength_t": 1
+            },
+            "projectorPointer": {
+                "color": {
+                    "r": 0.1,
+                    "g": 0.3,
+                    "b": 0.4
+                },
+                "emissive": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "specular": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "transparent": true,
+                "opacity": 0.4
+            },
+            "projector": {
+                "color": {
+                    "r": 0.87,
+                    "g": 0.86,
+                    "b": 0.85
+                },
+                "emissive": {
+                    "r": 0.604,
+                    "g": 0.6,
+                    "b": 0.58
+                },
+                "specular": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "opacity": 1,
+                "shininess": 100,
+                "transparent" : false
             }
         },
         "cameras": {
@@ -258,7 +360,7 @@
                 "children": {
                     "pointLight": {
                         "type": "pointlight",
-                        "enabled" : false,  
+                        "enabled" : true,  
                         "color": {
                             "r": 0.5,
                             "g": 0.6,
@@ -274,25 +376,22 @@
                             "z": 5
                         }
                     },
-                    "projectorSpotLight" : {
-                        "type" : "spotlight",
-                        "intensity" : 1000,
-                        "angle" : 30,
-                        "distance" : 10,
-                        "color" : {
+                    "projectorLight" : {
+                        "type": "pointlight",
+                        "enabled" : true,  
+                        "color": {
                             "r": 0.5,
                             "g": 0.6,
                             "b": 0.8
                         },
-                        "position" : {
-                            "x": -20,
+                        "intensity": 1,
+                        "distance": 1,
+                        "decay": 2.0,
+                        "castshadow": false,
+                        "position": {
+                            "x": -19,
                             "y": 8.3,
-                            "z": 23
-                        },
-                        "target" : {
-                            "x": -30,
-                            "y": 20,
-                            "z": 0
+                            "z": 22.8
                         }
                     },
                     "nodesList": [
@@ -305,7 +404,8 @@
                         "walls",
                         "door",
                         "floor",
-                        "projector"
+                        "projector",
+                        "monitors"
                     ]
                 }
             },
@@ -1324,13 +1424,13 @@
             "projector" :{
                 "type" : "node",
                 "materialref": {
-                    "materialId": "door"
+                    "materialId": "projector"
                 },
                 "children" : {
                     "nodesList" : [
                         "projectorCase",
                         "projectorPointer",
-                        "lightBeam"
+                        "projectorScreen"
                     ]
                 }
                 
@@ -1365,33 +1465,411 @@
             },
             "projectorPointer" : {
                 "type": "node",
+                "materialref": {
+                    "materialId": "projectorPointer"
+                },
                 "transforms" : [
                     {
                         "type": "translate",
                         "amount": {
-                            "x": 0,
-                            "y": 5,
-                            "z": 0  
+                            "x": -19,
+                            "y": 8.3,
+                            "z": 22.5  
                         }
                     }
                 ],
                 "children" : {
                     "spherePrim": {
                         "type": "sphere",
-                        "radius" : 4
+                        "radius" : 0.3
                     }
                 }   
             },
-            "lightBeam" : {
-                "type" : "node",
+            "projectorScreen" : {
+                "type": "node",
                 "materialref": {
-                    "materialId" : "lightBeamMaterial"
+                    "materialId": "screen"
+                },
+                "transforms": [
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 180,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 20,
+                            "y": 15,
+                            "z": -34.5
+                        }
+                    }
+                ],
+                "children": {
+                    "rectanglePrim": {
+                        "type": "rectangle",
+                        "xy1": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "xy2": {
+                            "x": 15,
+                            "y": 15
+                        }
+                    }
+                }
+            },
+            "monitors" : {
+                "type" : "node",
+                "children" : {
+                    "nodesList" : [
+                        "monitor",
+                        "monitor1",
+                        "monitor2"
+                    ]
+                }
+            },
+            "monitor" : {
+                "type" : "node",
+                "materialref" : {
+                    "materialId" : "frameMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 20
+                        }
+                    },
+                    {
+                        "type" : "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 90,
+                            "z": 0  
+                        }
+                    }
+                ],
+                "children" : {
+                    "nodesList" : [
+                        "base",
+                        "monitorSupport",
+                        "monitorFrame"
+                    ]
+                }
+            },
+            "monitor1" : {
+                "type" : "node",
+                "materialref" : {
+                    "materialId" : "frameMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 7
+                        }
+                    },
+                    {
+                        "type" : "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 90,
+                            "z": 0  
+                        }
+                    }
+                ],
+                "children" : {
+                    "nodesList" : [
+                        "base",
+                        "monitorSupport",
+                        "monitorFrame"
+                    ]
+                }
+            },
+            "monitor2" : {
+                "type" : "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -22,
+                            "y": 0,
+                            "z": 12
+                        }
+                    },
+                    {
+                        "type" : "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 90,
+                            "z": 0  
+                        }
+                    }
+                ],
+                "materialref" : {
+                    "materialId" : "frameMaterial"
                 },
                 "children" : {
-                    "conePrim" : {
-                        "type" : "cone",
-                        "radius": "3",
-                        "height": 5
+                    "nodesList" : [
+                        "base",
+                        "monitorSupport",
+                        "monitorFrame"
+                    ]
+                }
+            },
+            "base" : {
+                "type" : "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 8,
+                            "z": 0
+                        }
+                    }
+                ],
+                 "children" : {
+                    "boxPrim" : {
+                        "type" : "box",
+                        "xyz1" : {
+                            "x" : 0,
+                            "y" : 0,
+                            "z" : 0
+                        },
+                        "xyz2" : {
+                            "x" : 2,
+                            "y" : 0.2,
+                            "z": 1.4
+                        }
+                    }
+                }
+            },
+            "monitorSupport" : {
+                "type" : "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 8.5,
+                            "z": 0
+                        }
+                    }
+                ],
+                 "children" : {
+                    "cylinderPrim" : {
+                        "type" : "cylinder",
+                        "height": 1,
+                        "top": 0.15,
+                        "base": 0.15
+                    }
+                }
+            },
+            "monitorFrame" : {
+                "type" : "node",
+                "transforms" : [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 9,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children" : {
+                    "nodesList": [
+                        "monitorBot", 
+                        "monitorLeft",
+                        "monitorRight",
+                        "monitorTop",
+                        "monitorBack",
+                        "screen"
+                    ]
+                }
+            },
+            "screen" : {
+                "type" : "node",
+                "materialref": {
+                    "materialId": "code"
+                },
+                "transforms": [
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 180,
+                            "z": 0
+                        }
+
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 2,
+                            "z": 0.2
+                        }
+                    }
+                ],
+                 "children" : {
+                    "rectanglePrim" : {
+                        "type" : "rectangle",
+                        "xy1" : {
+                            "x" : 0,
+                            "y" : 0
+                        },
+                        "xy2" : {
+                            "x" : 6,
+                            "y" : 4
+                        }
+                    }
+                }
+            },
+            "monitorBack" : {
+                "type" : "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 2,
+                            "z": 0
+                        }
+                    }
+                ],
+                 "children" : {
+                    "rectanglePrim" : {
+                        "type" : "rectangle",
+                        "xy1" : {
+                            "x" : 0,
+                            "y" : 0
+                        },
+                        "xy2" : {
+                            "x" : 6,
+                            "y" : 4
+                        }
+                    }
+                }
+            },
+            "monitorBot" : {
+                "type" : "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0.1,
+                            "z": 0
+                        }
+                    }
+                ],
+                 "children" : {
+                    "boxPrim" : {
+                        "type" : "box",
+                        "xyz1" : {
+                            "x" : 0,
+                            "y" : 0,
+                            "z" : 0
+                        },
+                        "xyz2" : {
+                            "x" : 6,
+                            "y" : 0.2,
+                            "z": 0.8
+                        }
+                    }
+                }
+            },
+            "monitorTop" : {
+                "type" : "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 4,
+                            "z": 0
+                        }
+                    }
+                ],
+                 "children" : {
+                    "boxPrim" : {
+                        "type" : "box",
+                        "xyz1" : {
+                            "x" : 0,
+                            "y" : 0,
+                            "z" : 0
+                        },
+                        "xyz2" : {
+                            "x" : 6.2,
+                            "y" : 0.2,
+                            "z": 0.8
+                        }
+                    }
+                }
+            },
+            "monitorLeft" : {
+                "type" : "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -3,
+                            "y": 2,
+                            "z": 0
+                        }
+                    }
+                ],
+                 "children" : {
+                    "boxPrim" : {
+                        "type" : "box",
+                        "xyz1" : {
+                            "x" : 0,
+                            "y" : 0,
+                            "z" : 0
+                        },
+                        "xyz2" : {
+                            "x" : 0.2,
+                            "y" : 4,
+                            "z": 0.8
+                        }
+                    }
+                }
+            },
+            "monitorRight" : {
+                "type" : "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 3,
+                            "y": 2,
+                            "z": 0
+                        }
+                    }
+                ],
+                 "children" : {
+                    "boxPrim" : {
+                        "type" : "box",
+                        "xyz1" : {
+                            "x" : 0,
+                            "y" : 0,
+                            "z" : 0
+                        },
+                        "xyz2" : {
+                            "x" : 0.2,
+                            "y" : 4,
+                            "z": 0.8
+                        }
                     }
                 }
             }
