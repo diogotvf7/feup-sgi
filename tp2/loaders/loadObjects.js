@@ -217,9 +217,9 @@ const transform = (object, transforms) => {
                 object.translateZ(transform.amount.z);
                 break;
             case 'rotate':
-                object.rotateX(degreesToRadians(transform.amount.x));
-                object.rotateY(degreesToRadians(transform.amount.y));
-                object.rotateZ(degreesToRadians(transform.amount.z));
+                object.rotation.set(degreesToRadians(transform.amount.x),
+                                    degreesToRadians(transform.amount.y),
+                                    degreesToRadians(transform.amount.z))
                 break;
             case 'scale':
                 object.scale.set(transform.amount.x, transform.amount.y, transform.amount.z);

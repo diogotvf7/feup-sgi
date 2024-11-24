@@ -421,7 +421,8 @@
                         "door",
                         "floor",
                         "projector",
-                        "monitors"
+                        "monitors",
+                        "sofa"
                     ]
                 }
             },
@@ -1922,7 +1923,321 @@
                         }
                     }
                 }
+            },
+            "sofa" : {
+                "type" : "node",
+                "materialref" : {
+                    "materialId" : "door"
+                },
+                "children" : {
+                    "nodesList" : [
+                        "bases",
+                        "sofaLegs",
+                        "sides"
+                    ]
+                }
+            },
+            "bases" : {
+                "type" : "node",
+                "children" : {
+                    "nodesList" : [
+                        "backBase",
+                        "underBase"
+                    ]
+                }
+            },
+            "underBase" : {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 14,
+                            "y": 2,
+                            "z": -20
+                        }
+                    }
+                ],
+                 "children" : {
+                    "boxPrim" : {
+                        "type" : "box",
+                        "xyz1" : {
+                            "x" : 0,
+                            "y" : 0,
+                            "z" : 0
+                        },
+                        "xyz2" : {
+                            "x" : 8,
+                            "y" : 2,
+                            "z": 15
+                        }
+                    }
+                }
+            },
+            "backBase" : {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type" : "translate",
+                        "amount" : {
+                            "x" : 10,
+                            "y" : 5,
+                            "z" : -20
+                        }
+                    },
+                    {
+                        "type" : "rotate",
+                        "amount" : {
+                            "x": 0,
+                            "y": 0,
+                            "z": -60
+                        }
+                    }
+                ],
+                 "children" : {
+                    "boxPrim" : {
+                        "type" : "box",
+                        "xyz1" : {
+                            "x" : 0,
+                            "y" : 0,
+                            "z" : 0
+                        },
+                        "xyz2" : {
+                            "x" : 6,
+                            "y" : 2,
+                            "z": 15
+                        }
+                    }
+                }
+            },
+            "sofaLegs" : {
+                "type": "node",
+                "children" : {
+                    "nodesList" : [
+                        "sofaLeg1",
+                        "sofaLeg2",
+                        "sofaLeg3",
+                        "sofaLeg4"
+
+                    ]
+                }
+            },
+            "sofaLeg1" : {
+                "type": "node",
+                "transforms" : [
+                    {
+                        "type" : "translate",
+                        "amount" : {
+                            "x" : 11,
+                            "y" : 0.5,
+                            "z" : -13.5
+                        }
+                    }
+                ],
+                "children" : {
+                    "cylinderPrim": {
+                        "type": "cylinder",
+                        "height": 1,
+                        "top": 0.1,
+                        "base": 0.2
+                    }
+                }
+            },
+            "sofaLeg2" : {
+                "type": "node",
+                "transforms" : [
+                    {
+                        "type" : "translate",
+                        "amount" : {
+                            "x" : 17,
+                            "y" : 0.5,
+                            "z" : -13.5
+                        }
+                    }
+                ],
+                "children" : {
+                    "cylinderPrim": {
+                        "type": "cylinder",
+                        "height": 1,
+                        "top": 0.1,
+                        "base": 0.2
+                    }
+                }
+            },
+            "sofaLeg3" : {
+                "type": "node",
+                "transforms" : [
+                    {
+                        "type" : "translate",
+                        "amount" : {
+                            "x" : 17,
+                            "y" : 0.5,
+                            "z" : -27
+                        }
+                    }
+                ],
+                "children" : {
+                    "cylinderPrim": {
+                        "type": "cylinder",
+                        "height": 1,
+                        "top": 0.1,
+                        "base": 0.2
+                    }
+                }
+            },
+            "sofaLeg4" : {
+                "type": "node",
+                "transforms" : [
+                    {
+                        "type" : "translate",
+                        "amount" : {
+                            "x" : 11,
+                            "y" : 0.5,
+                            "z" : -27
+                        }
+                    }
+                ],
+                "children" : {
+                    "cylinderPrim": {
+                        "type": "cylinder",
+                        "height": 1,
+                        "top": 0.1,
+                        "base": 0.2
+                    }
+                }
+            },
+            "sides" : {
+                "type": "node",
+                "children" : {
+                    "nodesList" :[
+                        "sofaSide1",
+                        "sofaSide2",
+                        "sofaSide3",
+                        "sofaSide4"
+                    ]
+                }
+            },
+            "sofaSide1" : {
+                "type" : "node",
+                "transforms" : [
+                    {
+                        "type" : "translate",
+                        "amount" : {
+                            "x" : 10,
+                            "y" : 5,
+                            "z" : -12.5
+                        }
+                    },
+                    {
+                        "type" : "rotate",
+                        "amount" : {
+                            "x": 0,
+                            "y": 0,
+                            "z": 30
+                        }
+                    }
+                ],
+                "children" : {
+                    "cylinderPrim": {
+                        "type": "cylinder",
+                        "height": 6,
+                        "top": 1,
+                        "base": 1,
+                        "capsclose" : true
+                    }
+                }
+            },
+            "sofaSide2" : {
+                "type" : "node",
+                "transforms" : [
+                    {
+                        "type" : "translate",
+                        "amount" : {
+                            "x" : 10,
+                            "y" : 5,
+                            "z" : -27.5
+                        }
+                    },
+                    {
+                        "type" : "rotate",
+                        "amount" : {
+                            "x": 0,
+                            "y": 0,
+                            "z": 30
+                        }
+                    }
+                ],
+                "children" : {
+                    "cylinderPrim": {
+                        "type": "cylinder",
+                        "height": 6,
+                        "top": 1,
+                        "base": 1,
+                        "capsclose" : true
+                    }
+                }
+            },
+            "sofaSide3" : {
+                "type" : "node",
+                "transforms" : [
+                    {
+                        "type" : "translate",
+                        "amount" : {
+                            "x" : 14,
+                            "y" : 2,
+                            "z" : -12.5
+                        }
+                    },
+                    {
+                        "type" : "rotate",
+                        "amount" : {
+                            "x": 0,
+                            "y": 0,
+                            "z": 90
+                        }
+                    }
+                ],
+                "children" : {
+                    "cylinderPrim": {
+                        "type": "cylinder",
+                        "height": 8,
+                        "top": 1,
+                        "base": 1,
+                        "capsclose" : true
+                    }
+                }
+            },
+            "sofaSide4" : {
+                "type" : "node",
+                "transforms" : [
+                    {
+                        "type" : "translate",
+                        "amount" : {
+                            "x" : 14,
+                            "y" : 2,
+                            "z" : -27.5
+                        }
+                    },
+                    {
+                        "type" : "rotate",
+                        "amount" : {
+                            "x": 0,
+                            "y": 0,
+                            "z": 90
+                        }
+                    }
+                ],
+                "children" : {
+                    "cylinderPrim": {
+                        "type": "cylinder",
+                        "height": 8,
+                        "top": 1,
+                        "base": 1,
+                        "capsclose" : true
+                    }
+                }
             }
+
         }
     }
 }
