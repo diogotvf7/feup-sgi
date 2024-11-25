@@ -50,6 +50,10 @@
                 "filepath" : "scenes/textures/pulpfiction.mp4",
                 "isVideo" : true
             },
+            "sofa" : {
+                "filapath" : "scenes/textures/sofaTexture.jpg",
+                "isVideo" : false
+            },
             "code": {
                 "filepath": "scenes/textures/mipMapCode/code.jpg",
                 "isVideo" : false,
@@ -244,9 +248,9 @@
             },
             "screen": {
                 "color": {
-                    "r": 1,
-                    "g": 1,
-                    "b": 1
+                    "r": 0.1,
+                    "g": 0.1,
+                    "b": 0.1
                 },
                 "emissive": {
                     "r": 0.02,
@@ -329,6 +333,49 @@
                 "shininess": 100,
                 "transparent" : false,
                 "twosided" : true 
+            },
+            "sideSofa" : {
+                "color" : {
+                    "r": 1,
+                    "g" : 0.99,
+                    "b" : 0.94
+                },
+                "emissive" : {
+                    "r": 0.48,
+                    "g" : 0.44,
+                    "b" : 0.15
+                },
+                "specular" : {
+                    "r" : 0,
+                    "g" : 0,
+                    "b" : 0
+                },
+                "opacity" : 1,
+                "shininess" : 0,
+                "transparent" : false,
+                "twosided" : false
+            },
+            "sofaMaterial" : {
+                "color": {
+                    "r": 0.21,
+                    "g": 0.21,
+                    "b": 0.21
+                },
+                "emissive": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "specular": {
+                    "r": 0.06,
+                    "g": 0.06,
+                    "b": 0.06
+                },
+                "shininess": 0,
+                "transparent" : false,
+                "opacity" : 1,
+                "texlength_s": 1,
+                "texlength_t": 1
             }
         },
         "cameras": {
@@ -1927,7 +1974,7 @@
             "sofa" : {
                 "type" : "node",
                 "materialref" : {
-                    "materialId" : "door"
+                    "materialId" : "sofaMaterial"
                 },
                 "children" : {
                     "nodesList" : [
@@ -1968,7 +2015,7 @@
                         },
                         "xyz2" : {
                             "x" : 8,
-                            "y" : 2,
+                            "y" : 2.1,
                             "z": 15
                         }
                     }
@@ -2004,7 +2051,7 @@
                         },
                         "xyz2" : {
                             "x" : 6,
-                            "y" : 2,
+                            "y" : 2.1,
                             "z": 15
                         }
                     }
@@ -2108,6 +2155,9 @@
             },
             "sides" : {
                 "type": "node",
+                "materialref" : {
+                    "materialId" : "sideSofa"
+                },
                 "children" : {
                     "nodesList" :[
                         "sofaSide1",
@@ -2125,7 +2175,7 @@
                         "amount" : {
                             "x" : 10,
                             "y" : 5,
-                            "z" : -12.5
+                            "z" : -13
                         }
                     },
                     {
@@ -2140,7 +2190,7 @@
                 "children" : {
                     "cylinderPrim": {
                         "type": "cylinder",
-                        "height": 6,
+                        "height": 5.99,
                         "top": 1,
                         "base": 1,
                         "capsclose" : true
@@ -2155,7 +2205,7 @@
                         "amount" : {
                             "x" : 10,
                             "y" : 5,
-                            "z" : -27.5
+                            "z" : -27
                         }
                     },
                     {
@@ -2170,7 +2220,7 @@
                 "children" : {
                     "cylinderPrim": {
                         "type": "cylinder",
-                        "height": 6,
+                        "height": 5.99,
                         "top": 1,
                         "base": 1,
                         "capsclose" : true
@@ -2185,7 +2235,7 @@
                         "amount" : {
                             "x" : 14,
                             "y" : 2,
-                            "z" : -12.5
+                            "z" : -13
                         }
                     },
                     {
@@ -2200,7 +2250,7 @@
                 "children" : {
                     "cylinderPrim": {
                         "type": "cylinder",
-                        "height": 8,
+                        "height": 7.99,
                         "top": 1,
                         "base": 1,
                         "capsclose" : true
@@ -2215,7 +2265,7 @@
                         "amount" : {
                             "x" : 14,
                             "y" : 2,
-                            "z" : -27.5
+                            "z" : -27
                         }
                     },
                     {
@@ -2230,7 +2280,7 @@
                 "children" : {
                     "cylinderPrim": {
                         "type": "cylinder",
-                        "height": 8,
+                        "height": 7.99,
                         "top": 1,
                         "base": 1,
                         "capsclose" : true
