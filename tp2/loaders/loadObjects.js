@@ -1,4 +1,6 @@
 import * as THREE from 'three';
+import { MyNurbsBuilder } from "../helpers/MyNurbsBuilder.js";
+
 
 export const loadObjects = {
     execute: function(data, materials) {
@@ -92,6 +94,10 @@ const dfs = (data, materials, node, materialref=null, isLod=false, debug=false, 
                         const cone = buildCone(info, material)
                         object.add(cone)
                         break
+                    case 'nurbs':
+                        const nurb = buildNurbs(info, material)
+                        object.add(nurb)
+                        break
                     default:
                         throw new Error('Unknown object type: ' + node.children[key].type);
                 }        
@@ -167,6 +173,37 @@ const buildCone = ({radius, height, radialSegments = 32, heightSegments = 1, the
     const mesh = new THREE.Mesh(geometry, material)
     return mesh
 }
+
+
+const buildNurbs = ({ degree_u, degree_v, parts_u, parts_v, controlPoints },material) => {
+    let controlPointsNormalized = [];
+    for (let i = 0; i <= degree_u; i++) {
+      let points = [];
+      let startIndex = i * (degree_v + 1);
+
+      for (let j = 0; j <= degree_v; j++) {
+        let point = controlPoints[startIndex + j];
+        points.push([point.x, point.y, point.z, 1]);
+      }
+      controlPointsNormalized.push(points);
+    }
+
+    console.log(controlPointsNormalized);
+    let builder = new MyNurbsBuilder()
+  
+    let surfaceData = builder.build(
+      controlPointsNormalized,
+      degree_u,
+      degree_v,
+      parts_u,
+      parts_v,
+      material
+    );
+  
+    let mesh = new THREE.Mesh(surfaceData, material)
+    return mesh
+};
+
 
 /**
  * Build a point light
