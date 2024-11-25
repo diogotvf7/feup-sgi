@@ -57,12 +57,17 @@ const dfs = (data, materials, node, materialref=null, isLod=false, debug=false, 
 
                 switch (info.type) {
                     case 'pointlight':
-                        const pointlight = buildPointLight(info.enabled, info.color, info.intensity, info.distance, info.decay, info.castshadow, info.position);
-                        object.add(pointlight);
-                        
-                        const lightHelper = buildLightHelper(pointlight);
-                        object.add(lightHelper);
+                        if(info.enabled !== false){
+                            const pointlight = buildPointLight(info.color, info.intensity, info.distance, info.decay, info.castshadow, info.position);
+                            object.add(pointlight);                            
+                        }
                         break;
+                    case 'spotlight':
+                        if(info.enabled !== false){
+                            const spotlight = buildSpotLight(info.color, info.intensity, info.distance, info.angle, info.decay, info.penumbra, info.position, info.target, info.castshadow, info.shadowfar, info.shadowmapsize)
+                            object.add(spotlight)
+                        }
+                        break
                     case 'rectangle':
                         const rectangle = buildRectangle(info, material);
                         object.add(rectangle);
@@ -83,6 +88,10 @@ const dfs = (data, materials, node, materialref=null, isLod=false, debug=false, 
                         const sphere = buildSphere(info, material);
                         object.add(sphere);
                         break;
+                    case 'cone':
+                        const cone = buildCone(info, material)
+                        object.add(cone)
+                        break
                     default:
                         throw new Error('Unknown object type: ' + node.children[key].type);
                 }        
@@ -141,16 +150,22 @@ const buildBox = ({xyz1, xyz2, parts_x=1, parts_y=1, parts_z=1}, material) => {
     return mesh;
 }
 
-const buildCylinder = ({base, top, height, slices, stacks, capsclose=false, thetaStart=0, thetaLength=360}, material) => {
-    const geometry = new THREE.CylinderGeometry(base, top, height, slices, stacks, !capsclose, degreesToRadians(thetaStart), degreesToRadians(thetaLength));
+const buildCylinder = ({base, top, height, slices = 32, stacks = 1, capsclose=false, thetastart=0, thetalength=360}, material) => {
+    const geometry = new THREE.CylinderGeometry(base, top, height, slices, stacks, !capsclose, degreesToRadians(thetastart), degreesToRadians(thetalength));
     const mesh = new THREE.Mesh(geometry, material);
     return mesh;
 }
 
-const buildSphere = ({radius, slices, stacks, thetaStart=0, thetaLength=2*Math.PI, phiStart=0, phiLength=Math.PI}, material) => {
-    const geometry = new THREE.SphereGeometry(radius, slices, stacks, degreesToRadians(thetaStart), degreesToRadians(thetaLength), degreesToRadians(phiStart), degreesToRadians(phiLength));
+const buildSphere = ({radius, slices=32, stacks=16, thetastart=0, thetalength=180, phistart=0, philength=360}, material) => {
+    const geometry = new THREE.SphereGeometry(radius, slices, stacks, phistart, degreesToRadians(philength), thetastart, degreesToRadians(thetalength))
     const mesh = new THREE.Mesh(geometry, material);
     return mesh;
+}
+
+const buildCone = ({radius, height, radialSegments = 32, heightSegments = 1, thetastart = 0, thetalength = 2*Math.PI}, material) => {
+    const geometry = new THREE.ConeGeometry(radius, height, radialSegments, heightSegments, thetastart, thetalength)
+    const mesh = new THREE.Mesh(geometry, material)
+    return mesh
 }
 
 /**
@@ -164,16 +179,31 @@ const buildSphere = ({radius, slices, stacks, thetaStart=0, thetaLength=2*Math.P
  * @param {*} position 
  * @returns 
  */
-const buildPointLight = (enabled, color, intensity, distance, decay, castshadow, position) => {
-    if (!enabled) return null;
+const buildPointLight = (color, intensity, distance, decay, castshadow, position) => {
     const light = new THREE.PointLight(color, intensity, distance, decay);
     light.castShadow = castshadow;
     light.position.set(position.x, position.y, position.z);
     return light;
 }
 
+const buildSpotLight = (color, intensity = 1, distance = 10, angle, decay = 2, penumbra = 1, position, target, castshadow = false, shadowfar = 500, shadowmapsize = 512) => {
+    const light = new THREE.SpotLight(color, intensity, distance, degreesToRadians(angle), penumbra, decay)
+    light.castShadow = castshadow
+    light.position.set(position.x, position.y, position.z)
+    light.target.position.set(target.x, target.y, target.z)
+    light.shadowfar = shadowfar
+    light.shadowmapsize = shadowmapsize
+
+    return light
+}
+
+
 const buildLightHelper = (light) => {
     return new THREE.PointLightHelper(light);
+}
+
+const buildSpotLightHelper = (light) => {
+    return new THREE.SpotLightHelper(light);
 }
 
 const transform = (object, transforms) => {
@@ -187,9 +217,9 @@ const transform = (object, transforms) => {
                 object.translateZ(transform.amount.z);
                 break;
             case 'rotate':
-                object.rotateX(degreesToRadians(transform.amount.x));
-                object.rotateY(degreesToRadians(transform.amount.y));
-                object.rotateZ(degreesToRadians(transform.amount.z));
+                object.rotation.set(degreesToRadians(transform.amount.x),
+                                    degreesToRadians(transform.amount.y),
+                                    degreesToRadians(transform.amount.z))
                 break;
             case 'scale':
                 object.scale.set(transform.amount.x, transform.amount.y, transform.amount.z);
