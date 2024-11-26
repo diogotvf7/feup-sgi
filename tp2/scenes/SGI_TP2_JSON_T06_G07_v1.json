@@ -73,6 +73,10 @@
             "bump" : {
                 "filepath" : "scenes/textures/bump.jpg",
                 "isVideo" : false
+            },
+            "ni" : {
+                "filepath" : "scenes/textures/niafeup.jpg",
+                "isVideo" : false
             }
         },
         "materials": {
@@ -275,8 +279,7 @@
                 "textureref": "video",
                 "texlength_s": 1,
                 "texlength_t": 1
-            }
-            ,
+            },
             "code": {
                 "color": {
                     "r": 1,
@@ -407,6 +410,30 @@
                 "bumpref" : "bump",
                 "bumpscale" : 1,
                 "texlength_s": 1,
+                "texlength_t": 1,
+                "twosided" : true
+            },
+            "ni": {
+                "color": {
+                    "r": 0.8,
+                    "g": 0.8,
+                    "b": 0.8
+                },
+                "emissive": {
+                    "r": 0.01,
+                    "g": 0.01,
+                    "b": 0.01
+                },
+                "specular": {
+                    "r": 0.01,
+                    "g": 0.01,
+                    "b": 0.01
+                },
+                "shininess": 50,
+                "transparent" : false,
+                "opacity" : 0,
+                "textureref": "ni",
+                "texlength_s": 1,
                 "texlength_t": 1
             }
         },
@@ -467,7 +494,7 @@
                         "castshadow": false,
                         "position": {
                             "x": 0,
-                            "y": 5,
+                            "y": 20,
                             "z": 5
                         }
                     },
@@ -502,7 +529,8 @@
                         "projector",
                         "monitors",
                         "sofa",
-                        "blanket"
+                        "blanket", 
+                        "poster"
                     ]
                 }
             },
@@ -2542,6 +2570,43 @@
             "type": "sphere",
             "radius": 0.1
           }
+        }
+      },
+      "poster" : {
+        "type" : "node",
+        "transforms" : [
+            {
+                "type" : "rotate",
+                "amount" : {
+                    "x" : 0,
+                    "y" : 90,
+                    "z" : 0
+                }
+            },
+            {
+                "type" : "translate",
+                "amount" : {
+                    "x" : 0,
+                    "y" : 20,
+                    "z" : -34.9
+                }
+            }
+        ],
+        "materialref" : {
+            "materialId" : "ni"
+        },
+        "children" : {
+            "rectanglePrim" : {
+                "type" : "rectangle",
+                "xy1" : {
+                    "x" : 0,
+                    "y" : 0
+                },
+                "xy2" : {
+                    "x" : 10,
+                    "y" : 10
+                }
+            }
         }
       }
     }

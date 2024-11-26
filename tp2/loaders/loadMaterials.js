@@ -38,7 +38,15 @@ export const loadMaterials = {
                     material.specularMap = textures[material_data.specularref]
                     texture.wrapS = texlength_s
                     texture.wrapT = texlength_t
-                }   
+                }
+
+                if (texlength_s != 1){
+                    materials[key].map.repeat.set(texlength_s, texlength_t)
+                    materials[key].map.wrapS = THREE.RepeatWrapping
+                    materials[key].map.wrapT = THREE.RepeatWrapping
+                }
+
+
             }
             materials[key] = material
         }
