@@ -65,7 +65,14 @@
                 "mipmap5" : "scenes/textures/mipMapCode/code32.jpg",
                 "mipmap6" : "scenes/textures/mipMapCode/code16.jpg",
                 "mipmap7" : "scenes/textures/mipMapCode/code8.jpg"
-                
+            },
+            "blanket" : {
+                "filepath" : "scenes/textures/blanket.png",
+                "isVideo" : false
+            },
+            "bump" : {
+                "filepath" : "scenes/textures/bump.jpg",
+                "isVideo" : false
             }
         },
         "materials": {
@@ -248,9 +255,9 @@
             },
             "screen": {
                 "color": {
-                    "r": 0.1,
-                    "g": 0.1,
-                    "b": 0.1
+                    "r": 0.5,
+                    "g": 0.5,
+                    "b": 0.5
                 },
                 "emissive": {
                     "r": 0.02,
@@ -337,8 +344,8 @@
             "sideSofa" : {
                 "color" : {
                     "r": 1,
-                    "g" : 0.99,
-                    "b" : 0.94
+                    "g" : 0.97,
+                    "b" : 0.82
                 },
                 "emissive" : {
                     "r": 0.48,
@@ -374,6 +381,31 @@
                 "shininess": 0,
                 "transparent" : false,
                 "opacity" : 1,
+                "texlength_s": 1,
+                "texlength_t": 1
+            },
+            "blanketMaterial" : {
+                "color": {
+                    "r": 0.89,
+                    "g": 0.53,
+                    "b": 0.87
+                },
+                "emissive": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "specular": {
+                    "r": 0.1,
+                    "g": 0.1,
+                    "b": 0.1
+                },
+                "shininess": 0,
+                "transparent" : false,
+                "opacity" : 100,
+                "textureref": "blanket",
+                "bumpref" : "bump",
+                "bumpscale" : 1,
                 "texlength_s": 1,
                 "texlength_t": 1
             }
@@ -2288,73 +2320,73 @@
                     }
                 }
             },
-            "blanket": {
-        "type": "node",
-        "materialref": {
-          "materialId": "projector"
+        "blanket": {
+            "type": "node",
+            "materialref": {
+                "materialId": "blanketMaterial"
+            },
+            "children": {
+            "nodesList": ["towel", "towelEnd", "towelStart"]
+            }
         },
-        "children": {
-          "nodesList": ["towel", "towelEnd"]
-        }
-      },
-      "towel": {
-        "type": "node",
-        "transforms": [
-          {
-            "type": "translate",
-            "amount": {
-              "x": 7.6,
-              "y": 8.2,
-              "z": -24
+        "towel": {
+            "type": "node",
+            "transforms": [
+            {
+                "type": "translate",
+                "amount": {
+                "x": 7.6,
+                "y": 8.2,
+                "z": -24
+                }
+            },
+            {
+                "type": "rotate",
+                "amount": {
+                "x": 0,
+                "y": 0,
+                "z": -62
+                }
             }
-          },
-          {
-            "type": "rotate",
-            "amount": {
-              "x": 0,
-              "y": 0,
-              "z": -62
+            ],
+            "children": {
+            "nurbsPrim": {
+                "type": "nurbs",
+                "degree_u": 3,
+                "degree_v": 5,
+                "parts_u": 16,
+                "parts_v": 16,
+                "controlPoints": [
+                { "x": 3.8, "y": -1.1, "z": -1.5 },
+                { "x": -0.8, "y": -2.5, "z": -1.5 },
+                { "x": 0, "y": 2.8, "z": -1.5 },
+                { "x": 0.4, "y": 2.8, "z": -1.5 },
+                { "x": 5.1, "y": 2.4, "z": -1.5 },
+                { "x": 5.3, "y": 2.6, "z": -1.5 },
+
+                { "x": 3.8, "y": -1.1, "z": -0.5 },
+                { "x": -0.8, "y": -2.5, "z": -0.5 },
+                { "x": 0, "y": 2.8, "z": -0.5 },
+                { "x": 0.4, "y": 2.8, "z": -0.5 },
+                { "x": 5.1, "y": 2.4, "z": -0.5 },
+                { "x": 5.3, "y": 2.6, "z": -0.5 },
+
+                { "x": 3.8, "y": -1.1, "z": 0.5 },
+                { "x": -0.8, "y": -2.5, "z": 0.5 },
+                { "x": 0, "y": 2.8, "z": 0.5 },
+                { "x": 0.4, "y": 2.8, "z": 0.5 },
+                { "x": 5.1, "y": 2.4, "z": 0.5 },
+                { "x": 5.3, "y": 2.6, "z": 0.5 },
+
+                { "x": 3.8, "y": -1.1, "z": 1.5 },
+                { "x": -0.8, "y": -2.5, "z": 1.5 },
+                { "x": 0, "y": 2.8, "z": 1.5 },
+                { "x": 0.4, "y": 2.8, "z": 1.5 },
+                { "x": 5.1, "y": 2.4, "z": 1.5 },
+                { "x": 5.3, "y": 2.6, "z": 1.5 }
+                ]
             }
-          }
-        ],
-        "children": {
-          "nurbsPrim": {
-            "type": "nurbs",
-            "degree_u": 3,
-            "degree_v": 5,
-            "parts_u": 16,
-            "parts_v": 16,
-            "controlPoints": [
-              { "x": 3.8, "y": -1.1, "z": -1.5 },
-              { "x": -0.8, "y": -2.5, "z": -1.5 },
-              { "x": 0, "y": 2.8, "z": -1.5 },
-              { "x": 0.4, "y": 2.8, "z": -1.5 },
-              { "x": 5.1, "y": 2.4, "z": -1.5 },
-              { "x": 5.3, "y": 2.6, "z": -1.5 },
-
-              { "x": 3.8, "y": -1.1, "z": -0.5 },
-              { "x": -0.8, "y": -2.5, "z": -0.5 },
-              { "x": 0, "y": 2.8, "z": -0.5 },
-              { "x": 0.4, "y": 2.8, "z": -0.5 },
-              { "x": 5.1, "y": 2.4, "z": -0.5 },
-              { "x": 5.3, "y": 2.6, "z": -0.5 },
-
-              { "x": 3.8, "y": -1.1, "z": 0.5 },
-              { "x": -0.8, "y": -2.5, "z": 0.5 },
-              { "x": 0, "y": 2.8, "z": 0.5 },
-              { "x": 0.4, "y": 2.8, "z": 0.5 },
-              { "x": 5.1, "y": 2.4, "z": 0.5 },
-              { "x": 5.3, "y": 2.6, "z": 0.5 },
-
-              { "x": 3.8, "y": -1.1, "z": 1.5 },
-              { "x": -0.8, "y": -2.5, "z": 1.5 },
-              { "x": 0, "y": 2.8, "z": 1.5 },
-              { "x": 0.4, "y": 2.8, "z": 1.5 },
-              { "x": 5.1, "y": 2.4, "z": 1.5 },
-              { "x": 5.3, "y": 2.6, "z": 1.5 }
-            ]
-          }
-        }
+            }
       },
       "towelEnd": {
         "type": "node",
@@ -2370,9 +2402,33 @@
         {
             "type": "translate",
             "amount": {
-              "x": 13,
+              "x": 13.1,
               "y": -2.1,
               "z": -25
+            }
+          }
+        ],
+        "children": {
+          "nodesList": ["tassel1", "tassel2", "tassel3", "tassel4"]
+        }
+      },
+      "towelStart": {
+        "type": "node",
+        "transforms": [
+        {
+            "type": "rotate",
+            "amount": {
+              "x": 0,
+              "y": 0,
+              "z": 30
+            }
+        },
+        {
+            "type": "translate",
+            "amount": {
+                "x": 9.5,
+                "y": -0.6,
+                "z": -25          
             }
           }
         ],
@@ -2488,7 +2544,6 @@
           }
         }
       }
-
-        }
+    }
     }
 }
