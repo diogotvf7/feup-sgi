@@ -2288,52 +2288,206 @@
                     }
                 }
             },
-            "blanket" : {
-                "type" : "node",
-                "materialref" : {
-                    "materialId": "door"
-                },
-                "transforms" : [
-                    {
-                        "type" : "translate",
-                        "amount" : {
-                            "x" : 0,
-                            "y" : 15,
-                            "z" : 0
-                        }
-                    }
-                ],
-                "children" : {
-                    "nurbsPrim": {
-                        "type" : "nurbs",
-                        "degree_u" : 3,
-                        "degree_v" : 3,
-                        "parts_u" : 16,
-                        "parts_v" : 16,
-                        "controlPoints" : [
-                            {"x" : -0.5, "y" : -1, "z" : 0.0},
-                            {"x" : -1, "y" : 0, "z" : 0.0},
-                            {"x" : -0.5, "y" : 0.5, "z" : 0.3},
-                            {"x" : -1, "y" : 1.2, "z" : 0.0},
-
-                            {"x" : -0.5, "y" : -1, "z" : 0.67},
-                            {"x" : -0.5, "y" : 0, "z" : 1.0},
-                            {"x" : -0.2, "y" : 0.5, "z" : 0.3},
-                            {"x" : -0.35, "y" : 1.2, "z" : 1},
-
-                            {"x" : 0.5, "y" : -1, "z" : 0.67},
-                            {"x" : 0.5, "y" : 0, "z" : 1.0},
-                            {"x" : 0.2, "y" : 0.5, "z" : 0.3},
-                            {"x" : 0.35, "y" : 1.2, "z" : 1},
-
-                            {"x" : 0.5, "y" : -1, "z" : 0.0},
-                            {"x" : 1, "y" : 0, "z" : 0.0},
-                            {"x" : 0.5, "y" : 0.5, "z" : 0.3},
-                            {"x" : 1, "y" : 1.2, "z" : 0.0}
-                        ]
-                    }
-                }
+            "blanket": {
+        "type": "node",
+        "materialref": {
+          "materialId": "projector"
+        },
+        "children": {
+          "nodesList": ["towel", "towelEnd"]
+        }
+      },
+      "towel": {
+        "type": "node",
+        "transforms": [
+          {
+            "type": "translate",
+            "amount": {
+              "x": 7.6,
+              "y": 8.2,
+              "z": -24
             }
+          },
+          {
+            "type": "rotate",
+            "amount": {
+              "x": 0,
+              "y": 0,
+              "z": -62
+            }
+          }
+        ],
+        "children": {
+          "nurbsPrim": {
+            "type": "nurbs",
+            "degree_u": 3,
+            "degree_v": 5,
+            "parts_u": 16,
+            "parts_v": 16,
+            "controlPoints": [
+              { "x": 3.8, "y": -1.1, "z": -1.5 },
+              { "x": -0.8, "y": -2.5, "z": -1.5 },
+              { "x": 0, "y": 2.8, "z": -1.5 },
+              { "x": 0.4, "y": 2.8, "z": -1.5 },
+              { "x": 5.1, "y": 2.4, "z": -1.5 },
+              { "x": 5.3, "y": 2.6, "z": -1.5 },
+
+              { "x": 3.8, "y": -1.1, "z": -0.5 },
+              { "x": -0.8, "y": -2.5, "z": -0.5 },
+              { "x": 0, "y": 2.8, "z": -0.5 },
+              { "x": 0.4, "y": 2.8, "z": -0.5 },
+              { "x": 5.1, "y": 2.4, "z": -0.5 },
+              { "x": 5.3, "y": 2.6, "z": -0.5 },
+
+              { "x": 3.8, "y": -1.1, "z": 0.5 },
+              { "x": -0.8, "y": -2.5, "z": 0.5 },
+              { "x": 0, "y": 2.8, "z": 0.5 },
+              { "x": 0.4, "y": 2.8, "z": 0.5 },
+              { "x": 5.1, "y": 2.4, "z": 0.5 },
+              { "x": 5.3, "y": 2.6, "z": 0.5 },
+
+              { "x": 3.8, "y": -1.1, "z": 1.5 },
+              { "x": -0.8, "y": -2.5, "z": 1.5 },
+              { "x": 0, "y": 2.8, "z": 1.5 },
+              { "x": 0.4, "y": 2.8, "z": 1.5 },
+              { "x": 5.1, "y": 2.4, "z": 1.5 },
+              { "x": 5.3, "y": 2.6, "z": 1.5 }
+            ]
+          }
+        }
+      },
+      "towelEnd": {
+        "type": "node",
+        "transforms": [
+        {
+            "type": "rotate",
+            "amount": {
+              "x": 0,
+              "y": 0,
+              "z": 30
+            }
+        },
+        {
+            "type": "translate",
+            "amount": {
+              "x": 13,
+              "y": -2.1,
+              "z": -25
+            }
+          }
+        ],
+        "children": {
+          "nodesList": ["tassel1", "tassel2", "tassel3", "tassel4"]
+        }
+      },
+      "tassel1": {
+        "type": "node",
+        "transforms": [
+           {
+            "type": "translate",
+            "amount": {
+                "x": 0,
+                "y": 0,
+                "z": -0.4
+            }
+          },
+          {
+            "type": "scale",
+            "amount": {
+              "x": 1,
+              "y": 2,
+              "z": 1
+            }
+          }
+        ],
+        "children": {
+          "spherePrim": {
+            "type": "sphere",
+            "radius": 0.1
+          }
+        }
+      },
+      "tassel2": {
+        "type": "node",
+        "transforms": [
+           {
+            "type": "translate",
+            "amount": {
+                "x": 0,
+                "y": 0,
+                "z": 0.5
+            }
+          },
+          {
+            "type": "scale",
+            "amount": {
+              "x": 1,
+              "y": 2,
+              "z": 1
+            }
+          }
+        ],
+        "children": {
+          "spherePrim": {
+            "type": "sphere",
+            "radius": 0.1
+          }
+        }
+      },
+      "tassel3": {
+        "type": "node",
+        "transforms": [
+           {
+            "type": "translate",
+            "amount": {
+                "x": 0,
+                "y": 0,
+                "z": 1.5
+            }
+          },
+          {
+            "type": "scale",
+            "amount": {
+              "x": 1,
+              "y": 2,
+              "z": 1
+            }
+          }
+        ],
+        "children": {
+          "spherePrim": {
+            "type": "sphere",
+            "radius": 0.1
+          }
+        }
+      },
+      "tassel4": {
+        "type": "node",
+        "transforms": [
+           {
+            "type": "translate",
+            "amount": {
+                "x": 0,
+                "y": 0,
+                "z": 2.4
+            }
+          },
+          {
+            "type": "scale",
+            "amount": {
+              "x": 1,
+              "y": 2,
+              "z": 1
+            }
+          }
+        ],
+        "children": {
+          "spherePrim": {
+            "type": "sphere",
+            "radius": 0.1
+          }
+        }
+      }
 
         }
     }
