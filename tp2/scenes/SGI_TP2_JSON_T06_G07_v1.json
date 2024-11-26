@@ -516,6 +516,28 @@
                             "z": 23.1
                         }
                     },
+                    "spotLight" : {
+                        "type" : "spotlight",
+                        "enabled" : true,
+                        "color": {
+                            "r": 0.5,
+                            "g": 0.6,
+                            "b": 0.8
+                        },
+                        "intensity" : 500,
+                        "distance" : 30,
+                        "angle" : 40,
+                        "position" : {
+                            "x" : -25,
+                            "y" : 20,
+                             "z" : 0
+                        },
+                        "target" : {
+                            "x" : -35,
+                            "y" : 20,
+                            "z" : 0
+                        }
+                    },
                     "nodesList": [
                         "slimBilly",
                         "largeBilly1",

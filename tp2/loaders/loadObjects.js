@@ -68,6 +68,9 @@ const dfs = (data, materials, node, materialref=null, isLod=false, debug=false, 
                         if(info.enabled !== false){
                             const spotlight = buildSpotLight(info.color, info.intensity, info.distance, info.angle, info.decay, info.penumbra, info.position, info.target, info.castshadow, info.shadowfar, info.shadowmapsize)
                             object.add(spotlight)
+
+                            const helper = buildSpotLightHelper(spotlight)
+                            object.add(helper)
                         }
                         break
                     case 'rectangle':
