@@ -552,7 +552,8 @@
                         "monitors",
                         "sofa",
                         "blanket", 
-                        "poster"
+                        "poster",
+                        "myPolygon"
                     ]
                 }
             },
@@ -2630,7 +2631,41 @@
                 }
             }
         }
+      },
+      "myPolygon" : {
+        "type" : "node",
+        "materialref" : {
+            "materialId" : "door"
+        },
+        "transforms" : [
+            {
+                "type" : "translate",
+                "amount" : {
+                    "x" : 0,
+                    "y" : 10, 
+                    "z" : 0 
+                }
+            }
+        ],
+        "children" : {
+            "polygonPrim" : {
+                "type" : "polygon",
+                "radius" : 3,
+                "stacks" : 3,
+                "slices" : 5,
+                "color_p" : {
+                    "r" : 1,
+                    "g" : 0,
+                    "b" : 0
+                },
+                "color_c" : {
+                    "r" : 0,
+                    "g" : 1,
+                    "b" : 0
+                }
+            }
+        }
       }
     }
-    }
+  }
 }

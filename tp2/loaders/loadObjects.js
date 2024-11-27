@@ -68,9 +68,12 @@ const dfs = (data, materials, node, materialref=null, isLod=false, debug=false, 
                         if(info.enabled !== false){
                             const spotlight = buildSpotLight(info.color, info.intensity, info.distance, info.angle, info.decay, info.penumbra, info.position, info.target, info.castshadow, info.shadowfar, info.shadowmapsize)
                             object.add(spotlight)
-
-                            const helper = buildSpotLightHelper(spotlight)
-                            object.add(helper)
+                        }
+                        break
+                    case 'directionallight':
+                        if (info.enabled !== false) {
+                            const directionallight = buildDirectionalLight()
+                            object.add(directionallight)
                         }
                         break
                     case 'rectangle':
@@ -100,6 +103,10 @@ const dfs = (data, materials, node, materialref=null, isLod=false, debug=false, 
                     case 'nurbs':
                         const nurb = buildNurbs(info, material)
                         object.add(nurb)
+                        break
+                    case 'polygon':
+                        const polygon = buildPolygon(info, material)
+                        object.add(polygon)
                         break
                     default:
                         throw new Error('Unknown object type: ' + node.children[key].type);
@@ -177,6 +184,38 @@ const buildCone = ({radius, height, radialSegments = 32, heightSegments = 1, the
     return mesh
 }
 
+const buildPolygon = ({radius, stacks, slices, color_c, color_p}, material) => {
+
+    let positions = []
+    let indices = [] 
+    let colors = []
+    let normals = []
+
+    let centerColor = new THREE.Color(color_c.r, color_c.g, color_c.b)
+    let peripheralColor = new THREE.Color(color_p.r, color_p.g, color_p.b)
+    positions.push([0,0,0])
+
+    
+    for (let i = 1; i <= stacks; i++) {
+        let angle = Math.PI * 2 / slices
+        let sliceRadius = radius * (i / stacks)
+
+        for (let j = 1; j <= slices; j++) {
+            let sliceAngle = angle * j
+            let color = new THREE.Color().lerpColors(centerColor, peripheralColor, i / stacks)
+         
+            positions.push([Math.cos(sliceAngle) * sliceRadius, Math.sin(sliceAngle) * sliceRadius, 0])
+            normals.push([0,0,1])
+            colors.push([color.r, color.g, color.b,])
+        }
+    }
+
+    console.log(positions)
+
+
+
+}
+
 
 const buildNurbs = ({ degree_u, degree_v, parts_u, parts_v, controlPoints },material) => {
     let controlPointsNormalized = [];
@@ -237,6 +276,19 @@ const buildSpotLight = (color, intensity = 1, distance = 10, angle, decay = 2, p
     return light
 }
 
+const buildDirectionalLight = (color, intensity = 1, position, castshadow = false, shadowleft = -5, shadowright = 5, shadowbottom = -5, shadowtop = 5, shadowfar = 500.0, shadowmapsize = 512) => {
+    const light = new THREE.DirectionalLight(color, intensity)
+    light.castShadow = castshadow
+    light.position.set(position.x, position.y, position.z)
+    light.shadowfar = shadowfar
+    light.shadowmapsize = shadowmapsize
+    light.shadow.camera.left = shadowleft
+    light.shadow.camera.right = shadowright
+    light.shadow.camera.top = shadowtop
+    light.shadow.camera.bottom = shadowbottom
+    return light
+}
+
 
 const buildLightHelper = (light) => {
     return new THREE.PointLightHelper(light);
@@ -244,6 +296,10 @@ const buildLightHelper = (light) => {
 
 const buildSpotLightHelper = (light) => {
     return new THREE.SpotLightHelper(light);
+}
+
+const buildDirectionalLightHelper = (light) => {
+    return new THREE.DirectionalLightHelper(light)
 }
 
 const transform = (object, transforms) => {
