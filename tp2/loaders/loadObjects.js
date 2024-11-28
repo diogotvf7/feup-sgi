@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { MyNurbsBuilder } from "../helpers/MyNurbsBuilder.js";
+import { Triangle } from '../objects/Triangle.js';
 
 
 export const loadObjects = {
@@ -147,25 +148,49 @@ const buildRectangle = ({ xy1, xy2, parts_x = 1, parts_y = 1 }, material) => {
     const width = Math.abs(xy1.x - xy2.x);
     const height = Math.abs(xy1.y - xy2.y);
 
+    if (material.material.map && material.material.map.repeat) {
+        const repeatX = width / material.texlength_s;
+        const repeatY = height / material.texlength_t;
+        material.material.map.repeat.set(repeatX, repeatY);
+    }
+
     const geometry = new THREE.PlaneGeometry(width, height, parts_x, parts_y);
-    const mesh = new THREE.Mesh(geometry, material);
+    const mesh = new THREE.Mesh(geometry, material.material);
     return mesh;    
 };
 
 
-const buildTriangle = ({xyz1, xyz2, xyz3}, material) => {
-    const geometry = new THREE.Geometry();
-    geometry.vertices.push(
+const buildTriangle = ({ xyz1, xyz2, xyz3 }, material) => {
+    const vertices = [
         new THREE.Vector3(xyz1.x, xyz1.y, xyz1.z),
         new THREE.Vector3(xyz2.x, xyz2.y, xyz2.z),
-        new THREE.Vector3(xyz3.x, xyz3.y, xyz3.z)
+        new THREE.Vector3(xyz3.x, xyz3.y, xyz3.z),
+    ];
+
+    const width = Math.abs(
+        Math.max(vertices[0].x, vertices[1].x, vertices[2].x) - 
+        Math.min(vertices[0].x, vertices[1].x, vertices[2].x)
     );
 
-    geometry.faces.push(new THREE.Face3(0, 1, 2));
-    geometry.computeFaceNormals();
-    const mesh = new THREE.Mesh(geometry, material);
-    return mesh;
-}
+    const edge = new THREE.Vector3().subVectors(vertices[1], vertices[0]); 
+    const pointToEdge = new THREE.Vector3().subVectors(vertices[2], vertices[0]); 
+    const edgeLength = edge.length();
+    const projectionLength = edge.dot(pointToEdge) / edgeLength; 
+    const projection = edge.clone().setLength(projectionLength); 
+    const perpendicular = pointToEdge.sub(projection); 
+    const height = perpendicular.length();
+
+    if (material.material.map && material.material.map.repeat) {
+        const repeatX = width / material.texlength_s;
+        const repeatY = height / material.texlength_t;
+        material.material.map.repeat.set(repeatX, repeatY);
+    }
+
+    const triangle = new Triangle(...vertices)
+    console.log(material.material.map)
+    return new THREE.Mesh(triangle, material.material);
+};
+
 
 const buildBox = ({xyz1, xyz2, parts_x=1, parts_y=1, parts_z=1}, material) => {
     const width = Math.abs(xyz1.x - xyz2.x);
@@ -173,25 +198,25 @@ const buildBox = ({xyz1, xyz2, parts_x=1, parts_y=1, parts_z=1}, material) => {
     const depth = Math.abs(xyz1.z - xyz2.z);
 
     const geometry = new THREE.BoxGeometry(width, height, depth, parts_x, parts_y, parts_z);
-    const mesh = new THREE.Mesh(geometry, material);
+    const mesh = new THREE.Mesh(geometry, material.material);
     return mesh;
 }
 
 const buildCylinder = ({base, top, height, slices = 32, stacks = 1, capsclose=false, thetastart=0, thetalength=360}, material) => {
     const geometry = new THREE.CylinderGeometry(base, top, height, slices, stacks, !capsclose, degreesToRadians(thetastart), degreesToRadians(thetalength));
-    const mesh = new THREE.Mesh(geometry, material);
+    const mesh = new THREE.Mesh(geometry, material.material);
     return mesh;
 }
 
 const buildSphere = ({radius, slices=32, stacks=16, thetastart=0, thetalength=180, phistart=0, philength=360}, material) => {
     const geometry = new THREE.SphereGeometry(radius, slices, stacks, phistart, degreesToRadians(philength), thetastart, degreesToRadians(thetalength))
-    const mesh = new THREE.Mesh(geometry, material);
+    const mesh = new THREE.Mesh(geometry, material.material);
     return mesh;
 }
 
 const buildCone = ({radius, height, radialSegments = 32, heightSegments = 1, thetastart = 0, thetalength = 2*Math.PI}, material) => {
     const geometry = new THREE.ConeGeometry(radius, height, radialSegments, heightSegments, thetastart, thetalength)
-    const mesh = new THREE.Mesh(geometry, material)
+    const mesh = new THREE.Mesh(geometry, material.material)
     return mesh
 }
 
@@ -263,7 +288,6 @@ const buildNurbs = ({ degree_u, degree_v, parts_u, parts_v, controlPoints }, mat
       controlPointsNormalized.push(points);
     }
 
-    console.log(controlPointsNormalized);
     let builder = new MyNurbsBuilder()
   
     let surfaceData = builder.build(
@@ -275,7 +299,7 @@ const buildNurbs = ({ degree_u, degree_v, parts_u, parts_v, controlPoints }, mat
       material
     );
   
-    let mesh = new THREE.Mesh(surfaceData, material)
+    let mesh = new THREE.Mesh(surfaceData, material.material)
     return mesh
 };
 

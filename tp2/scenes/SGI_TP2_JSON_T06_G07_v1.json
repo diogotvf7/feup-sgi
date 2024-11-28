@@ -35,17 +35,44 @@
         },
         "textures": {
             "tableTop": {
-                "filepath": "scenes/textures/tableTop.jpg"
+                "filepath": "scenes/textures/tableTop.jpg",
+                "isVideo" : false
             },
             "floor": {
-                "filepath": "scenes/textures/floor.jpg"
+                "filepath": "scenes/textures/floor.jpg",
+                "isVideo" : false
             },
             "wall": {
-                "filepath": "scenes/textures/wall.jpg"
+                "filepath": "scenes/textures/wall.jpg",
+                "isVideo" : false
             },
             "video": {
                 "filepath" : "scenes/textures/pulpfiction.mp4",
                 "isVideo" : true
+            },
+            "code": {
+                "filepath": "scenes/textures/mipMapCode/code.jpg",
+                "isVideo" : false,
+                "mipmap0" : "scenes/textures/mipMapCode/code1024.jpg",
+                "mipmap1" : "scenes/textures/mipMapCode/code512.jpg",
+                "mipmap2" : "scenes/textures/mipMapCode/code256.jpg",
+                "mipmap3" : "scenes/textures/mipMapCode/code128.jpg",
+                "mipmap4" : "scenes/textures/mipMapCode/code64.jpg",
+                "mipmap5" : "scenes/textures/mipMapCode/code32.jpg",
+                "mipmap6" : "scenes/textures/mipMapCode/code16.jpg",
+                "mipmap7" : "scenes/textures/mipMapCode/code8.jpg"
+            },
+            "blanket" : {
+                "filepath" : "scenes/textures/blanket.png",
+                "isVideo" : false
+            },
+            "bump" : {
+                "filepath" : "scenes/textures/bump.jpg",
+                "isVideo" : false
+            },
+            "ni" : {
+                "filepath" : "scenes/textures/niafeup.jpg",
+                "isVideo" : false
             },
             "folder-group": {
                 "filepath": "scenes/textures/folder-group.png"
@@ -64,18 +91,6 @@
             },
             "folder-yellow": {
                 "filepath": "scenes/textures/folder-yellow.jpg"
-            },
-            "code": {
-                "filepath": "scenes/textures/mipMapCode/code.jpg",
-                "mipmap0" : "scenes/textures/mipMapCode/code1024.jpg",
-                "mipmap1" : "scenes/textures/mipMapCode/code512.jpg",
-                "mipmap2" : "scenes/textures/mipMapCode/code256.jpg",
-                "mipmap3" : "scenes/textures/mipMapCode/code128.jpg",
-                "mipmap4" : "scenes/textures/mipMapCode/code64.jpg",
-                "mipmap5" : "scenes/textures/mipMapCode/code32.jpg",
-                "mipmap6" : "scenes/textures/mipMapCode/code16.jpg",
-                "mipmap7" : "scenes/textures/mipMapCode/code8.jpg"
-                
             }
         },
         "materials": {
@@ -99,6 +114,28 @@
                 "transparent" : false,
                 "opacity" : 0,
                 "textureref": "floor",
+                "texlength_s": 1,
+                "texlength_t": 1
+            },
+            "sofaMaterial" : {
+                "color": {
+                    "r": 0.21,
+                    "g": 0.21,
+                    "b": 0.21
+                },
+                "emissive": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "specular": {
+                    "r": 0.06,
+                    "g": 0.06,
+                    "b": 0.06
+                },
+                "shininess": 0,
+                "transparent" : false,
+                "opacity" : 1,
                 "texlength_s": 1,
                 "texlength_t": 1
             },
@@ -364,11 +401,11 @@
                 "transparent" : false,
                 "twosided" : false
             },
-            "sofaMaterial" : {
+            "blanketMaterial" : {
                 "color": {
-                    "r": 0.21,
-                    "g": 0.21,
-                    "b": 0.21
+                    "r": 0.89,
+                    "g": 0.53,
+                    "b": 0.87
                 },
                 "emissive": {
                     "r": 0,
@@ -376,15 +413,43 @@
                     "b": 0
                 },
                 "specular": {
-                    "r": 0.06,
-                    "g": 0.06,
-                    "b": 0.06
+                    "r": 0.1,
+                    "g": 0.1,
+                    "b": 0.1
                 },
                 "shininess": 0,
                 "transparent" : false,
-                "opacity" : 1,
+                "opacity" : 100,
+                "textureref": "blanket",
+                "bumpref" : "bump",
+                "bumpscale" : 1,
                 "texlength_s": 1,
-                "texlength_t": 1
+                "texlength_t": 1,
+                "twosided" : true
+            },
+            "niMaterial": {
+                "color": {
+                    "r": 0.8,
+                    "g": 0.8,
+                    "b": 0.8
+                },
+                "emissive": {
+                    "r": 0.01,
+                    "g": 0.01,
+                    "b": 0.01
+                },
+                "specular": {
+                    "r": 0.01,
+                    "g": 0.01,
+                    "b": 0.01
+                },
+                "shininess": 50,
+                "transparent" : false,
+                "opacity" : 0,
+                "twosided" : true,
+                "textureref": "ni",
+                "texlength_s": 1,
+                "texlength_t": 1    
             },
             "folder-group": {
                 "color": {

@@ -62,7 +62,7 @@ class MyContents {
                 this.app.setActiveCamera(initialCamera)
             },
             objects: () => {
-                [...loadObjects.execute(graph, this.materialsSetttings)] // fix to stupid bug
+                [...loadObjects.execute(graph, this.materialsSetttings)] 
                 .forEach(object => {
                     this.app.scene.add(object)
                 })
