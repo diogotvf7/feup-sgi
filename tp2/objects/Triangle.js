@@ -3,13 +3,11 @@ import * as THREE from 'three';
 
 class Triangle extends THREE.BufferGeometry {
 
-    constructor(p1, p2, p3, s = 1, t = 1){
+    constructor(p1, p2, p3){
         super()
         this.v1 = p1
         this.v2 = p2
         this.v3 = p3
-        this.textlength_s  = s
-        this.textlength_t = t
         this.ab = new THREE.Vector3();
         this.cb = new THREE.Vector3();
 
@@ -47,8 +45,8 @@ class Triangle extends THREE.BufferGeometry {
 
         let uvs = [
             0,0,
-            c / this.textlength_s, 0,
-            (b * cos_teta) / this.textlength_s, (b *sin_teta) / this.textlength_t 
+            c , 0,
+            b * cos_teta, b *sin_teta 
         ]
 
         this.setIndex(indices)

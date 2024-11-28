@@ -95,9 +95,7 @@
                 "shininess" : 0.0,
                 "transparent" : false,
                 "opacity" : 0,
-                "textureref": "floor",
-                "texlength_s": 1,
-                "texlength_t": 1
+                "textureref": "floor"
             },
             "wall": {
                 "color": {
@@ -409,7 +407,7 @@
                 "texlength_t": 1,
                 "twosided" : true
             },
-            "ni": {
+            "niMaterial": {
                 "color": {
                     "r": 0.8,
                     "g": 0.8,
@@ -431,7 +429,7 @@
                 "twosided" : true,
                 "textureref": "ni",
                 "texlength_s": 1,
-                "texlength_t": 1
+                "texlength_t": 1    
             }
         },
         "cameras": {
@@ -550,7 +548,7 @@
                         "sofa",
                         "blanket", 
                         "poster",
-                        "rectangle"
+                        "triangle"
                     ]
                 }
             },
@@ -2613,7 +2611,7 @@
             }
         ],
         "materialref" : {
-            "materialId" : "ni"
+            "materialId" : "niMaterial"
         },
         "children" : {
             "rectanglePrim" : {
@@ -2632,7 +2630,7 @@
         "triangle" : {
         "type" : "node",
         "materialref" : {
-            "materialId" : "ni"
+            "materialId" : "niMaterial"
         },
         "transforms" : [
             {
@@ -2640,7 +2638,7 @@
                 "amount" : {
                     "x" : 0,
                     "y" : 10, 
-                    "z" : 0 
+                    "z" : -5
                 }
             }
         ],
@@ -2656,7 +2654,7 @@
       "rectangle" : {
         "type" : "node",
         "materialref" : {
-            "materialId" : "ni"
+            "materialId" : "niMaterial"
         },
         "transforms" : [
             {
@@ -2669,7 +2667,7 @@
             }
         ],
         "children" : {
-            "rectanglePrim" : {
+            "trianglePrim" : {
                 "type" : "rectangle",
                 "xy1": {"x": 0, "y": 0},
                 "xy2": {"x": 10, "y": 5}
