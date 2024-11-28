@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { MyNurbsBuilder } from "../helpers/MyNurbsBuilder.js";
+import { Triangle } from '../objects/Triangle.js';
 
 
 export const loadObjects = {
@@ -130,31 +131,35 @@ const dfs = (data, materials, node, materialref=null, isLod=false, debug=false, 
  * @returns the rectangle mesh
  */
 const buildRectangle = ({ xy1, xy2, parts_x = 1, parts_y = 1 }, material) => {
-    console.log('[DEBUG]  ', material);
-    
     
     const width = Math.abs(xy1.x - xy2.x);
     const height = Math.abs(xy1.y - xy2.y);
 
     const geometry = new THREE.PlaneGeometry(width, height, parts_x, parts_y);
+    console.log(geometry.attributes.uv)
+
     const mesh = new THREE.Mesh(geometry, material);
     return mesh;    
 };
 
 
-const buildTriangle = ({xyz1, xyz2, xyz3}, material) => {
-    const geometry = new THREE.Geometry();
-    geometry.vertices.push(
+const buildTriangle = ({ xyz1, xyz2, xyz3 }, material) => {
+    const vertices = [
         new THREE.Vector3(xyz1.x, xyz1.y, xyz1.z),
         new THREE.Vector3(xyz2.x, xyz2.y, xyz2.z),
-        new THREE.Vector3(xyz3.x, xyz3.y, xyz3.z)
-    );
+        new THREE.Vector3(xyz3.x, xyz3.y, xyz3.z),
+    ];
 
-    geometry.faces.push(new THREE.Face3(0, 1, 2));
-    geometry.computeFaceNormals();
-    const mesh = new THREE.Mesh(geometry, material);
-    return mesh;
-}
+    const repeatX = material.map?.repeat.x || 1; 
+    const repeatY = material.map?.repeat.y || 1;
+
+    const triangle = material.map
+        ? new Triangle(...vertices, repeatX, repeatY)
+        : new Triangle(...vertices);
+
+    return new THREE.Mesh(triangle, material);
+};
+
 
 const buildBox = ({xyz1, xyz2, parts_x=1, parts_y=1, parts_z=1}, material) => {
     const width = Math.abs(xyz1.x - xyz2.x);
@@ -207,13 +212,8 @@ const buildPolygon = ({radius, stacks, slices, color_c, color_p}, material) => {
             positions.push([Math.cos(sliceAngle) * sliceRadius, Math.sin(sliceAngle) * sliceRadius, 0])
             normals.push([0,0,1])
             colors.push([color.r, color.g, color.b,])
-        }
-    }
-
-    console.log(positions)
-
-
-
+        }        
+    }                 
 }
 
 
@@ -230,7 +230,6 @@ const buildNurbs = ({ degree_u, degree_v, parts_u, parts_v, controlPoints },mate
       controlPointsNormalized.push(points);
     }
 
-    console.log(controlPointsNormalized);
     let builder = new MyNurbsBuilder()
   
     let surfaceData = builder.build(

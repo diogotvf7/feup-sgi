@@ -50,10 +50,6 @@
                 "filepath" : "scenes/textures/pulpfiction.mp4",
                 "isVideo" : true
             },
-            "sofa" : {
-                "filapath" : "scenes/textures/sofaTexture.jpg",
-                "isVideo" : false
-            },
             "code": {
                 "filepath": "scenes/textures/mipMapCode/code.jpg",
                 "isVideo" : false,
@@ -432,6 +428,7 @@
                 "shininess": 50,
                 "transparent" : false,
                 "opacity" : 0,
+                "twosided" : true,
                 "textureref": "ni",
                 "texlength_s": 1,
                 "texlength_t": 1
@@ -553,7 +550,7 @@
                         "sofa",
                         "blanket", 
                         "poster",
-                        "myPolygon"
+                        "rectangle"
                     ]
                 }
             },
@@ -2632,10 +2629,10 @@
             }
         }
       },
-      "myPolygon" : {
+        "triangle" : {
         "type" : "node",
         "materialref" : {
-            "materialId" : "door"
+            "materialId" : "ni"
         },
         "transforms" : [
             {
@@ -2648,21 +2645,34 @@
             }
         ],
         "children" : {
-            "polygonPrim" : {
-                "type" : "polygon",
-                "radius" : 3,
-                "stacks" : 3,
-                "slices" : 5,
-                "color_p" : {
-                    "r" : 1,
-                    "g" : 0,
-                    "b" : 0
-                },
-                "color_c" : {
-                    "r" : 0,
-                    "g" : 1,
-                    "b" : 0
+            "trianglePrim" : {
+                "type" : "triangle",
+                "xyz1": {"x": -2.5, "y": -5, "z": 0},
+                "xyz2": {"x": 0, "y": -2.5, "z": 0},
+                "xyz3": {"x": -2.5, "y": -2.5, "z": 0}
+            }
+        }
+      },
+      "rectangle" : {
+        "type" : "node",
+        "materialref" : {
+            "materialId" : "ni"
+        },
+        "transforms" : [
+            {
+                "type" : "translate",
+                "amount" : {
+                    "x" : 0,
+                    "y" : 10, 
+                    "z" :-4 
                 }
+            }
+        ],
+        "children" : {
+            "rectanglePrim" : {
+                "type" : "rectangle",
+                "xy1": {"x": 0, "y": 0},
+                "xy2": {"x": 10, "y": 5}
             }
         }
       }
