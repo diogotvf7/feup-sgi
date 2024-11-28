@@ -2,8 +2,6 @@ import { MyAxis } from './MyAxis.js';
 import { MyFileReader } from './parser/MyFileReader.js';
 import { loadCameras, loadGlobals, loadTextures, loadMaterials, loadObjects } from './loaders/index.js';
 
-import { matrix_to_transformations } from './object2json/converter.js';
-
 /**
  *  This class contains the contents of out application
  */

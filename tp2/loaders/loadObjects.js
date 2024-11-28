@@ -24,96 +24,110 @@ export const loadObjects = {
 const dfs = (data, materials, node, materialref=null, isLod=false, debug=false, depth=1) => {        
     if (debug) console.log(`[${isLod ? 'L' : 'G'}]`, " ".repeat(depth*2), node.name);
     
-    const object = isLod ? new THREE.LOD() : new THREE.Group();
-    object.name = node.name;
-
     let material = null;
     if (node.materialref !== undefined) material = materials[node.materialref.materialId];
     else if (materialref) material = materialref;
     
+    let object = null
+    if (isLod) {
+        object = new THREE.LOD()
+        object.name = node.name;
 
-    for (let key in node.children) {        
-        switch (key) {
-            case "nodesList":
-                const nodesList = node.children[key];
-                nodesList.forEach(key => {
-                    const child = data[key];
-                    child.name = key;
+        node.lodNodes.forEach(lodNode => {
+            const child = data[lodNode.nodeId];
+            child.name = lodNode.nodeId;
 
-                    const newNode = dfs(data, materials, child, material, false, debug, depth+1);
-                    object.add(newNode);
-                });
-                break;
-            case "lodsList":
-                const lodsList = node.children[key];
-                lodsList.forEach(key => {
-                    const child = data[key];
-                    child.name = key;
+            const newNode = dfs(data, materials, child, material, false, debug, depth+1);
+            object.addLevel(newNode, lodNode.mindist)
+        })
+    } else {
+        object = new THREE.Group()
+        object.name = node.name;
 
-                    const newNode = dfs(data, materials, child, material, true, debug, depth+1);
-                    object.add(newNode);
-                });
-                break;
-            default:
-                const info = node.children[key];
+        for (let key in node.children) {                    
+            switch (key) {
+                case "nodesList":
+                    const nodesList = node.children[key];
+                    nodesList.forEach(key => {
+                        const child = data[key];
+                        
+                        child.name = key;
+    
+                        const newNode = dfs(data, materials, child, material, false, debug, depth+1);
+                        object.add(newNode);
+                    });
+                    break;
+                case "lodsList":
+                    const lodsList = node.children[key];
+                    lodsList.forEach(key => {
+                        const child = data[key];
+                        child.name = key;
 
-                switch (info.type) {
-                    case 'pointlight':
-                        if(info.enabled !== false){
-                            const pointlight = buildPointLight(info.color, info.intensity, info.distance, info.decay, info.castshadow, info.position);
-                            object.add(pointlight);                            
-                        }
-                        break;
-                    case 'spotlight':
-                        if(info.enabled !== false){
-                            const spotlight = buildSpotLight(info.color, info.intensity, info.distance, info.angle, info.decay, info.penumbra, info.position, info.target, info.castshadow, info.shadowfar, info.shadowmapsize)
-                            object.add(spotlight)
-                        }
-                        break
-                    case 'directionallight':
-                        if (info.enabled !== false) {
-                            const directionallight = buildDirectionalLight()
-                            object.add(directionallight)
-                        }
-                        break
-                    case 'rectangle':
-                        const rectangle = buildRectangle(info, material);
-                        object.add(rectangle);
-                        break;
-                    case 'triangle':
-                        const triangle = buildTriangle(info, material);
-                        object.add(triangle);
-                        break;
-                    case 'box':
-                        const box = buildBox(info, material);
-                        object.add(box);
-                        break;
-                    case 'cylinder':
-                        const cylinder = buildCylinder(info, material);
-                        object.add(cylinder);
-                        break;
-                    case 'sphere':
-                        const sphere = buildSphere(info, material);
-                        object.add(sphere);
-                        break;
-                    case 'cone':
-                        const cone = buildCone(info, material)
-                        object.add(cone)
-                        break
-                    case 'nurbs':
-                        const nurb = buildNurbs(info, material)
-                        object.add(nurb)
-                        break
-                    case 'polygon':
-                        const polygon = buildPolygon(info, material)
-                        object.add(polygon)
-                        break
-                    default:
-                        throw new Error('Unknown object type: ' + node.children[key].type);
-                }        
-
-                break;
-        }
+                        const newNode = dfs(data, materials, child, material, true, debug, depth+1);
+                        object.add(newNode);
+                    });
+                    break;
+                default:
+                    const info = node.children[key];
+    
+                    switch (info.type) {
+                        case 'pointlight':
+                            if(info.enabled !== false){
+                                const pointlight = buildPointLight(info.color, info.intensity, info.distance, info.decay, info.castshadow, info.position);
+                                object.add(pointlight);                            
+                            }
+                            break;
+                        case 'spotlight':
+                            if(info.enabled !== false){
+                                const spotlight = buildSpotLight(info.color, info.intensity, info.distance, info.angle, info.decay, info.penumbra, info.position, info.target, info.castshadow, info.shadowfar, info.shadowmapsize)
+                                object.add(spotlight)
+                            }
+                            break
+                        case 'directionallight':
+                            if (info.enabled !== false) {
+                                const directionallight = buildDirectionalLight()
+                                object.add(directionallight)
+                            }
+                            break
+                        case 'rectangle':
+                            const rectangle = buildRectangle(info, material);
+                            object.add(rectangle);
+                            break;
+                        case 'triangle':
+                            const triangle = buildTriangle(info, material);
+                            object.add(triangle);
+                            break;
+                        case 'box':
+                            const box = buildBox(info, material);
+                            object.add(box);
+                            break;
+                        case 'cylinder':
+                            const cylinder = buildCylinder(info, material);
+                            object.add(cylinder);
+                            break;
+                        case 'sphere':
+                            const sphere = buildSphere(info, material);
+                            object.add(sphere);
+                            break;
+                        case 'cone':
+                            const cone = buildCone(info, material)
+                            object.add(cone)
+                            break
+                        case 'nurbs':
+                            const nurb = buildNurbs(info, material)
+                            object.add(nurb)
+                            break
+                        case 'polygon':
+                            const polygon = buildPolygon(info)
+                            object.add(polygon)
+                            break
+                        default:
+                            throw new Error('Unknown object type: ' + node.children[key].type);
+                    }        
+    
+                    break;
+            }
+        }    
     }
 
     transform(object, node.transforms);
@@ -130,9 +144,6 @@ const dfs = (data, materials, node, materialref=null, isLod=false, debug=false, 
  * @returns the rectangle mesh
  */
 const buildRectangle = ({ xy1, xy2, parts_x = 1, parts_y = 1 }, material) => {
-    console.log('[DEBUG]  ', material);
-    
-    
     const width = Math.abs(xy1.x - xy2.x);
     const height = Math.abs(xy1.y - xy2.y);
 
@@ -184,40 +195,62 @@ const buildCone = ({radius, height, radialSegments = 32, heightSegments = 1, the
     return mesh
 }
 
-const buildPolygon = ({radius, stacks, slices, color_c, color_p}, material) => {
+const buildPolygon = ({radius, stacks, slices, color_c, color_p}) => {
+    const geometry = new THREE.BufferGeometry();
 
-    let positions = []
-    let indices = [] 
-    let colors = []
-    let normals = []
+    const vertices = [0, 0, 0]
+    const indices = [] 
+    const colors = [color_c.r, color_c.g, color_c.b]
+    const normals = []
 
-    let centerColor = new THREE.Color(color_c.r, color_c.g, color_c.b)
-    let peripheralColor = new THREE.Color(color_p.r, color_p.g, color_p.b)
-    positions.push([0,0,0])
+    const centerColor = new THREE.Color(color_c.r, color_c.g, color_c.b)
+    const peripheralColor = new THREE.Color(color_p.r, color_p.g, color_p.b)
 
-    
-    for (let i = 1; i <= stacks; i++) {
-        let angle = Math.PI * 2 / slices
-        let sliceRadius = radius * (i / stacks)
+    for (let i = 0; i < stacks; i++) {
+        const angle = Math.PI * 2 / slices
+        const sliceRadius = radius * (i + 1) / stacks
 
-        for (let j = 1; j <= slices; j++) {
-            let sliceAngle = angle * j
-            let color = new THREE.Color().lerpColors(centerColor, peripheralColor, i / stacks)
-         
-            positions.push([Math.cos(sliceAngle) * sliceRadius, Math.sin(sliceAngle) * sliceRadius, 0])
+        for (let j = 0; j < slices; j++) {
+            const sliceAngle = angle * j + Math.PI / 2
+            const color = new THREE.Color().lerpColors(centerColor, peripheralColor, (i + 1) / stacks)
+            
+            vertices.push(
+                Math.cos(sliceAngle) * sliceRadius,
+                Math.sin(sliceAngle) * sliceRadius,
+                0
+            )
+            colors.push(color.r, color.g, color.b)            
+
             normals.push([0,0,1])
-            colors.push([color.r, color.g, color.b,])
+
+            if (i > 0) {
+                const a = i * slices + j + 1
+                const b = i * slices + (j + 1) % slices + 1
+                const c = a - slices
+                const d = b - slices
+
+                indices.push(a, b, c, b, d, c)
+            } else {
+                const a = j + 1
+                const b = (j + 1) % slices + 1
+                const c = 0
+
+                indices.push(a, b, c)
+            }
         }
-    }
+    }        
+    
+    geometry.setIndex( indices );
+    geometry.setAttribute( 'position', new THREE.BufferAttribute( new Float32Array(vertices), 3 ) );
+    geometry.setAttribute( 'color', new THREE.BufferAttribute( new Float32Array(colors), 3 ) );
 
-    console.log(positions)
-
-
-
+    const material = new THREE.MeshBasicMaterial( { vertexColors: true } );
+    let mesh = new THREE.Mesh( geometry, material );
+    return mesh
 }
 
 
-const buildNurbs = ({ degree_u, degree_v, parts_u, parts_v, controlPoints },material) => {
+const buildNurbs = ({ degree_u, degree_v, parts_u, parts_v, controlPoints }, material) => {
     let controlPointsNormalized = [];
     for (let i = 0; i <= degree_u; i++) {
       let points = [];
