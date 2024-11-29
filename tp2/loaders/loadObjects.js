@@ -318,6 +318,15 @@ const buildNurbs = ({ degree_u, degree_v, parts_u, parts_v, controlPoints }, mat
       controlPointsNormalized.push(points);
     }
 
+    if(materialHasTexture(material)){
+        const controlPoints4Casteljau = []
+        for(const x of controlPoints){
+            controlPoints4Casteljau.push([x.x, x.y, x.z])
+        }
+        const casteljauPoints = crlPtReduceDeCasteljau(controlPoints4Casteljau)
+        console.log(casteljauPoints)
+    }
+
     let builder = new MyNurbsBuilder()
   
     let surfaceData = builder.build(
@@ -374,6 +383,27 @@ const buildDirectionalLight = (color, intensity = 1, position, castshadow = fals
     light.shadow.camera.top = shadowtop
     light.shadow.camera.bottom = shadowbottom
     return light
+}
+
+
+const crlPtReduceDeCasteljau = (points) => {
+    let retArr = [ points.slice () ];
+	while (points.length > 1) {
+        let midpoints = [];
+		for (let i = 0; i+1 < points.length; ++i) {
+			let ax = points[i][0];
+			let ay = points[i][1];
+			let bx = points[i+1][0];
+			let by = points[i+1][1];
+			midpoints.push([
+				ax + (bx - ax) * 0.5,
+				ay + (by - ay) * 0.5,
+			]);
+		}
+        retArr.push (midpoints)
+		points = midpoints;
+	}
+	return retArr;
 }
 
 
