@@ -2528,8 +2528,8 @@
                 "children" : {
                     "cylinderPrim": {
                         "type": "cylinder",
-                        "base" : 0.2,
-                        "top": 0.4,
+                        "base" : 0.4,
+                        "top": 0.2,
                         "slices" : 32,
                         "stacks" : 1,
                         "height" : 0.8,
@@ -3258,9 +3258,12 @@
                     }
                 ],
                 "children" : {
-                    "spherePrim": {
-                        "type": "sphere",
-                        "radius":2 
+                    "cylinderPrim": {
+                        "type": "cylinder",
+                        "base":2,
+                        "top" : 4,
+                        "height" : 4,
+                        "capsclose" : true
                     }
                 }
             }

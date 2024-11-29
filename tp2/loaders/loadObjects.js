@@ -217,7 +217,15 @@ const buildBox = ({xyz1, xyz2, parts_x=1, parts_y=1, parts_z=1}, material) => {
 }
 
 const buildCylinder = ({base, top, height, slices = 32, stacks = 1, capsclose=false, thetastart=0, thetalength=360}, material) => {
-    const geometry = new THREE.CylinderGeometry(base, top, height, slices, stacks, !capsclose, degreesToRadians(thetastart), degreesToRadians(thetalength));
+
+    //Lets use the perimter of one of the bases to do the math - base was chosen arbitrarly
+    if(materialHasTexture(material)){
+        const circumference = 2 * Math.PI * base
+        const repeatX = circumference / material.texlength_s
+        const repeatY = circumference / material.texlength_t
+        material.material.map.repeat.set(repeatX, repeatY)
+    }
+    const geometry = new THREE.CylinderGeometry(top, base, height, slices, stacks, !capsclose, degreesToRadians(thetastart), degreesToRadians(thetalength));
     const mesh = new THREE.Mesh(geometry, material.material);
     return mesh;
 }
