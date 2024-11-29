@@ -202,8 +202,8 @@
                 "transparent": false,
                 "opacity": 1.0,
                 "textureref": "tableTop",
-                "texlength_s": 2,
-                "texlength_t": 2
+                "texlength_s": 12,
+                "texlength_t": 6
             },
             "tableLegBlue": {
                 "color": {
@@ -471,8 +471,8 @@
                 "transparent" : false,
                 "opacity" : 1,
                 "textureref": "folder-group",
-                "texlength_s": 1,
-                "texlength_t": 1
+                "texlength_s": 2.5,
+                "texlength_t": 2.5
             },
             "folder-black": {
                 "color": {
@@ -494,8 +494,8 @@
                 "transparent" : false,
                 "opacity" : 1,
                 "textureref": "folder-black",
-                "texlength_s": 1,
-                "texlength_t": 1
+                "texlength_s": 0.5,
+                "texlength_t": 2.5
             },
             "black": {
                 "color": {
@@ -539,8 +539,8 @@
                 "transparent" : false,
                 "opacity" : 1,
                 "textureref": "folder-blue",
-                "texlength_s": 1,
-                "texlength_t": 1
+                "texlength_s": 0.5,
+                "texlength_t": 2.5
             },
             "blue": {
                 "color": {
@@ -584,8 +584,8 @@
                 "transparent" : false,
                 "opacity" : 1,
                 "textureref": "folder-green",
-                "texlength_s": 1,
-                "texlength_t": 1
+                "texlength_s": 0.5,
+                "texlength_t": 2.5
             },
             "green": {
                 "color": {
@@ -629,8 +629,8 @@
                 "transparent" : false,
                 "opacity" : 1,
                 "textureref": "folder-red",
-                "texlength_s": 1,
-                "texlength_t": 1
+                "texlength_s": 0.5,
+                "texlength_t": 2.5
             },
             "red": {
                 "color": {
@@ -674,8 +674,8 @@
                 "transparent" : false,
                 "opacity" : 1,
                 "textureref": "folder-yellow",
-                "texlength_s": 1,
-                "texlength_t": 1
+                "texlength_s": 0.5,
+                "texlength_t": 2.5
             },
             "yellow": {
                 "color": {
@@ -2255,6 +2255,14 @@
                             "y": 7.7,
                             "z": 0.9
                         }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 90,
+                            "y": 0,
+                            "z": 0
+                        }
                     }
                 ],
                 "children": {
@@ -2267,8 +2275,8 @@
                         },
                         "xyz2": {
                             "x": 12,
-                            "y": 0.3,
-                            "z": 6
+                            "y": 6,
+                            "z": 0.3    
                         }
                     }
                 }

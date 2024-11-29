@@ -8,7 +8,7 @@ export const loadObjects = {
         const root = data[data.rootid];
         root.name = data.rootid;
 
-        const scene = dfs(data, materials, root, null, false, true);
+        const scene = dfs(data, materials, root, null, false, false);
         
         return scene.children;
     }
@@ -191,14 +191,28 @@ const buildTriangle = ({ xyz1, xyz2, xyz3 }, material) => {
     return new THREE.Mesh(triangle, material.material);
 };
 
-
 const buildBox = ({xyz1, xyz2, parts_x=1, parts_y=1, parts_z=1}, material) => {
     const width = Math.abs(xyz1.x - xyz2.x);
     const height = Math.abs(xyz1.y - xyz2.y);
     const depth = Math.abs(xyz1.z - xyz2.z);
+    const materials = []
+    for (let i = 0; i < 6 ; i++){ materials.push(material.material.clone()) }
+    const repeats = [
+        {repeatX : depth / material.texlength_s, repeatY : height / material.texlength_t},
+        {repeatX : depth / material.texlength_s, repeatY : height / material.texlength_t},
+        {repeatX : width / material.texlength_s, repeatY : depth / material.texlength_t},
+        {repeatX : width / material.texlength_s, repeatY : depth / material.texlength_t},
+        {repeatX : width / material.texlength_s, repeatY : height / material.texlength_t},
+        {repeatX : width / material.texlength_s, repeatY : height / material.texlength_t},
+    ]
 
+    if(material.material.map && material.material.map.repeat){
+        for(let i = 0;  i < 6 ; i++){
+            materials[i].map.repeat.set(repeats[i].repeatX,  repeats[i].repeatY)
+        }
+    } 
     const geometry = new THREE.BoxGeometry(width, height, depth, parts_x, parts_y, parts_z);
-    const mesh = new THREE.Mesh(geometry, material.material);
+    const mesh = new THREE.Mesh(geometry, materials);
     return mesh;
 }
 
