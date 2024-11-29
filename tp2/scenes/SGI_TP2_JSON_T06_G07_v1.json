@@ -114,8 +114,8 @@
                 "transparent" : false,
                 "opacity" : 0,
                 "textureref": "floor",
-                "texlength_s": 1,
-                "texlength_t": 1
+                "texlength_s": 70,
+                "texlength_t": 70
             },
             "sofaMaterial" : {
                 "color": {
@@ -159,8 +159,8 @@
                 "transparent" : false,
                 "opacity" : 0,
                 "textureref": "wall",
-                "texlength_s": 1,
-                "texlength_t": 1
+                "texlength_s": 70,
+                "texlength_t": 30
             },
             "door": {
                 "color": {
@@ -202,8 +202,8 @@
                 "transparent": false,
                 "opacity": 1.0,
                 "textureref": "tableTop",
-                "texlength_s": 1,
-                "texlength_t": 1
+                "texlength_s": 2,
+                "texlength_t": 2
             },
             "tableLegBlue": {
                 "color": {
@@ -295,9 +295,9 @@
             },
             "screen": {
                 "color": {
-                    "r": 0.1,
-                    "g": 0.1,
-                    "b": 0.1
+                    "r": 0.5,
+                    "g": 0.5,
+                    "b": 0.5
                 },
                 "emissive": {
                     "r": 0.02,
@@ -313,8 +313,8 @@
                 "transparent" : false,
                 "opacity" : 0,
                 "textureref": "video",
-                "texlength_s": 1,
-                "texlength_t": 1
+                "texlength_s": 15,
+                "texlength_t": 15
             },
             "code": {
                 "color": {
@@ -336,8 +336,8 @@
                 "transparent" : false,
                 "opacity" : 0,
                 "textureref": "code",
-                "texlength_s": 1,
-                "texlength_t": 1
+                "texlength_s": 6,
+                "texlength_t": 4
             },
             "projectorPointer": {
                 "color": {
@@ -3119,8 +3119,8 @@
                     {
                         "type" : "translate",
                         "amount" : {
-                            "x" : 10,
-                            "y" : 5,
+                            "x" : 10.1,
+                            "y" : 4.8,
                             "z" : -13
                         }
                     },
@@ -3149,8 +3149,8 @@
                     {
                         "type" : "translate",
                         "amount" : {
-                            "x" : 10,
-                            "y" : 5,
+                            "x" : 10.1,
+                            "y" : 4.8,
                             "z" : -27
                         }
                     },
@@ -3196,9 +3196,9 @@
                 "children" : {
                     "cylinderPrim": {
                         "type": "cylinder",
-                        "height": 7.99,
-                        "top": 1,
-                        "base": 1,
+                        "height": 7.9,
+                        "top": 0.9,
+                        "base": 0.9,
                         "capsclose" : true
                     }
                 }
@@ -3226,9 +3226,9 @@
                 "children" : {
                     "cylinderPrim": {
                         "type": "cylinder",
-                        "height": 7.99,
-                        "top": 1,
-                        "base": 1,
+                        "height": 7.9,
+                        "top": 0.9,
+                        "base": 0.9,
                         "capsclose" : true
                     }
                 }
