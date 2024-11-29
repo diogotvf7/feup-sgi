@@ -791,7 +791,8 @@
                         "floor",
                         "projector",
                         "monitors",
-                        "sofa"
+                        "sofa",
+                        "sphere"
                     ]
                 }
             },
@@ -3238,6 +3239,28 @@
                         "top": 0.9,
                         "base": 0.9,
                         "capsclose" : true
+                    }
+                }
+            },
+            "sphere" : {
+                "type" : "node",
+                "materialref" : {
+                    "materialId" : "niMaterial"
+                },
+                "transforms" : [
+                    {
+                        "type" : "translate",
+                        "amount" : {
+                            "x" : 0,
+                            "y" : 10,
+                            "z" : 0
+                        }
+                    }
+                ],
+                "children" : {
+                    "spherePrim": {
+                        "type": "sphere",
+                        "radius":2 
                     }
                 }
             }

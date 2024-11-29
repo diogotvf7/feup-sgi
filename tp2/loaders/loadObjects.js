@@ -148,7 +148,7 @@ const buildRectangle = ({ xy1, xy2, parts_x = 1, parts_y = 1 }, material) => {
     const width = Math.abs(xy1.x - xy2.x);
     const height = Math.abs(xy1.y - xy2.y);
 
-    if (material.material.map && material.material.map.repeat) {
+    if (materialHasTexture(material)) {
         const repeatX = width / material.texlength_s;
         const repeatY = height / material.texlength_t;
         material.material.map.repeat.set(repeatX, repeatY);
@@ -180,7 +180,7 @@ const buildTriangle = ({ xyz1, xyz2, xyz3 }, material) => {
     const perpendicular = pointToEdge.sub(projection); 
     const height = perpendicular.length();
 
-    if (material.material.map && material.material.map.repeat) {
+    if (materialHasTexture(material)) {
         const repeatX = width / material.texlength_s;
         const repeatY = height / material.texlength_t;
         material.material.map.repeat.set(repeatX, repeatY);
@@ -206,7 +206,7 @@ const buildBox = ({xyz1, xyz2, parts_x=1, parts_y=1, parts_z=1}, material) => {
         {repeatX : width / material.texlength_s, repeatY : height / material.texlength_t},
     ]
 
-    if(material.material.map && material.material.map.repeat){
+    if(materialHasTexture(material)){
         for(let i = 0;  i < 6 ; i++){
             materials[i].map.repeat.set(repeats[i].repeatX,  repeats[i].repeatY)
         }
@@ -224,6 +224,14 @@ const buildCylinder = ({base, top, height, slices = 32, stacks = 1, capsclose=fa
 
 const buildSphere = ({radius, slices=32, stacks=16, thetastart=0, thetalength=180, phistart=0, philength=360}, material) => {
     const geometry = new THREE.SphereGeometry(radius, slices, stacks, phistart, degreesToRadians(philength), thetastart, degreesToRadians(thetalength))
+ 
+    const circumference = 2 * Math.PI * radius
+    if(materialHasTexture(material)){
+        const repeatX = circumference / material.texlength_s
+        const repeatY = circumference / material.texlength_t
+        material.material.map.repeat.set(repeatX, repeatY);
+    }
+
     const mesh = new THREE.Mesh(geometry, material.material);
     return mesh;
 }
@@ -371,6 +379,10 @@ const buildSpotLightHelper = (light) => {
 
 const buildDirectionalLightHelper = (light) => {
     return new THREE.DirectionalLightHelper(light)
+}
+
+const materialHasTexture = (material) => {
+    return material.material.map && material.material.map.repeat
 }
 
 const transform = (object, transforms) => {
