@@ -75,7 +75,9 @@ const dfs = (data, materials, node, materialref=null, isLod=false, debug=false, 
                         case 'pointlight':
                             if(info.enabled !== false){
                                 const pointlight = buildPointLight(info.color, info.intensity, info.distance, info.decay, info.castshadow, info.position);
-                                object.add(pointlight);                            
+                                object.add(pointlight);
+                                const helper = buildLightHelper(pointlight)
+                                object.add(helper)
                             }
                             break;
                         case 'spotlight':

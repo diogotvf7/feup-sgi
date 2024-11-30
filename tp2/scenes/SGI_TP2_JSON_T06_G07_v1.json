@@ -91,6 +91,9 @@
             },
             "folder-yellow": {
                 "filepath": "scenes/textures/folder-yellow.jpg"
+            },
+            "styrofoam" : {
+                "filepath" : "scenes/textures/styrofoam.jpg"
             }
         },
         "materials": {
@@ -698,6 +701,29 @@
                 "opacity" : 1,
                 "texlength_s": 1,
                 "texlength_t": 1
+            },
+            "styrofoam" : {
+                "color": {
+                    "r": 0.9,
+                    "g": 0.9,
+                    "b": 0.9
+                },
+                "emissive": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "specular": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "shininess": 0,
+                "transparent" : false,
+                "opacity" : 0.5,
+                "textureref": "styrofoam",
+                "texlength_s": 5,
+                "texlength_t": 5
             }
         },
         "cameras": {
@@ -757,8 +783,8 @@
                         "castshadow": false,
                         "position": {
                             "x": 0,
-                            "y": 5,
-                            "z": 5
+                            "y": 25,
+                            "z": 0
                         }
                     },
                     "projectorLight" : {
@@ -779,6 +805,24 @@
                             "z": 23.1
                         }
                     },
+                    "roomLight1": {
+                        "type": "pointlight",
+                        "enabled" : true,  
+                        "color": {
+                            "r": 0.5,
+                            "g": 0.6,
+                            "b": 0.8
+                        },
+                        "intensity": 200,
+                        "distance": 100,
+                        "decay": 2.0,
+                        "castshadow": false,
+                        "position": {
+                            "x": -25,
+                            "y": 25,
+                            "z": -25
+                        }
+                    },
                     "nodesList": [
                         "slimBilly",
                         "largeBilly1",
@@ -792,7 +836,8 @@
                         "projector",
                         "monitors",
                         "blanket",
-                        "sofa"
+                        "sofa",
+                        "niStyrofoam"
                     ]
                 }
             },
@@ -3489,6 +3534,119 @@
                 "type": "sphere",
                 "radius": 0.1
               }
+            }
+          },
+          "niStyrofoam": {
+            "type" : "node",
+            "materialref" : {
+                "materialId" : "styrofoam"
+            },
+            "transforms": [
+                {
+                    "type": "rotate",
+                    "amount" : {
+                        "x" : 0,
+                        "y" : 90,
+                        "z" : 0
+                    }
+                },
+                {
+                 "type": "translate",
+                 "amount": {
+                     "x": 32.5,
+                     "y": 20,
+                     "z": -25
+                 }
+               }
+             ],
+             "children" : {
+                "nodesList" : [
+                    "niLeg1",
+                    "niLeg2",
+                    "niLeg3"
+                ]
+             }
+          },
+          "niLeg1" : {
+            "type" : "node",
+            "children" : {
+                "boxPrim" : {
+                    "type" : "box",
+                    "xyz1": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    },
+                    "xyz2": {
+                        "x": 2,
+                        "y": 7.5,
+                        "z": 2
+                    }
+                }
+            }
+          },
+          "niLeg2" : {
+            "type" : "node",
+            "transforms": [
+                {
+                    "type" : "translate",
+                    "amount": {
+                        "x": 0,
+                        "y": 0.1,
+                        "z": 2.3
+                    }
+                },
+                {
+                 "type": "rotate",
+                 "amount": {
+                     "x": -35,
+                     "y": 0,
+                     "z": 0
+                 }
+               }
+             ],
+            "children" : {
+                "boxPrim" : {
+                    "type" : "box",
+                    "xyz1": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    },
+                    "xyz2": {
+                        "x": 2.01,
+                        "y": 7.5,
+                        "z": 2.01
+                    }
+                }
+            }
+          },
+          "niLeg3" : {
+            "type" : "node",
+            "transforms": [
+                {
+                    "type" : "translate",
+                    "amount": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 4.65
+                    }
+                }
+             ],
+            "children" : {
+                "boxPrim" : {
+                    "type" : "box",
+                    "xyz1": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    },
+                    "xyz2": {
+                        "x": 2,
+                        "y": 7.5,
+                        "z": 2
+                    }
+                }
             }
           }
         }
