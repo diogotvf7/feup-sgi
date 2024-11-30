@@ -13,21 +13,29 @@ class MyContents {
     constructor(app) {
         this.app = app
         this.axis = null
-
-        this.reader = new MyFileReader(this.onSceneLoaded.bind(this));
-        this.reader.open("scenes/SGI_TP2_JSON_T06_G07_v1.json");
     }
 
     /**
      * initializes the contents
      */
-    init() {
-        // create once 
-        if (this.axis === null) {
-            // create and attach the axis to the scene
-            this.axis = new MyAxis(this)
-            this.app.scene.add(this.axis)
+    async init() {
+        // Load the JSON scene
+        try {
+            const data = await this.loadScene("scenes/SGI_TP2_JSON_T06_G07_v1.json");
+            this.onSceneLoaded(data);
+        } catch (error) {
+            console.error(`Failed to initialize contents: ${error}`);
         }
+
+        if (this.axis === null) {
+            this.axis = new MyAxis(this);
+            this.app.scene.add(this.axis);
+        }
+    }
+
+    async loadScene(filePath) {
+        const reader = new MyFileReader();
+        return await reader.open(filePath);
     }
 
     /**

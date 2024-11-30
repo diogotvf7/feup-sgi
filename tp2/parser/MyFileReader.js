@@ -17,31 +17,23 @@ import * as THREE from 'three';
  */
 
 class MyFileReader {
-
-	/**
-	   constructs the object
-	*/
-	constructor(onSceneLoadedCallback) {
-		this.errorMessage = null;
-		this.onSceneLoadedCallback = onSceneLoadedCallback;
-	}
-
-	open(jsonfile) {
-		fetch(jsonfile)
-			.then((res) => {
-				if (!res.ok) {
-					throw new Error(`HTTP error! Status: ${res.status}`);
-				}
-				return res.json();
-			})
-			.then((data) => {
-				console.log("Loading Scene")
-				this.onSceneLoadedCallback(data);
-			})
-			.catch((error) =>
-				console.error("Unable to fetch data:", error));
-	};
-
+    open(filePath) {
+        return new Promise((resolve, reject) => {
+            fetch(filePath)
+                .then(response => {
+                    if (!response.ok) throw new Error(`Failed to load: ${response.statusText}`);
+                    return response.json();
+                })
+                .then(data => {
+                    resolve(data); 
+                })
+                .catch(error => {
+                    console.error(`Error loading file: ${error}`);
+                    reject(error); 
+                });
+        });
+    }
 }
+
 
 export { MyFileReader };
