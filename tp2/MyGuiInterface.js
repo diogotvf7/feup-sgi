@@ -29,9 +29,38 @@ class MyGuiInterface  {
      * Initialize the gui interface
      */
     init() {
+        const nodes = this.app.scene.children
 
-        
+        const cameraFolder = this.datgui.addFolder('Camera')
+        cameraFolder.add(this.app, 'activeCameraName', Object.keys(this.app.cameras) ).name("Active Camera")
 
+        const lights = nodes.filter(x => x.isLight === true)
+        const lightsFolder = this.datgui.addFolder('Lights')
+        lights.forEach((light, index) => {
+            lightsFolder.add(light, 'intensity', 0, light.intensity * 2)
+                .name(`Light ${index + 1} Intensity`)
+                .onChange((value) => {
+                    light.intensity = value;
+                });
+        });
+
+        const objects = nodes.filter(x => x.isObject3D === true && x.isGroup === true)
+        const wireframeButton = this.datgui.add({ toggleWireframe: false }, 'toggleWireframe').name('Toggle Wireframe');
+
+        wireframeButton.onChange((value) => {
+            objects.forEach((obj) => {
+                this.wireframeOn(obj, value)
+            });
+        });
+    }
+
+    wireframeOn(object, value) {
+        if (object.isMesh) {
+            const materials = Array.isArray(object.material) ? object.material : [object.material];
+            materials.forEach(material => material.wireframe = value);
+        } else {
+            object.children.forEach(child => this.wireframeOn(child, value));
+        }
     }
 }
 
