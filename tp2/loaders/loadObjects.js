@@ -152,6 +152,7 @@ const buildRectangle = ({ xy1, xy2, parts_x = 1, parts_y = 1 }, material) => {
         const repeatX = width / material.texlength_s;
         const repeatY = height / material.texlength_t;
         material.material.map.repeat.set(repeatX, repeatY);
+        material.material.map.needsUpdate = true;
     }
 
     const geometry = new THREE.PlaneGeometry(width, height, parts_x, parts_y);
@@ -184,10 +185,10 @@ const buildTriangle = ({ xyz1, xyz2, xyz3 }, material) => {
         const repeatX = width / material.texlength_s;
         const repeatY = height / material.texlength_t;
         material.material.map.repeat.set(repeatX, repeatY);
+        material.material.map.needsUpdate = true;
     }
 
     const triangle = new Triangle(...vertices)
-    console.log(material.material.map)
     return new THREE.Mesh(triangle, material.material);
 };
 
@@ -209,6 +210,7 @@ const buildBox = ({xyz1, xyz2, parts_x=1, parts_y=1, parts_z=1}, material) => {
     if(materialHasTexture(material)){
         for(let i = 0;  i < 6 ; i++){
             materials[i].map.repeat.set(repeats[i].repeatX,  repeats[i].repeatY)
+            materials[i].map.needsUpdate = true;
         }
     } 
     const geometry = new THREE.BoxGeometry(width, height, depth, parts_x, parts_y, parts_z);
@@ -224,6 +226,7 @@ const buildCylinder = ({base, top, height, slices = 32, stacks = 1, capsclose=fa
         const repeatX = circumference / material.texlength_s
         const repeatY = circumference / material.texlength_t
         material.material.map.repeat.set(repeatX, repeatY)
+        material.material.map.needsUpdate = true;
     }
     const geometry = new THREE.CylinderGeometry(top, base, height, slices, stacks, !capsclose, degreesToRadians(thetastart), degreesToRadians(thetalength));
     const mesh = new THREE.Mesh(geometry, material.material);
@@ -238,6 +241,7 @@ const buildSphere = ({radius, slices=32, stacks=16, thetastart=0, thetalength=18
         const repeatX = circumference / material.texlength_s
         const repeatY = circumference / material.texlength_t
         material.material.map.repeat.set(repeatX, repeatY);
+        material.material.map.needsUpdate = true;
     }
 
     const mesh = new THREE.Mesh(geometry, material.material);
@@ -245,6 +249,14 @@ const buildSphere = ({radius, slices=32, stacks=16, thetastart=0, thetalength=18
 }
 
 const buildCone = ({radius, height, radialSegments = 32, heightSegments = 1, thetastart = 0, thetalength = 2*Math.PI}, material) => {
+
+    const circumference = 2 * Math.PI * radius
+    if(materialHasTexture(material)){
+        const repeatX = circumference / material.texlength_s
+        const repeatY = circumference / material.texlength_t
+        material.material.map.repeat.set(repeatX, repeatY);
+        material.material.map.needsUpdate = true;
+    }
     const geometry = new THREE.ConeGeometry(radius, height, radialSegments, heightSegments, thetastart, thetalength)
     const mesh = new THREE.Mesh(geometry, material.material)
     return mesh
@@ -319,12 +331,35 @@ const buildNurbs = ({ degree_u, degree_v, parts_u, parts_v, controlPoints }, mat
     }
 
     if(materialHasTexture(material)){
-        const controlPoints4Casteljau = []
-        for(const x of controlPoints){
-            controlPoints4Casteljau.push([x.x, x.y, x.z])
+
+        const averagePoints = []
+        const u = controlPointsNormalized.length
+        const v = controlPointsNormalized[0].length
+        let curveWidth = 0
+
+        for(let i = 0; i < v; i++){
+            let x = 0, y = 0, z = 0
+            let minX = Infinity, maxX = -Infinity
+            let minY = Infinity, maxY = -Infinity
+            let minZ = Infinity, maxZ = - Infinity
+            
+            for(let j = 0; j < u; j++){
+                x += controlPointsNormalized[j][i][0], y += controlPointsNormalized[j][i][1] ,z += controlPointsNormalized[j][i][2]
+                minX = Math.min(minX, controlPointsNormalized[j][i][0]) , maxX = Math.max(maxX, controlPointsNormalized[j][i][0]) , minY = Math.min(minY, controlPointsNormalized[j][i][1]) ,maxY = Math.max(maxY, controlPointsNormalized[j][i][1]) ,minZ = Math.min(minZ, controlPointsNormalized[j][i][2]), maxZ = Math.max(maxZ, controlPointsNormalized[j][i][2])
+            }
+            averagePoints.push([x/u, y/u, z/u])
+            curveWidth += euclidianDistance([minX, minY, minZ], [maxX, maxY, maxZ])
         }
-        const casteljauPoints = crlPtReduceDeCasteljau(controlPoints4Casteljau)
-        console.log(casteljauPoints)
+
+        curveWidth /= v
+
+        const casteljauPoints = crlPtReduceDeCasteljau(averagePoints)
+        const curveLength = calculateCurveLength(casteljauPoints)
+        const repeatX = curveLength / material.texlength_t
+        const repeatY = curveWidth / material.texlength_s
+
+        material.material.map.repeat.set(repeatX, repeatY)
+        material.material.map.needsUpdate = true;
     }
 
     let builder = new MyNurbsBuilder()
@@ -387,23 +422,52 @@ const buildDirectionalLight = (color, intensity = 1, position, castshadow = fals
 
 
 const crlPtReduceDeCasteljau = (points) => {
-    let retArr = [ points.slice () ];
-	while (points.length > 1) {
+    let retArr = [ ];
+    for(let k = 0; k < 3; k++){
         let midpoints = [];
-		for (let i = 0; i+1 < points.length; ++i) {
-			let ax = points[i][0];
-			let ay = points[i][1];
-			let bx = points[i+1][0];
-			let by = points[i+1][1];
-			midpoints.push([
-				ax + (bx - ax) * 0.5,
-				ay + (by - ay) * 0.5,
-			]);
-		}
+        for (let i = 0; i+1 < points.length; i++) {
+            if(i == 0 && k == 0){
+                midpoints.push([points[i][0], points[i][1], points[i][2]]);
+            }
+            let ax = points[i][0]
+            let ay = points[i][1]
+            let az = points[i][2]
+            let bx = points[i+1][0];
+            let by = points[i+1][1];
+            let bz = points[i+1][2]
+            midpoints.push([
+                ax + (bx - ax) * 0.5,
+                ay + (by - ay) * 0.5,
+                az + (bz - az) * 0.5,
+            ]);
+        }
+        points = midpoints
         retArr.push (midpoints)
-		points = midpoints;
-	}
+    }
 	return retArr;
+}
+
+const euclidianDistance = (point1, point2) => {
+    return Math.sqrt(
+        Math.pow(point2[0] - point1[0], 2) + 
+        Math.pow(point2[1] - point1[1], 2) + 
+        Math.pow(point2[2] - point1[2], 2)
+    );
+}
+
+const calculateCurveLength = (points) => {
+    let length = 0
+    for(let i = 0; i < points.length; i++){
+        if(i == (points.length - 1)){
+            for(let j = 0; j < points[i].length - 1 ; j++){
+                length += euclidianDistance(points[i][j], points[i][j+1])
+            }
+        }else{
+            length += euclidianDistance(points[i][0], points[i + 1][0])
+            length += euclidianDistance(points[i][points[i].length - 1], points[i+1][points[i+1].length - 1])
+        }
+    }
+    return length
 }
 
 
@@ -418,6 +482,19 @@ const buildSpotLightHelper = (light) => {
 const buildDirectionalLightHelper = (light) => {
     return new THREE.DirectionalLightHelper(light)
 }
+
+function drawPoints(pointLists,  color = 0xff0000, size = 5, object) {
+    for (const pointList of pointLists) {
+        for (const point of pointList) {
+            const geometry = new THREE.SphereGeometry(size, 16, 16); 
+            const material = new THREE.MeshBasicMaterial({ color }); 
+            const sphere = new THREE.Mesh(geometry, material);
+            sphere.position.set(point[0], point[1], point[2]); 
+            object.add(sphere)
+        }
+    }
+}
+
 
 const materialHasTexture = (material) => {
     return material.material.map && material.material.map.repeat
