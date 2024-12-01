@@ -107,3 +107,7 @@ Textures had to be adjusted depending on the object they are going to be applied
 - Cylinder : The math was done using the base of the cylinder (same with the cone for example)
 
 - Curved Superficies : Three iterations of DeCasteljau algorithm are run, to provide a good approximation without being too computationally heavy. Then the different segments are added. For the width we take the average width of the curve. 
+
+### Notes
+
+- The fetch operation when reading the file is asynchronous. Early on in the project, we realized that the scene could be attempted to load before all the scene properties were properly defined. To address this issue, we modified the logic in the *FileReader* to return a JavaScript *Promise*. In *MyContents* (and consequently in *main*), we used *await* to ensure the file was fully read before proceeding.
