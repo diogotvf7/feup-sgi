@@ -120,8 +120,8 @@ const dfs = (data, materials, node, materialref=null, isLod=false, debug=false, 
                             const nurb = buildNurbs(info, material)
                             object.add(nurb)
                             break
-                        case 'polygon':
-                            const polygon = buildPolygon(info)
+                        case 'polygon':                            
+                            const polygon = buildPolygon(info, material)
                             object.add(polygon)
                             break
                         default:
@@ -264,7 +264,7 @@ const buildCone = ({radius, height, radialSegments = 32, heightSegments = 1, the
     return mesh
 }
 
-const buildPolygon = ({radius, stacks, slices, color_c, color_p}) => {
+const buildPolygon = ({radius, stacks, slices, color_c, color_p}, material_) => {
     const geometry = new THREE.BufferGeometry();
 
     const vertices = [0, 0, 0]
@@ -312,8 +312,13 @@ const buildPolygon = ({radius, stacks, slices, color_c, color_p}) => {
     geometry.setIndex( indices );
     geometry.setAttribute( 'position', new THREE.BufferAttribute( new Float32Array(vertices), 3 ) );
     geometry.setAttribute( 'color', new THREE.BufferAttribute( new Float32Array(colors), 3 ) );
+    
+    const isWireframe = material_?.material?.wireframe
+    const material = new THREE.MeshBasicMaterial( { 
+        vertexColors: true,
+        wireframe: isWireframe,
+    });
 
-    const material = new THREE.MeshBasicMaterial( { vertexColors: true } );
     let mesh = new THREE.Mesh( geometry, material );
     return mesh
 }
@@ -339,7 +344,7 @@ const buildNurbs = ({ degree_u, degree_v, parts_u, parts_v, controlPoints }, mat
         const v = controlPointsNormalized[0].length
         let curveWidth = 0
 
-        for(let i = 0; i < v; i++){
+        for (let i = 0; i < v; i++){
             let x = 0, y = 0, z = 0
             let minX = Infinity, maxX = -Infinity
             let minY = Infinity, maxY = -Infinity

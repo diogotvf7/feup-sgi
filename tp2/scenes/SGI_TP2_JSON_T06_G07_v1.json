@@ -97,6 +97,9 @@
             },
             "window" : {
                 "filepath" : "scenes/textures/window.jpg"
+            },
+            "ni-text": {
+                "filepath": "scenes/textures/Ni.png"
             }
         },
         "materials": {
@@ -748,8 +751,51 @@
                 "transparent" : true,
                 "opacity" : 0.4,
                 "textureref": "window",
-                "texlength_s": 1,
-                "texlength_t": 1
+                "texlength_s": 15,
+                "texlength_t": 18
+            },
+            "wireframe": {
+                "color": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "emissive": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "specular": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0
+                },
+                "shininess": 0,
+                "opacity" : 1,
+                "wireframe" : true
+            },
+            "ni-text": {
+                "color": {
+                    "r": 1,
+                    "g": 1,
+                    "b": 1
+                },
+                "emissive": {
+                    "r": 1,
+                    "g": 1,
+                    "b": 1
+                },
+                "specular": {
+                    "r": 1,
+                    "g": 1,
+                    "b": 1
+                },
+                "shininess": 50,
+                "transparent" : true,
+                "opacity" : 1,
+                "textureref": "ni-text",
+                "texlength_s": 16.6,
+                "texlength_t": 17.0
             }
         },
         "cameras": {
@@ -856,6 +902,7 @@
                         "table-group-1",
                         "table-group-2",
                         "table-group-3",
+                        "table-group-4",
                         "walls",
                         "door",
                         "floor",
@@ -869,6 +916,135 @@
                         "locker-1",
                         "locker-2"
                     ]
+                }
+            },
+            "ni": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 3.5,
+                            "z": -0.2
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 180,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.5,
+                            "y": 0.5,
+                            "z": 1
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "full-hexagon",
+                        "border-hexagon",
+                        "text"
+                    ]
+                }
+            },
+            "text": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 0.2,
+                            "y": 0.2,
+                            "z": 1
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0.01
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "ni-text"
+                },
+                "children": {
+                    "rectanglePrim": {
+                        "type": "rectangle",
+                        "xy1": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "xy2": {
+                            "x": 16.6,
+                            "y": 17
+                        }
+                    }
+                }
+                
+            },
+            "full-hexagon": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 90
+                        }
+                    }
+                ],
+                "children": {
+                    "polygonPrim": {
+                        "type": "polygon",
+                        "radius": 5,
+                        "stacks": 6,
+                        "slices": 6,
+                        "color_c": {
+                            "r": 0.6237,
+                            "g": 0.1882,
+                            "b": 0.1882
+                        },
+                        "color_p": {
+                            "r": 0.6237,
+                            "g": 0.1882,
+                            "b": 0.1882
+                        }
+                    }
+                }
+            },
+            "border-hexagon": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "wireframe"
+                },
+                "children": {
+                    "polygonPrim": {
+                        "type": "polygon",
+                        "radius": 5,
+                        "stacks": 1,
+                        "slices": 6,
+                        "color_c": {
+                            "r": 0.6237,
+                            "g": 0.1882,
+                            "b": 0.1882
+                        },
+                        "color_p": {
+                            "r": 0.6237,
+                            "g": 0.1882,
+                            "b": 0.1882
+                        }
+                    }
                 }
             },
             "locker-1": {
@@ -1389,12 +1565,12 @@
                     "boxPrim": {
                         "type": "box",
                         "xyz1": {
-                            "x": -7.5,
+                            "x": 0,
                             "y": 0,
                             "z": 0.025
                         },
                         "xyz2": {
-                            "x": 7.5,
+                            "x": 15,
                             "y": 18,
                             "z": 0.05
                         }
@@ -2310,7 +2486,10 @@
                             "y": 22,
                             "z": 0.3
                         }
-                    }
+                    },
+                    "nodesList": [
+                        "ni"
+                    ]
                 }                
             },
             "floor": {
@@ -2356,7 +2535,7 @@
                     {
                         "type": "translate",
                         "amount": {
-                            "x": 14,
+                            "x": 20,
                             "y": 0,
                             "z": -27
                         }
@@ -2452,6 +2631,33 @@
                             "x": 0,
                             "y": 0,
                             "z": 14
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "table1",
+                        "table3"
+                    ]
+                }
+            },
+            "table-group-4": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1,
+                            "y": 1,
+                            "z": 1
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -10,
+                            "y": 0,
+                            "z": 28
                         }
                     }
                 ],
@@ -3326,8 +3532,8 @@
                         "type": "translate",
                         "amount": {
                             "x": 20,
-                            "y": 15,
-                            "z": -34.5
+                            "y": 17,
+                            "z": -41.4
                         }
                     }
                 ],
