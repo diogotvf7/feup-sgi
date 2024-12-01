@@ -55,6 +55,10 @@ class MyGuiInterface  {
     }
 
     wireframeOn(object, value) {
+        console.log("Test", object.name);
+        if (object.name == 'border-hexagon') {
+            return;
+        }
         if (object.isMesh) {
             const materials = Array.isArray(object.material) ? object.material : [object.material];
             materials.forEach(material => material.wireframe = value);

@@ -8,7 +8,7 @@ export const loadObjects = {
         const root = data[data.rootid];
         root.name = data.rootid;
 
-        const scene = dfs(data, materials, root, null, false, false);
+        const scene = dfs(data, materials, root, true);
         
         return scene.children;
     }
@@ -22,7 +22,7 @@ export const loadObjects = {
  * @param {*} materialref Material reference passed by the parent node (will be used if the node does not have a materialref itself)
  * @returns 
  */
-const dfs = (data, materials, node, materialref=null, isLod=false, debug=false, depth=1) => {        
+const dfs = (data, materials, node, debug=false, depth=1, materialref=null, isLod=false, cast_shadow_override=false, receive_shadow_override=false) => {        
     if (debug) console.log(`[${isLod ? 'L' : 'G'}]`, " ".repeat(depth*2), node.name);
     
     let material = null;
@@ -33,17 +33,21 @@ const dfs = (data, materials, node, materialref=null, isLod=false, debug=false, 
     if (isLod) {
         object = new THREE.LOD()
         object.name = node.name;
+        object.castShadow = node.castshadows ?? cast_shadow_override;
+        object.receiveShadow = node.receiveshadows ?? receive_shadow_override;
 
         node.lodNodes.forEach(lodNode => {
             const child = data[lodNode.nodeId];
             child.name = lodNode.nodeId;
 
-            const newNode = dfs(data, materials, child, material, false, debug, depth+1);
+            const newNode = dfs(data, materials, child, debug, depth+1, material, false, object.castShadow, object.receiveShadow);
             object.addLevel(newNode, lodNode.mindist)
         })
     } else {
         object = new THREE.Group()
         object.name = node.name;
+        object.castShadow = node.castshadows ?? cast_shadow_override;
+        object.receiveShadow = node.receiveshadows ?? receive_shadow_override;      
 
         for (let key in node.children) {                    
             switch (key) {
@@ -53,8 +57,8 @@ const dfs = (data, materials, node, materialref=null, isLod=false, debug=false, 
                         const child = data[key];
                         
                         child.name = key;
-    
-                        const newNode = dfs(data, materials, child, material, false, debug, depth+1);
+
+                        const newNode = dfs(data, materials, child, debug, depth+1, material, false, object.castShadow, object.receiveShadow);
                         object.add(newNode);
                     });
                     break;
@@ -93,35 +97,35 @@ const dfs = (data, materials, node, materialref=null, isLod=false, debug=false, 
                             }
                             break
                         case 'rectangle':
-                            const rectangle = buildRectangle(info, material);
+                            const rectangle = buildRectangle(info, material, object.castShadow, object.receiveShadow);
                             object.add(rectangle);
                             break;
                         case 'triangle':
-                            const triangle = buildTriangle(info, material);
+                            const triangle = buildTriangle(info, material, object.castShadow, object.receiveShadow);
                             object.add(triangle);
                             break;
                         case 'box':
-                            const box = buildBox(info, material);
+                            const box = buildBox(info, material, object.castShadow, object.receiveShadow);
                             object.add(box);
                             break;
                         case 'cylinder':
-                            const cylinder = buildCylinder(info, material);
+                            const cylinder = buildCylinder(info, material, object.castShadow, object.receiveShadow);
                             object.add(cylinder);
                             break;
                         case 'sphere':
-                            const sphere = buildSphere(info, material);
+                            const sphere = buildSphere(info, material, object.castShadow, object.receiveShadow);
                             object.add(sphere);
                             break;
                         case 'cone':
-                            const cone = buildCone(info, material)
+                            const cone = buildCone(info, material, object.castShadow, object.receiveShadow);
                             object.add(cone)
                             break
                         case 'nurbs':
-                            const nurb = buildNurbs(info, material)
+                            const nurb = buildNurbs(info, material, object.castShadow, object.receiveShadow);
                             object.add(nurb)
                             break
                         case 'polygon':                            
-                            const polygon = buildPolygon(info, material)
+                            const polygon = buildPolygon(info, material, object.castShadow, object.receiveShadow);
                             object.add(polygon)
                             break
                         default:
@@ -146,7 +150,7 @@ const dfs = (data, materials, node, materialref=null, isLod=false, debug=false, 
  * @param {*} material Material to be applied to the rectangle
  * @returns the rectangle mesh
  */
-const buildRectangle = ({ xy1, xy2, parts_x = 1, parts_y = 1 }, material) => {
+const buildRectangle = ({ xy1, xy2, parts_x = 1, parts_y = 1 }, material, cast_shadow, receive_shadow) => {
     const width = Math.abs(xy1.x - xy2.x);
     const height = Math.abs(xy1.y - xy2.y);
 
@@ -159,11 +163,13 @@ const buildRectangle = ({ xy1, xy2, parts_x = 1, parts_y = 1 }, material) => {
 
     const geometry = new THREE.PlaneGeometry(width, height, parts_x, parts_y);
     const mesh = new THREE.Mesh(geometry, material.material);
+    mesh.castShadow = cast_shadow;
+    mesh.receiveShadow = receive_shadow;
     return mesh;    
 };
 
 
-const buildTriangle = ({ xyz1, xyz2, xyz3 }, material) => {
+const buildTriangle = ({ xyz1, xyz2, xyz3 }, material, cast_shadow, receive_shadow) => {
     const vertices = [
         new THREE.Vector3(xyz1.x, xyz1.y, xyz1.z),
         new THREE.Vector3(xyz2.x, xyz2.y, xyz2.z),
@@ -191,10 +197,13 @@ const buildTriangle = ({ xyz1, xyz2, xyz3 }, material) => {
     }
 
     const triangle = new Triangle(...vertices)
-    return new THREE.Mesh(triangle, material.material);
+    const mesh = new THREE.Mesh(triangle, material.material);
+    mesh.castShadow = cast_shadow;
+    mesh.receiveShadow = receive_shadow;
+    return mesh
 };
 
-const buildBox = ({xyz1, xyz2, parts_x=1, parts_y=1, parts_z=1}, material) => {
+const buildBox = ({xyz1, xyz2, parts_x=1, parts_y=1, parts_z=1}, material, cast_shadow, receive_shadow) => {
     const width = Math.abs(xyz1.x - xyz2.x);
     const height = Math.abs(xyz1.y - xyz2.y);
     const depth = Math.abs(xyz1.z - xyz2.z);
@@ -217,10 +226,12 @@ const buildBox = ({xyz1, xyz2, parts_x=1, parts_y=1, parts_z=1}, material) => {
     } 
     const geometry = new THREE.BoxGeometry(width, height, depth, parts_x, parts_y, parts_z);
     const mesh = new THREE.Mesh(geometry, materials);
+    mesh.castShadow = cast_shadow;
+    mesh.receiveShadow = receive_shadow;
     return mesh;
 }
 
-const buildCylinder = ({base, top, height, slices = 32, stacks = 1, capsclose=false, thetastart=0, thetalength=360}, material) => {
+const buildCylinder = ({base, top, height, slices = 32, stacks = 1, capsclose=false, thetastart=0, thetalength=360}, material, cast_shadow, receive_shadow) => {
 
     //Lets use the perimter of one of the bases to do the math - base was chosen arbitrarly
     if(materialHasTexture(material)){
@@ -232,10 +243,12 @@ const buildCylinder = ({base, top, height, slices = 32, stacks = 1, capsclose=fa
     }
     const geometry = new THREE.CylinderGeometry(top, base, height, slices, stacks, !capsclose, degreesToRadians(thetastart), degreesToRadians(thetalength));
     const mesh = new THREE.Mesh(geometry, material.material);
+    mesh.castShadow = cast_shadow;
+    mesh.receiveShadow = receive_shadow;
     return mesh;
 }
 
-const buildSphere = ({radius, slices=32, stacks=16, thetastart=0, thetalength=180, phistart=0, philength=360}, material) => {
+const buildSphere = ({radius, slices=32, stacks=16, thetastart=0, thetalength=180, phistart=0, philength=360}, material, cast_shadow, receive_shadow) => {
     const geometry = new THREE.SphereGeometry(radius, slices, stacks, phistart, degreesToRadians(philength), thetastart, degreesToRadians(thetalength))
  
     const circumference = 2 * Math.PI * radius
@@ -250,7 +263,7 @@ const buildSphere = ({radius, slices=32, stacks=16, thetastart=0, thetalength=18
     return mesh;
 }
 
-const buildCone = ({radius, height, radialSegments = 32, heightSegments = 1, thetastart = 0, thetalength = 2*Math.PI}, material) => {
+const buildCone = ({radius, height, radialSegments = 32, heightSegments = 1, thetastart = 0, thetalength = 2*Math.PI}, material, cast_shadow, receive_shadow) => {
 
     const circumference = 2 * Math.PI * radius
     if(materialHasTexture(material)){
@@ -259,12 +272,14 @@ const buildCone = ({radius, height, radialSegments = 32, heightSegments = 1, the
         material.material.map.repeat.set(repeatX, repeatY);
         material.material.map.needsUpdate = true;
     }
-    const geometry = new THREE.ConeGeometry(radius, height, radialSegments, heightSegments, thetastart, thetalength)
-    const mesh = new THREE.Mesh(geometry, material.material)
+    const geometry = new THREE.ConeGeometry(radius, height, radialSegments, heightSegments, thetastart, thetalength);
+    const mesh = new THREE.Mesh(geometry, material.material);
+    mesh.castShadow = cast_shadow;
+    mesh.receiveShadow = receive_shadow;
     return mesh
 }
 
-const buildPolygon = ({radius, stacks, slices, color_c, color_p}, material_) => {
+const buildPolygon = ({radius, stacks, slices, color_c, color_p}, material_, cast_shadow, receive_shadow) => {
     const geometry = new THREE.BufferGeometry();
 
     const vertices = [0, 0, 0]
@@ -320,11 +335,13 @@ const buildPolygon = ({radius, stacks, slices, color_c, color_p}, material_) => 
     });
 
     let mesh = new THREE.Mesh( geometry, material );
+    mesh.castShadow = cast_shadow;
+    mesh.receiveShadow = receive_shadow;
     return mesh
 }
 
 
-const buildNurbs = ({ degree_u, degree_v, parts_u, parts_v, controlPoints }, material) => {
+const buildNurbs = ({ degree_u, degree_v, parts_u, parts_v, controlPoints }, material, cast_shadow, receive_shadow) => {
     let controlPointsNormalized = [];
     for (let i = 0; i <= degree_u; i++) {
       let points = [];
@@ -380,8 +397,10 @@ const buildNurbs = ({ degree_u, degree_v, parts_u, parts_v, controlPoints }, mat
       material
     );
   
-    let mesh = new THREE.Mesh(surfaceData, material.material)
-    return mesh
+    let mesh = new THREE.Mesh(surfaceData, material.material);
+    mesh.castShadow = cast_shadow;
+    mesh.receiveShadow = receive_shadow;
+    return mesh;
 };
 
 

@@ -100,6 +100,12 @@
             },
             "ni-text": {
                 "filepath": "scenes/textures/Ni.png"
+            },
+            "lamp-texture": {
+                "filepath": "scenes/textures/lamp.jpg"
+            },
+            "steel-texture": {
+                "filepath": "scenes/textures/steel.jpg"
             }
         },
         "materials": {
@@ -274,7 +280,7 @@
                     "g": 0.25,
                     "b": 0.25
                 },
-                "shininess": 100,
+                "shininess": 30,
                 "transparent": false,
                 "opacity": 0,
                 "texlength_s": 1,
@@ -462,14 +468,14 @@
             },
             "folder-group": {
                 "color": {
-                    "r": 0.8,
-                    "g": 0.8,
-                    "b": 0.8
+                    "r": 1,
+                    "g": 1,
+                    "b": 1
                 },
                 "emissive": {
-                    "r": 0.0,
-                    "g": 0.0,
-                    "b": 0.0
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
                 },
                 "specular": {
                     "r": 0.0,
@@ -771,6 +777,7 @@
                     "b": 0.0
                 },
                 "shininess": 0,
+                "transparent" : false,
                 "opacity" : 1,
                 "wireframe" : true
             },
@@ -796,6 +803,52 @@
                 "textureref": "ni-text",
                 "texlength_s": 16.6,
                 "texlength_t": 17.0
+            },
+            "lamp-material": {
+                "color": {
+                    "r": 1,
+                    "g": 1,
+                    "b": 1
+                },
+                "emissive": {
+                    "r": 0,
+                    "g": 0,
+                    "b": 0
+                },
+                "specular": {
+                    "r": 1,
+                    "g": 1,
+                    "b": 1
+                },
+                "shininess": 50,
+                "transparent" : true,
+                "opacity" : 1,
+                "textureref": "lamp-texture",
+                "texlength_s": 3,
+                "texlength_t": 2
+            },
+            "steel-material": {
+                "color": {
+                    "r": 0.8,
+                    "g": 0.8,
+                    "b": 0.8
+                },
+                "emissive": {
+                    "r": 0.1,
+                    "g": 0.1,
+                    "b": 0.1
+                },
+                "specular": {
+                    "r": 0.1,
+                    "g": 0.1,
+                    "b": 0.1
+                },
+                "shininess": 50,
+                "transparent" : false,
+                "opacity" : 1,
+                "textureref": "steel-texture",
+                "texlength_s": 1,
+                "texlength_t": 1
             }
         },
         "cameras": {
@@ -841,7 +894,7 @@
             "scene": {
                 "type": "node",
                 "children": {
-                    "pointLight": {
+                    "pointLight1": {
                         "type": "pointlight",
                         "enabled" : true,  
                         "color": {
@@ -850,12 +903,48 @@
                             "b": 0.8
                         },
                         "intensity": 200,
-                        "distance": 1000,
+                        "distance": 100,
                         "decay": 2.0,
-                        "castshadow": false,
+                        "castshadow": true,
                         "position": {
                             "x": 0,
-                            "y": 25,
+                            "y": 20,
+                            "z": 0
+                        }
+                    },
+                    "pointLight2": {
+                        "type": "pointlight",
+                        "enabled" : true,  
+                        "color": {
+                            "r": 0.5,
+                            "g": 0.6,
+                            "b": 0.8
+                        },
+                        "intensity": 200,
+                        "distance": 100,
+                        "decay": 2.0,
+                        "castshadow": true,
+                        "position": {
+                            "x": 20,
+                            "y": 20,
+                            "z": 0
+                        }
+                    },
+                    "pointLight3": {
+                        "type": "pointlight",
+                        "enabled" : true,  
+                        "color": {
+                            "r": 0.5,
+                            "g": 0.6,
+                            "b": 0.8
+                        },
+                        "intensity": 200,
+                        "distance": 100,
+                        "decay": 2.0,
+                        "castshadow": true,
+                        "position": {
+                            "x": -20,
+                            "y": 20,
                             "z": 0
                         }
                     },
@@ -874,25 +963,7 @@
                         "position": {
                             "x": -19,
                             "y": 8.3,
-                            "z": 23.1
-                        }
-                    },
-                    "roomLight1": {
-                        "type": "pointlight",
-                        "enabled" : true,  
-                        "color": {
-                            "r": 0.5,
-                            "g": 0.6,
-                            "b": 0.8
-                        },
-                        "intensity": 200,
-                        "distance": 100,
-                        "decay": 2.0,
-                        "castshadow": false,
-                        "position": {
-                            "x": -25,
-                            "y": 25,
-                            "z": -25
+                            "z": 14.7
                         }
                     },
                     "nodesList": [
@@ -903,6 +974,7 @@
                         "table-group-2",
                         "table-group-3",
                         "table-group-4",
+                        "table-group-5",
                         "walls",
                         "door",
                         "floor",
@@ -914,8 +986,112 @@
                         "back-wall",
                         "ceiling",
                         "locker-1",
-                        "locker-2"
+                        "locker-2",
+                        "lamps"
                     ]
+                }
+            },
+            "lamps": {
+                "type": "node",
+                "children": {
+                    "nodesList": [
+                        "lamp1",
+                        "lamp2",
+                        "lamp3"
+                    ]
+                }
+            },
+            "lamp1": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -25,
+                            "y": 30,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "lamp"
+                    ]
+                }
+            },
+            "lamp2": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 30,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "lamp"
+                    ]
+                }
+            },
+            "lamp3": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 25,
+                            "y": 30,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "lamp"
+                    ]
+                }
+            },
+            "lamp": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "lamp-material"
+                },
+                "children": {
+                    "nodesList": [
+                        "lamp-frame"
+                    ]
+                }
+            },
+            "lamp-frame": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 90,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "boxPrim": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        }, 
+                        "xyz2": {
+                            "x": 60,
+                            "y": 0.1,
+                            "z": 2
+                        }
+                    }
                 }
             },
             "ni": {
@@ -1100,8 +1276,10 @@
             },
             "locker": {
                 "type": "node",
+                "receiveshadows": true,
+                "castshadows": true,
                 "materialref": {
-                    "materialId": "grey"
+                    "materialId": "steel-material"
                 },
                 "children": {
                     "nodesList": [
@@ -2494,6 +2672,8 @@
             },
             "floor": {
                 "type": "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "materialref": {
                     "materialId": "floor"
                 },
@@ -2668,6 +2848,57 @@
                     ]
                 }
             },
+            "table-group-5": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": 90,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 32,
+                            "y": 0,
+                            "z": 28
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "table1",
+                        "table3",
+                        "monitor3"
+                    ]
+                }
+            },
+            "monitor3": {
+                "type" : "node",
+                "materialref" : {
+                    "materialId" : "frameMaterial"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -6,
+                            "y": 0,
+                            "z": 3.5
+                        }
+                    }
+                ],
+                "children" : {
+                    "nodesList" : [
+                        "base",
+                        "monitorSupport",
+                        "monitorFrame"
+                    ]
+                }
+            },  
             "table1": {
                 "type": "node",
                 "transforms": [
@@ -2802,6 +3033,8 @@
             },
             "table": {
                 "type": "node",
+                "castshadows": true,       
+                "receiveshadows": true,
                 "transforms": [
                     {
                         "type": "translate",
@@ -2911,6 +3144,8 @@
             },
             "billy": {
                 "type": "node",
+                "receiveshadows": true,
+                "castshadows": true,
                 "materialref": {
                     "materialId": "billyMaterial"
                 },
@@ -3417,7 +3652,7 @@
                         "amount": {
                             "x": 27,
                             "y": 0,
-                            "z": 13.5
+                            "z": 11.5
                         }
                     }
                 ],
@@ -3872,6 +4107,8 @@
             },
             "sofa" : {
                 "type" : "node",
+                "castshadows": true,
+                "receiveshadows": true,
                 "materialref" : {
                     "materialId" : "sofaMaterial"
                 },
