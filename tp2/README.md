@@ -22,8 +22,12 @@ Reality:
 
 Our scene:
 <p align="center">
-  <img src="./screenshots/roomOriginal.jpeg">
+  <img src="./screenshots/ss1.jpeg">
   <p align="center">Figure 2: Scene developed<p>
+<p>
+<p align="center">
+  <img src="./screenshots/ss2.jpeg">
+  <p align="center">Figure 3: Scene developed - different angle<p>
 <p>
 
 ## Topics
@@ -70,7 +74,7 @@ Developing the triangle was straight-forward, but it is important to notice that
 The blanket placed on the sofa was made using nurbs and applied a bump texture to create the effect of a real-life blanket
 <p align="center">
   <img src="./screenshots/blanket.png">
-  <p align="center">Figure 3: Blanket<p>
+  <p align="center">Figure 4: Blanket<p>
 <p>
 
 #### Logo
@@ -79,7 +83,7 @@ The logo is not just an image. Two polygons (hexagons) were built, one as a wire
 
 <p align="center">
   <img src="./screenshots/niSymbol.png">
-  <p align="center">Figure 4: NIAFEUP Logo<p>
+  <p align="center">Figure 5: NIAFEUP Logo<p>
 <p>
 
 #### Windows
@@ -88,7 +92,7 @@ The windows are made of a semi-transparent material with a subtle blueish color 
 
 <p align="center">
   <img src="./screenshots/windows.png">
-  <p align="center">Figure 5: Windows<p>
+  <p align="center">Figure 6: Windows<p>
 <p>
 
 

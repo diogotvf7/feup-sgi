@@ -968,8 +968,8 @@
                     },
                     "nodesList": [
                         "slimBilly",
-                        "largeBilly1",
-                        "largeBilly2",
+                        "large-billy1",
+                        "large-billy2",
                         "table-group-1",
                         "table-group-2",
                         "table-group-3",
@@ -1879,16 +1879,6 @@
             },
             "folder-group": {
                 "type": "lod",
-                "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": 0,
-                            "y": 6.8,
-                            "z": 0
-                        }
-                    }
-                ],
                 "lodNodes": [
                     {
                         "nodeId": "folder-group-simple",
@@ -3053,7 +3043,7 @@
                     ]
                 }
             },
-            "largeBilly1": {
+            "large-billy": {
                 "type": "node",
                 "transforms": [
                     {
@@ -3063,7 +3053,17 @@
                             "y": 1,
                             "z": 1
                         }
-                    },
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "billy"
+                    ]
+                }
+            },
+            "large-billy1": {
+                "type": "node",
+                "transforms": [
                     {
                         "type": "rotate",
                         "amount": {
@@ -3083,21 +3083,60 @@
                 ],
                 "children": {
                     "nodesList": [
-                        "billy"
+                        "large-billy",
+                        "folder-group-1",
+                        "folder-group-3",
+                        "folder-group-4"
                     ]
                 }
             },
-            "largeBilly2": {
+            "folder-group-3": {
                 "type": "node",
                 "transforms": [
                     {
+                        "type": "translate",
+                        "amount": {
+                            "x": 1.7,
+                            "y": 13.6,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "lodsList": [
+                        "folder-group"
+                    ]
+                }
+            },
+            "folder-group-4": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -1,
+                            "y": 13.6,
+                            "z": 0
+                        }
+                    },
+                    {
                         "type": "scale",
                         "amount": {
-                            "x": 2,
+                            "x": -1,
                             "y": 1,
                             "z": 1
                         }
-                    },
+                    }
+                ],
+                "children": {
+                    "lodsList": [
+                        "folder-group"
+                    ]
+                }
+            },
+            "large-billy2": {
+                "type": "node",
+                "transforms": [
                     {
                         "type": "rotate",
                         "amount": {
@@ -3117,7 +3156,63 @@
                 ],
                 "children": {
                     "nodesList": [
-                        "billy"
+                        "large-billy",
+                        "folder-group-5",
+                        "folder-group-6"
+                    ]
+                }
+            },
+            "folder-group-5": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -1.7,
+                            "y": 3.4,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "lodsList": [
+                        "folder-group"
+                    ]
+                }
+            },
+            "folder-group-6": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 1,
+                            "y": 17,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "lodsList": [
+                        "folder-group"
+                    ]
+                }
+            },
+            "folder-group-1": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 6.8,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "lodsList": [
+                        "folder-group"
                     ]
                 }
             },
@@ -3135,8 +3230,25 @@
                 ],
                 "children": {
                     "nodesList": [
-                        "billy"
-                    ],
+                        "billy",
+                        "folder-group-1",
+                        "folder-group-2"
+                    ]
+                }
+            },
+            "folder-group-2": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 10.2,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
                     "lodsList": [
                         "folder-group"
                     ]

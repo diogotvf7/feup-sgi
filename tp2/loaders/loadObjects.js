@@ -80,8 +80,8 @@ const dfs = (data, materials, node, debug=false, depth=1, materialref=null, isLo
                             if(info.enabled !== false){
                                 const pointlight = buildPointLight(info.color, info.intensity, info.distance, info.decay, info.castshadow, info.position);
                                 object.add(pointlight);
-                                const helper = buildLightHelper(pointlight)
-                                object.add(helper)
+                                // const helper = buildLightHelper(pointlight)
+                                // object.add(helper)
                             }
                             break;
                         case 'spotlight':
