@@ -853,21 +853,335 @@
                         "slimBilly",
                         "largeBilly1",
                         "largeBilly2",
-                        "tableGroup1",
-                        "tableGroup2",
-                        "tableGroup3",
+                        "table-group-1",
+                        "table-group-2",
+                        "table-group-3",
                         "walls",
                         "door",
                         "floor",
-                        "projector",
                         "monitors",
                         "blanket",
                         "sofa",
-                        "niStyrofoam",
                         "left-window",
                         "right-window",
-                        "back-wall"
+                        "back-wall",
+                        "ceiling",
+                        "locker-1",
+                        "locker-2"
                     ]
+                }
+            },
+            "locker-1": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "grey"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -30.7,
+                            "y": 0,
+                            "z": -32.7
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "locker",
+                        "niStyrofoam"
+                    ]
+                }
+            },
+            "locker-2": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "grey"
+                },
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -22.4,
+                            "y": 0,
+                            "z": -32.3
+                        }
+                    },
+                    {
+                        "type": "scale",
+                        "amount": {
+                            "x": 1,
+                            "y": 0.8,
+                            "z": 1.2
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "locker"
+                    ]
+                }
+            },
+            "locker": {
+                "type": "node",
+                "materialref": {
+                    "materialId": "grey"
+                },
+                "children": {
+                    "nodesList": [
+                        "locker-structure",
+                        "locker-doors"
+                    ]
+                }
+            },
+            "locker-doors": {
+                "type": "node",
+                "children": {
+                    "nodesList": [
+                        "locker-door-left",
+                        "locker-door-right"
+                    ]
+                }
+            },
+            "locker-door-left": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -2,
+                            "y": 9.75,
+                            "z": 1.3
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "locker-door"
+                    ]
+                }
+            },
+            "locker-door-right": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 1,
+                            "y": 9.75,
+                            "z": 1.6
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "locker-door"
+                    ]
+                }
+            },
+            "locker-door": {
+                "type": "node",
+                "children": {
+                    "boxPrim": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 4,
+                            "y": 19.5,
+                            "z": 0.3
+                        }
+                    }
+                }
+            },
+            "locker-structure": {
+                "type": "node",
+                "children": {
+                    "nodesList": [
+                        "locker-top",
+                        "locker-bottom",
+                        "locker-left",
+                        "locker-right",
+                        "locker-back"
+                    ]
+                }
+            },
+            "locker-left": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -4,
+                            "y": 9.75,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "locker-side"
+                    ]
+                }
+            },
+            "locker-right": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 4,
+                            "y": 9.75,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "nodesList": [
+                        "locker-side"
+                    ]
+                }
+            },
+            "locker-side": {
+                "type": "node",
+                "children": {
+                    "boxPrim": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 0.3,
+                            "y": 19.5,
+                            "z": 4
+                        }
+                    }
+                }
+            },
+            "locker-top": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 19.35,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "boxPrim": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 8,
+                            "y": 0.3,
+                            "z": 4
+                        }
+                    }
+                }
+            },
+            "locker-bottom": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 0.15,
+                            "z": 0
+                        }
+                    }
+                ],
+                "children": {
+                    "boxPrim": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 8,
+                            "y": 0.3,
+                            "z": 4
+                        }
+                    }
+                }
+            },
+            "locker-back": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 9.75,
+                            "z": -2
+                        }
+                    }
+                ],
+                "children": {
+                    "boxPrim": {
+                        "type": "box",
+                        "xyz1": {
+                            "x": 0,
+                            "y": 0,
+                            "z": 0
+                        },
+                        "xyz2": {
+                            "x": 8.3,
+                            "y": 19.5,
+                            "z": 0.3
+                        }
+                    }
+                }
+            },
+            "ceiling": {
+                "type": "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 0,
+                            "y": 30,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 90,
+                            "y": 0,
+                            "z": 0
+                        }
+                    }
+                ],
+                "materialref": {
+                    "materialId": "wall"
+                },
+                "children": {
+                    "rectanglePrim": {
+                        "type": "rectangle",
+                        "xy1": {
+                            "x": 0,
+                            "y": 0
+                        },
+                        "xy2": {
+                            "x": 70,
+                            "y": 70
+                        }
+                    }
                 }
             },
             "back-wall": {
@@ -2028,7 +2342,7 @@
                     }
                 }
             },
-            "tableGroup1": {
+            "table-group-1": {
                 "type": "node",
                 "transforms": [
                     {
@@ -2042,7 +2356,7 @@
                     {
                         "type": "translate",
                         "amount": {
-                            "x": 12,
+                            "x": 14,
                             "y": 0,
                             "z": -27
                         }
@@ -2055,11 +2369,36 @@
                         "table3",
                         "table4",
                         "table5",
-                        "table6"
+                        "table6",
+                        "monitor2",
+                        "projector"
                     ]
                 }
             },
-            "tableGroup2": {
+            "monitor2" : {
+                "type" : "node",
+                "transforms": [
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": -18.5,
+                            "y": 0,
+                            "z": 5.5
+                        }
+                    }
+                ],
+                "materialref" : {
+                    "materialId" : "frameMaterial"
+                },
+                "children" : {
+                    "nodesList" : [
+                        "base",
+                        "monitorSupport",
+                        "monitorFrame"
+                    ]
+                }
+            },
+            "table-group-2": {
                 "type": "node",
                 "transforms": [
                     {
@@ -2088,7 +2427,7 @@
                     ]
                 }
             },
-            "tableGroup3": {
+            "table-group-3": {
                 "type": "node",
                 "transforms": [
                     {
@@ -2858,6 +3197,24 @@
                 "materialref": {
                     "materialId": "projector"
                 },
+                "transforms": [
+                    {
+                        "type": "rotate",
+                        "amount": {
+                            "x": 0,
+                            "y": -90,
+                            "z": 0
+                        }
+                    },
+                    {
+                        "type": "translate",
+                        "amount": {
+                            "x": 27,
+                            "y": 0,
+                            "z": 13.5
+                        }
+                    }
+                ],
                 "children" : {
                     "nodesList" : [
                         "projectorCase",
@@ -2993,8 +3350,7 @@
                 "children" : {
                     "nodesList" : [
                         "monitor",
-                        "monitor1",
-                        "monitor2"
+                        "monitor1"
                     ]
                 }
             },
@@ -3052,37 +3408,6 @@
                         }
                     }
                 ],
-                "children" : {
-                    "nodesList" : [
-                        "base",
-                        "monitorSupport",
-                        "monitorFrame"
-                    ]
-                }
-            },
-            "monitor2" : {
-                "type" : "node",
-                "transforms": [
-                    {
-                        "type": "translate",
-                        "amount": {
-                            "x": -22,
-                            "y": 0,
-                            "z": 12
-                        }
-                    },
-                    {
-                        "type" : "rotate",
-                        "amount": {
-                            "x": 0,
-                            "y": 90,
-                            "z": 0  
-                        }
-                    }
-                ],
-                "materialref" : {
-                    "materialId" : "frameMaterial"
-                },
                 "children" : {
                     "nodesList" : [
                         "base",
@@ -3921,9 +4246,9 @@
                 {
                  "type": "translate",
                  "amount": {
-                     "x": 32.5,
-                     "y": 20,
-                     "z": -25
+                     "x": 0,
+                     "y": 23.25,
+                     "z": -3
                  }
                }
              ],
@@ -3931,7 +4256,8 @@
                 "nodesList" : [
                     "niLeg1",
                     "niLeg2",
-                    "niLeg3"
+                    "niLeg3",
+                    "niLeg4"
                 ]
              }
           },
@@ -3998,6 +4324,34 @@
                         "x": 0,
                         "y": 0,
                         "z": 4.65
+                    }
+                }
+             ],
+            "children" : {
+                "boxPrim" : {
+                    "type" : "box",
+                    "xyz1": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    },
+                    "xyz2": {
+                        "x": 2,
+                        "y": 7.5,
+                        "z": 2
+                    }
+                }
+            }
+          },
+          "niLeg4" : {
+            "type" : "node",
+            "transforms": [
+                {
+                    "type" : "translate",
+                    "amount": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 6.85
                     }
                 }
              ],
