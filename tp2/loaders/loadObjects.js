@@ -118,7 +118,6 @@ const dfs = (data, materials, node, materialref=null, isLod=false, debug=false, 
                             break
                         case 'nurbs':
                             const nurb = buildNurbs(info, material)
-                            console.log("ENBTREI NO NURBS")
                             object.add(nurb)
                             break
                         case 'polygon':
